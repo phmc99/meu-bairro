@@ -7,6 +7,7 @@ export default function Home() {
         <title>Next App by @phmc99</title>
         <meta name="description" content="Next App by @phmc99" />
       </Head>
+      <h1>Olá</h1>
     </div>
   );
 }
