@@ -28,8 +28,7 @@
   },
   "rules": {
     "comma-dangle": [
-      "error",
-      "always-multiline"
+      "error"
     ],
     "semi": "error",
     "prettier/prettier": "error",
