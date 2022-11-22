@@ -7,20 +7,28 @@ interface AdminState {
   error: string | undefined;
 }
 
+interface LoginProps {
+  email: string;
+  password: string;
+}
+
 const initialState: AdminState = {
   loading: false,
   token: null,
   error: ''
 };
 
-export const login = createAsyncThunk('admin/login', () => {
-  return api
-    .post('/auth/admin', {
-      email: 'pedrogks@gmail.com',
-      password: '123456'
-    })
-    .then(res => res.data.token);
-});
+export const login = createAsyncThunk(
+  'admin/login',
+  ({ email, password }: LoginProps) => {
+    return api
+      .post('/auth/admin', {
+        email,
+        password
+      })
+      .then(res => res.data.token);
+  }
+);
 
 export const adminSlice = createSlice({
   name: 'admin',

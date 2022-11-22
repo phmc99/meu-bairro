@@ -7,11 +7,13 @@ import {
 } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { adminSlice } from './admin';
+import { commerceSlice } from './commerce';
 
 const makeStore = () =>
   configureStore({
     reducer: {
-      [adminSlice.name]: adminSlice.reducer
+      [adminSlice.name]: adminSlice.reducer,
+      [commerceSlice.name]: commerceSlice.reducer
     },
     devTools: true
   });
