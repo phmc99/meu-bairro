@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Input } from '@chakra-ui/react';
+import { Button, Flex, Heading, Input, useToast } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import Router from 'next/router';
 import { useDispatch } from 'react-redux';
@@ -7,9 +7,16 @@ import { login } from '../../store/admin';
 
 const AdminLogin = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const toast = useToast();
 
   const handleLogin = async (email: string, password: string) => {
     await dispatch(login({ email, password }));
+    toast({
+      title: 'Bem-vindo!',
+      duration: 4000,
+      isClosable: true,
+      position: 'bottom-left'
+    });
     Router.push('/admin/dashboard');
   };
 
