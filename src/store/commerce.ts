@@ -2,44 +2,47 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Router from 'next/router';
 
 import api from '../services/api';
-import { ICommerce } from '../types';
+import { ICommerceResponse } from '../types';
 
 interface CommerceState {
   loading: boolean;
-  data: ICommerce[];
+  data: ICommerceResponse | null;
   error: string | undefined;
 }
 
 const initialState: CommerceState = {
   loading: false,
-  data: [],
+  data: null,
   error: ''
 };
 
-export const getCommerces = createAsyncThunk('admin/getCommerces', () => {
-  const token = localStorage.getItem('admin-token');
+export const getCommerces = createAsyncThunk(
+  'admin/getCommerces',
+  (endpoint: string) => {
+    const token = localStorage.getItem('admin-token');
 
-  if (!token) {
-    return Router.push('/admin/login');
+    if (!token) {
+      return Router.push('/admin/login');
+    }
+
+    return api
+      .get(endpoint, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        return res.data;
+      })
+      .catch(res => {
+        if (res.response.status === 401) {
+          localStorage.removeItem('admin-token');
+          Router.push('/admin/login');
+          return [];
+        }
+      });
   }
-
-  return api
-    .get('/commerce?perPage=10', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-    .then(res => {
-      return res.data.data;
-    })
-    .catch(res => {
-      if (res.response.status === 401) {
-        localStorage.removeItem('admin-token');
-        Router.push('/admin/login');
-        return [];
-      }
-    });
-});
+);
 
 export const commerceSlice = createSlice({
   name: 'commerce',
@@ -55,7 +58,7 @@ export const commerceSlice = createSlice({
     });
     builder.addCase(getCommerces.rejected, (state, action) => {
       state.loading = false;
-      state.data = [];
+      state.data = null;
       state.error = action.error.message;
     });
   }

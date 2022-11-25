@@ -13,6 +13,16 @@ export interface ICommerce {
   __v: number;
 }
 
+export interface ICommerceResponse {
+  page: number;
+  per_page: number;
+  previous_page: string | null;
+  next_page: string | null;
+  last_page: number;
+  count: number;
+  data: ICommerce[];
+}
+
 export interface IAddress {
   city: string;
   complement: string;
