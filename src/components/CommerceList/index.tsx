@@ -15,20 +15,15 @@ const CommerceList = () => {
     dispatch(getCommerces('/commerce'));
   }, [dispatch]);
 
-  const handleChangePage = (action: string) => {
-    if (action === 'previous') {
-      dispatch(getCommerces(`/commerce${data?.previous_page}`));
-    }
-    if (action === 'next') {
-      dispatch(getCommerces(`/commerce${data?.next_page}`));
-    }
+  const handleChangePage = (action: string | null | undefined) => {
+    action != null && dispatch(getCommerces(`/commerce${action}`));
   };
 
   return (
     <>
       <List overflowY="scroll" spacing={2} sx={scrollBarStyle}>
         {loading && <Progress size="xs" isIndeterminate />}
-        {data &&
+        {data?.data != null &&
           loading === false &&
           data.data.map(({ name, _id, logo }) => (
             <CommerceItem logo={logo} id={_id} name={name} key={_id} />
@@ -36,7 +31,7 @@ const CommerceList = () => {
       </List>
       <Flex mt={2} justifyContent="center" gap={2}>
         <ArrowLeftIcon
-          onClick={() => handleChangePage('previous')}
+          onClick={() => handleChangePage(data?.previous_page)}
           cursor="pointer"
         />
         <Heading as="h3" size="xs">
@@ -44,7 +39,7 @@ const CommerceList = () => {
         </Heading>
         <ArrowRightIcon
           cursor="pointer"
-          onClick={() => handleChangePage('next')}
+          onClick={() => handleChangePage(data?.next_page)}
         />
       </Flex>
     </>
