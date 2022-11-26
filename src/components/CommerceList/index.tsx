@@ -29,7 +29,7 @@ const CommerceList = () => {
             <CommerceItem logo={logo} id={_id} name={name} key={_id} />
           ))}
       </List>
-      <Flex mt={2} justifyContent="center" gap={2}>
+      <Flex mt={2} justifyContent="center" gap={[4, 2]}>
         <ArrowLeftIcon
           onClick={() => handleChangePage(data?.previous_page)}
           cursor="pointer"
