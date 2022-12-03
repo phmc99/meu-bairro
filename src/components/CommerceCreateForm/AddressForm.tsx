@@ -104,6 +104,7 @@ export const AddressForm = () => {
             id="cep"
             onChange={handleChangeCepInput}
             maxLength={8}
+            autoComplete={'new-password'}
           />
         </FormControl>
 
@@ -172,6 +173,7 @@ export const AddressForm = () => {
             name="number"
             id="number"
             onChange={handleChangeNumber}
+            autoComplete={'new-password'}
           />
         </FormControl>
 
@@ -185,6 +187,7 @@ export const AddressForm = () => {
             name="complement"
             id="complement"
             onChange={handleChangeComplement}
+            autoComplete={'new-password'}
           />
         </FormControl>
       </Flex>

@@ -44,16 +44,14 @@ export const NameCategoryForm = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleChange = (e: any) => {
+  const handleChangeName = (e: any) => {
     const value = e.target.value;
-    const inputName = e.target.name;
+    dispatch(handleChangeFormData({ name: value }));
+  };
 
-    if (inputName === 'name') {
-      dispatch(handleChangeFormData({ name: value }));
-    }
-    if (inputName === 'category') {
-      dispatch(handleChangeFormData({ category: value }));
-    }
+  const handleChangeCategory = (e: any) => {
+    const value = e.target.value;
+    dispatch(handleChangeFormData({ category: value }));
   };
 
   useEffect(() => {
@@ -73,7 +71,7 @@ export const NameCategoryForm = () => {
           type="text"
           name="name"
           placeholder="Nome do comércio"
-          onChange={handleChange}
+          onChange={handleChangeName}
         />
       </FormControl>
       <FormControl mt="2%">
@@ -88,7 +86,7 @@ export const NameCategoryForm = () => {
             categories.length === 0 ? 'Carregando...' : 'Escolha uma categoria'
           }
           disabled={categories.length === 0 ? true : false}
-          onChange={handleChange}
+          onChange={handleChangeCategory}
         >
           {categories.length > 0 &&
             categories.map((item, index) => (
