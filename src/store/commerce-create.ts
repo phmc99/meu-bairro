@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import Router from 'next/router';
+import api from '../services/api';
 
 interface CommerceFormState {
   category: string;
@@ -19,9 +21,40 @@ interface CommerceFormState {
     cep: string;
   };
   name: string;
+  error?: string;
+  loading?: boolean;
 }
 
 const initialState: CommerceFormState = {} as CommerceFormState;
+
+export const postCommerce = createAsyncThunk(
+  'admin/postCommerce',
+  (body: CommerceFormState) => {
+    const token = localStorage.getItem('admin-token');
+
+    if (!token) {
+      return Router.push('/admin/login');
+    }
+
+    return api
+      .post('/commerce', body, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        return res.data;
+      })
+      .catch(res => {
+        if (res.response.status === 401) {
+          localStorage.removeItem('admin-token');
+          Router.push('/admin/login');
+          return;
+        }
+        return res.response.data;
+      });
+  }
+);
 
 export const commerceFormSlice = createSlice({
   name: 'commerceForm',
@@ -42,10 +75,14 @@ export const commerceFormSlice = createSlice({
       if (address) {
         state.address = address;
       }
-    }
+    },
+    resetFormData: () => initialState
   }
 });
 
-export const { handleChangeFormData } = commerceFormSlice.actions;
+export const {
+  handleChangeFormData,
+  resetFormData
+} = commerceFormSlice.actions;
 
 export default commerceFormSlice.reducer;

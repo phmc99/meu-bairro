@@ -11,8 +11,9 @@ import {
 import { NameCategoryForm } from './NameCategoryForm';
 import { ContactForm } from './ContactForm';
 import { AddressForm } from './AddressForm';
-import { useSelector } from 'react-redux';
-import { AppState } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../store';
+import { postCommerce, resetFormData } from '../../store/commerce-create';
 
 interface ICommerceCreateForm {
   setToggle: () => void;
@@ -22,13 +23,28 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
   const toast = useToast();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
+  const dispatch = useDispatch<AppDispatch>();
 
   const { name, category, contact, address } = useSelector(
     (state: AppState) => state.commerceForm
   );
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    const response = await dispatch(
+      postCommerce({ name, category, contact, address })
+    );
+
+    if (response.payload.status === 'error') {
+      toast({
+        title: 'Erro na criação do comércio.',
+        description: response.payload.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      });
+      return;
+    }
+
     toast({
       title: 'Comércio criado.',
       description: 'Temos um novo comércio na plataforma!',
@@ -36,8 +52,8 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
       duration: 3000,
       isClosable: true
     });
-    console.log({ name, category, contact, address });
 
+    dispatch(resetFormData());
     setToggle();
   };
 
