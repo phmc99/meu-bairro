@@ -8,26 +8,26 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
+import { handleChangeFormData } from '../../store/commerce-create';
+import { IAddress } from '../../types';
 
 interface CepResponse {
   cep: string;
   logradouro: string;
-  complemento: string;
   bairro: string;
   localidade: string;
   uf: string;
-  ibge: string;
-  gia: string;
-  ddd: string;
-  siafi: string;
 }
-
 export const AddressForm = () => {
-  const [cep, setCep] = useState<CepResponse>({} as CepResponse);
+  const [cepResponse, setCepResponse] = useState({} as CepResponse);
+  const [address, setAddress] = useState({} as IAddress);
+  const dispatch = useDispatch<AppDispatch>();
   const toast = useToast();
 
-  const getCep = async (cep: string) => {
-    const endpoint = `https://viacep.com.br/ws/${cep}/json/`;
+  const getCep = async (cepInput: string) => {
+    const endpoint = `https://viacep.com.br/ws/${cepInput}/json/`;
 
     const response = await axios.get(endpoint);
 
@@ -42,14 +42,49 @@ export const AddressForm = () => {
       return;
     }
 
-    setCep(response.data);
+    const { cep, logradouro, bairro, localidade, uf } = response.data;
+
+    const serializeCep = {
+      cep: cep,
+      street: logradouro,
+      neighborhood: bairro,
+      city: localidade,
+      state: uf
+    };
+
+    setAddress({ ...address, ...serializeCep });
+    dispatch(handleChangeFormData({ address }));
+
+    setCepResponse({ cep, logradouro, bairro, localidade, uf });
   };
 
   const handleChangeCepInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length === 8) {
       getCep(e.target.value);
     }
-    setCep({} as CepResponse);
+    setCepResponse({} as CepResponse);
+  };
+
+  const handleChangeNumber = (e: any) => {
+    const value = e.target.value;
+    const copy: any = { ...address };
+
+    copy['number'] = value;
+
+    setAddress(copy);
+
+    dispatch(handleChangeFormData({ address }));
+  };
+
+  const handleChangeComplement = (e: any) => {
+    const value = e.target.value;
+    const copy: any = { ...address };
+
+    copy['complement'] = value;
+
+    setAddress(copy);
+
+    dispatch(handleChangeFormData({ address }));
   };
 
   return (
@@ -77,7 +112,7 @@ export const AddressForm = () => {
             Bairro
           </FormLabel>
           <Input
-            value={cep.bairro != null ? cep.bairro : ''}
+            value={cepResponse.bairro != null ? cepResponse.bairro : ''}
             disabled
             type="text"
             name="neighborhood"
@@ -92,7 +127,7 @@ export const AddressForm = () => {
             Cidade
           </FormLabel>
           <Input
-            value={cep.localidade != null ? cep.localidade : ''}
+            value={cepResponse.localidade != null ? cepResponse.localidade : ''}
             disabled
             type="text"
             name="city"
@@ -105,7 +140,7 @@ export const AddressForm = () => {
             Estado
           </FormLabel>
           <Input
-            value={cep.uf != null ? cep.uf : ''}
+            value={cepResponse.uf != null ? cepResponse.uf : ''}
             disabled
             type="text"
             name="state"
@@ -119,7 +154,7 @@ export const AddressForm = () => {
           Rua
         </FormLabel>
         <Input
-          value={cep.logradouro != null ? cep.logradouro : ''}
+          value={cepResponse.logradouro != null ? cepResponse.logradouro : ''}
           disabled
           type="text"
           name="street"
@@ -131,7 +166,13 @@ export const AddressForm = () => {
           <FormLabel htmlFor="number" fontWeight="md">
             Número
           </FormLabel>
-          <Input placeholder="Número" type="text" name="number" id="number" />
+          <Input
+            placeholder="Número"
+            type="text"
+            name="number"
+            id="number"
+            onChange={handleChangeNumber}
+          />
         </FormControl>
 
         <FormControl>
@@ -143,6 +184,7 @@ export const AddressForm = () => {
             type="text"
             name="complement"
             id="complement"
+            onChange={handleChangeComplement}
           />
         </FormControl>
       </Flex>

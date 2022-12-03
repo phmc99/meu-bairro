@@ -11,6 +11,8 @@ import {
 import { NameCategoryForm } from './NameCategoryForm';
 import { ContactForm } from './ContactForm';
 import { AddressForm } from './AddressForm';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../store';
 
 interface ICommerceCreateForm {
   setToggle: () => void;
@@ -21,7 +23,12 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
 
-  const handleSubmit = () => {
+  const { name, category, contact, address } = useSelector(
+    (state: AppState) => state.commerceForm
+  );
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     toast({
       title: 'Comércio criado.',
       description: 'Temos um novo comércio na plataforma!',
@@ -29,6 +36,8 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
       duration: 3000,
       isClosable: true
     });
+    console.log({ name, category, contact, address });
+
     setToggle();
   };
 
@@ -64,6 +73,7 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
           />
           <CloseButton onClick={setToggle} />
         </Flex>
+
         {step === 1 ? (
           <NameCategoryForm />
         ) : step === 2 ? (

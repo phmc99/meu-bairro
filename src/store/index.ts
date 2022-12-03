@@ -8,12 +8,14 @@ import {
 import { createWrapper } from 'next-redux-wrapper';
 import { adminSlice } from './admin';
 import { commerceSlice } from './commerce';
+import { commerceFormSlice } from './commerce-create';
 
 const makeStore = () =>
   configureStore({
     reducer: {
       [adminSlice.name]: adminSlice.reducer,
-      [commerceSlice.name]: commerceSlice.reducer
+      [commerceSlice.name]: commerceSlice.reducer,
+      [commerceFormSlice.name]: commerceFormSlice.reducer
     },
     devTools: true
   });

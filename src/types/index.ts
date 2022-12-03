@@ -37,6 +37,8 @@ export interface IContact {
   whatsapp: string;
   phone: string;
   email: string;
+  facebook?: string;
+  instagram?: string;
 }
 
 export interface IFeedback {

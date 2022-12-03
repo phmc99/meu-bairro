@@ -7,7 +7,10 @@ import {
 } from '@chakra-ui/react';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import api from '../../services/api';
+import { AppDispatch } from '../../store';
+import { handleChangeFormData } from '../../store/commerce-create';
 
 interface CategoriesResponse {
   description: string;
@@ -19,22 +22,38 @@ interface CategoriesResponse {
 export const NameCategoryForm = () => {
   const [categories, setCategories] = useState<CategoriesResponse[]>([]);
 
-  const getCategories = async () => {
+  const getCategories = () => {
     const token = localStorage.getItem('admin-token');
+    return api
+      .get('/category', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(({ data }) => {
+        setCategories(data.categories);
+      })
+      .catch(res => {
+        if (res.response.status === 401) {
+          localStorage.removeItem('admin-token');
+          Router.push('/admin/login');
+          return;
+        }
+      });
+  };
 
-    const response = await api.get('/category', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+  const dispatch = useDispatch<AppDispatch>();
 
-    if (response.status === 401) {
-      localStorage.removeItem('admin-token');
-      Router.push('/admin/login');
-      return;
+  const handleChange = (e: any) => {
+    const value = e.target.value;
+    const inputName = e.target.name;
+
+    if (inputName === 'name') {
+      dispatch(handleChangeFormData({ name: value }));
     }
-
-    setCategories(response.data.categories);
+    if (inputName === 'category') {
+      dispatch(handleChangeFormData({ category: value }));
+    }
   };
 
   useEffect(() => {
@@ -50,7 +69,12 @@ export const NameCategoryForm = () => {
         <FormLabel htmlFor="name" fontWeight="md">
           Nome do comércio
         </FormLabel>
-        <Input type="text" id="name" placeholder="Nome do comércio" />
+        <Input
+          type="text"
+          name="name"
+          placeholder="Nome do comércio"
+          onChange={handleChange}
+        />
       </FormControl>
       <FormControl mt="2%">
         <FormLabel htmlFor="category" fontWeight="md">
@@ -64,6 +88,7 @@ export const NameCategoryForm = () => {
             categories.length === 0 ? 'Carregando...' : 'Escolha uma categoria'
           }
           disabled={categories.length === 0 ? true : false}
+          onChange={handleChange}
         >
           {categories.length > 0 &&
             categories.map((item, index) => (
