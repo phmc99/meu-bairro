@@ -1,23 +1,24 @@
 import { FormControl, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../store';
 import { handleChangeFormData } from '../../store/commerce-create';
 import { IContact } from '../../types';
 
 export const ContactForm = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { contact } = useSelector((state: AppState) => state.commerceForm);
 
-  const [contact, setContact] = useState({} as IContact);
+  const [contactData, setContactData] = useState({} as IContact);
 
   const handleChange = (e: any) => {
     const value = e.target.value;
     const inputName = e.target.name;
-    const copy: any = { ...contact };
+    const copy: any = { ...contactData };
 
     copy[inputName] = value;
 
-    setContact(copy);
+    setContactData(copy);
 
     dispatch(handleChangeFormData({ contact }));
   };
@@ -36,6 +37,7 @@ export const ContactForm = () => {
           type="text"
           name="email"
           id="email"
+          value={contact.email}
           onChange={handleChange}
         />
       </FormControl>
@@ -49,6 +51,7 @@ export const ContactForm = () => {
           type="text"
           name="phone"
           id="phone"
+          value={contact.phone}
           onChange={handleChange}
         />
       </FormControl>
@@ -62,6 +65,7 @@ export const ContactForm = () => {
           type="text"
           name="whatsapp"
           id="whatsapp"
+          value={contact.whatsapp}
           onChange={handleChange}
         />
       </FormControl>
@@ -75,6 +79,7 @@ export const ContactForm = () => {
           type="text"
           name="facebook"
           id="facebook"
+          value={contact.facebook}
           onChange={handleChange}
         />
       </FormControl>
@@ -88,6 +93,7 @@ export const ContactForm = () => {
           type="text"
           name="instagram"
           id="instagram"
+          value={contact.instagram}
           onChange={handleChange}
         />
       </FormControl>

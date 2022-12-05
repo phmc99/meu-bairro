@@ -7,9 +7,9 @@ import {
 } from '@chakra-ui/react';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import api from '../../services/api';
-import { AppDispatch } from '../../store';
+import { AppDispatch, AppState } from '../../store';
 import { handleChangeFormData } from '../../store/commerce-create';
 
 interface CategoriesResponse {
@@ -43,6 +43,9 @@ export const NameCategoryForm = () => {
   };
 
   const dispatch = useDispatch<AppDispatch>();
+  const { name, category } = useSelector(
+    (state: AppState) => state.commerceForm
+  );
 
   const handleChangeName = (e: any) => {
     const value = e.target.value;
@@ -72,6 +75,7 @@ export const NameCategoryForm = () => {
           name="name"
           placeholder="Nome do comércio"
           onChange={handleChangeName}
+          value={name}
         />
       </FormControl>
       <FormControl mt="2%">
@@ -87,6 +91,7 @@ export const NameCategoryForm = () => {
           }
           disabled={categories.length === 0 ? true : false}
           onChange={handleChangeCategory}
+          value={category}
         >
           {categories.length > 0 &&
             categories.map((item, index) => (
