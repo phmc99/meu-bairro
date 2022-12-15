@@ -20,7 +20,13 @@ interface CategoriesResponse {
 }
 
 export const NameCategoryForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { name, category } = useSelector(
+    (state: AppState) => state.commerceForm
+  );
+
   const [categories, setCategories] = useState<CategoriesResponse[]>([]);
+  const [nameInput, setNameInput] = useState<string>(name);
 
   const getCategories = () => {
     const token = localStorage.getItem('admin-token');
@@ -42,14 +48,10 @@ export const NameCategoryForm = () => {
       });
   };
 
-  const dispatch = useDispatch<AppDispatch>();
-  const { name, category } = useSelector(
-    (state: AppState) => state.commerceForm
-  );
-
   const handleChangeName = (e: any) => {
     const value = e.target.value;
     dispatch(handleChangeFormData({ name: value }));
+    setNameInput(e.target.value);
   };
 
   const handleChangeCategory = (e: any) => {
@@ -75,7 +77,7 @@ export const NameCategoryForm = () => {
           name="name"
           placeholder="Nome do comércio"
           onChange={handleChangeName}
-          value={name}
+          value={nameInput}
         />
       </FormControl>
       <FormControl mt="2%">

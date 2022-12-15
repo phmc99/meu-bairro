@@ -20,7 +20,7 @@ export const ContactForm = () => {
 
     setContactData(copy);
 
-    dispatch(handleChangeFormData({ contact }));
+    dispatch(handleChangeFormData({ contact: { ...copy } }));
   };
 
   return (
@@ -37,7 +37,7 @@ export const ContactForm = () => {
           type="text"
           name="email"
           id="email"
-          value={contact.email}
+          value={contact.email && contact.email}
           onChange={handleChange}
         />
       </FormControl>
@@ -51,7 +51,7 @@ export const ContactForm = () => {
           type="text"
           name="phone"
           id="phone"
-          value={contact.phone}
+          value={contact.phone && contact.phone}
           onChange={handleChange}
         />
       </FormControl>
@@ -65,7 +65,7 @@ export const ContactForm = () => {
           type="text"
           name="whatsapp"
           id="whatsapp"
-          value={contact.whatsapp}
+          value={contact.whatsapp && contact.whatsapp}
           onChange={handleChange}
         />
       </FormControl>
@@ -79,7 +79,7 @@ export const ContactForm = () => {
           type="text"
           name="facebook"
           id="facebook"
-          value={contact.facebook}
+          value={contact.facebook && contact.facebook}
           onChange={handleChange}
         />
       </FormControl>
@@ -93,7 +93,7 @@ export const ContactForm = () => {
           type="text"
           name="instagram"
           id="instagram"
-          value={contact.instagram}
+          value={contact.instagram && contact.instagram}
           onChange={handleChange}
         />
       </FormControl>

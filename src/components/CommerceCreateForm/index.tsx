@@ -14,6 +14,7 @@ import { AddressForm } from './AddressForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from '../../store';
 import { postCommerce, resetFormData } from '../../store/commerce-create';
+import { categoryExists, contactExists, nameExists } from './verify';
 
 interface ICommerceCreateForm {
   setToggle: () => void;
@@ -28,6 +29,42 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
   const { name, category, contact, address } = useSelector(
     (state: AppState) => state.commerceForm
   );
+
+  const handleNextSetp = () => {
+    if (step === 1 && !nameExists(name)) {
+      return toast({
+        title: 'Nome inválido.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      });
+    }
+
+    if (step === 1 && !categoryExists(category)) {
+      return toast({
+        title: 'Categoria inválida.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      });
+    }
+
+    if (step === 2 && !contactExists(contact)) {
+      return toast({
+        title: 'Campos obrigatórios: e-mail, telefone, whatsapp.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      });
+    }
+
+    setStep(step + 1);
+    if (step === 3) {
+      setProgress(100);
+    } else {
+      setProgress(progress + 33.33);
+    }
+  };
 
   const handleSubmit = async () => {
     const response = await dispatch(
@@ -115,14 +152,7 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
               <Button
                 w="7rem"
                 isDisabled={step === 3}
-                onClick={() => {
-                  setStep(step + 1);
-                  if (step === 3) {
-                    setProgress(100);
-                  } else {
-                    setProgress(progress + 33.33);
-                  }
-                }}
+                onClick={handleNextSetp}
                 colorScheme="blue"
                 variant="outline"
               >

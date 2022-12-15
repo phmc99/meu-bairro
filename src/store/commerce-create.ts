@@ -25,7 +25,12 @@ interface CommerceFormState {
   loading?: boolean;
 }
 
-const initialState: CommerceFormState = {} as CommerceFormState;
+const initialState: CommerceFormState = {
+  name: '',
+  category: '',
+  contact: {},
+  address: {}
+} as CommerceFormState;
 
 export const postCommerce = createAsyncThunk(
   'admin/postCommerce',
