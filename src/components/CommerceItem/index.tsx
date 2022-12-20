@@ -66,6 +66,10 @@ const CommerceItem = ({ id, logo, name }: CommerceItemProps) => {
       });
   };
 
+  const handleUpdateCommerce = (id: string) => {
+    Router.push(`/admin/commerce/${id}`);
+  };
+
   return (
     <>
       <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
@@ -87,7 +91,10 @@ const CommerceItem = ({ id, logo, name }: CommerceItemProps) => {
             </Heading>
           </Flex>
           <Flex alignItems="center" gap={5}>
-            <EditIcon cursor="pointer" />
+            <EditIcon
+              cursor="pointer"
+              onClick={() => handleUpdateCommerce(id)}
+            />
             <DeleteIcon onClick={onOpen} cursor="pointer" />
           </Flex>
         </Flex>
