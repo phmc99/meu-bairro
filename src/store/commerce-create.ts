@@ -11,7 +11,7 @@ interface CommerceFormState {
     instagram?: string;
     facebook?: string;
   };
-  address: {
+  address?: {
     city: string;
     complement: string;
     number: string;

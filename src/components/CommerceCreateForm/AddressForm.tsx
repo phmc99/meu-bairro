@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -23,6 +24,7 @@ interface CepResponse {
 export const AddressForm = () => {
   const [cepResponse, setCepResponse] = useState({} as CepResponse);
   const [address, setAddress] = useState({} as IAddress);
+  const [noAddress, setNoAddress] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const toast = useToast();
 
@@ -87,11 +89,19 @@ export const AddressForm = () => {
     dispatch(handleChangeFormData({ address }));
   };
 
+  const handleSetNoAddress = () => {
+    setNoAddress(!noAddress);
+    dispatch(handleChangeFormData({ address: undefined }));
+  };
+
   return (
     <>
       <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
         Endereço do Comércio
       </Heading>
+      <Checkbox isChecked={noAddress} onChange={handleSetNoAddress}>
+        Esse comércio não tem endereço
+      </Checkbox>
       <Flex gap={2}>
         <FormControl>
           <FormLabel htmlFor="cep" fontWeight="md">
@@ -105,6 +115,7 @@ export const AddressForm = () => {
             onChange={handleChangeCepInput}
             maxLength={8}
             autoComplete={'new-password'}
+            disabled={noAddress}
           />
         </FormControl>
 
@@ -174,6 +185,7 @@ export const AddressForm = () => {
             id="number"
             onChange={handleChangeNumber}
             autoComplete={'new-password'}
+            disabled={noAddress}
           />
         </FormControl>
 
@@ -188,6 +200,7 @@ export const AddressForm = () => {
             id="complement"
             onChange={handleChangeComplement}
             autoComplete={'new-password'}
+            disabled={noAddress}
           />
         </FormControl>
       </Flex>

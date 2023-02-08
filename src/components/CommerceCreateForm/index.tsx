@@ -147,7 +147,7 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
                 variant="solid"
                 w="7rem"
               >
-                Back
+                Anterior
               </Button>
               <Button
                 w="7rem"
@@ -156,7 +156,7 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
                 colorScheme="blue"
                 variant="outline"
               >
-                Next
+                Próximo
               </Button>
             </Flex>
             {step === 3 ? (
