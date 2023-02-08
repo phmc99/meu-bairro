@@ -55,3 +55,14 @@ export interface IFeedback {
   _id: string;
   __v: number;
 }
+
+export interface ICommerceQuery {
+  data:
+    | {
+        commerce: ICommerce;
+        status?: string;
+      }
+    | undefined;
+  isLoading: boolean;
+  error: unknown;
+}

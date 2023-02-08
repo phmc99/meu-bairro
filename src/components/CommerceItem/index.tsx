@@ -67,6 +67,7 @@ const CommerceItem = ({ id, logo, name }: CommerceItemProps) => {
   };
 
   const handleUpdateCommerce = (id: string) => {
+    localStorage.setItem('@mb:current-commerce-id', id);
     Router.push(`/admin/commerce/${id}`);
   };
 
