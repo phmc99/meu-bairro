@@ -27,8 +27,6 @@ const Dashboard = () => {
       {newCommerceToggle ? (
         <CommerceCreateForm setToggle={handleOpenNewCommerceForm} />
       ) : null}
-
-      {}
       <Flex height="100vh" justifyContent="center">
         <Flex direction="column" width={'100%'} maxW={600} p={2}>
           <Flex gap={[2, 0]} justifyContent="space-between">
