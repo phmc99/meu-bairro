@@ -28,19 +28,10 @@ const CommercePageFormBase = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
 
-  const updateImages = async (data: any) => {
-    let logo: any;
-    let images: any[] = [];
+  const updateImages = async (elements: any) => {
+    const logo: any = elements[0].value;
+    const images: any[] = elements[1].value.split(',');
 
-    for (let i = 0, element; (element = data[i++]); ) {
-      if (element.value.trim() !== '') {
-        if (element.name === 'logo') {
-          logo = element.value;
-        } else {
-          images = [...images, element.value];
-        }
-      }
-    }
     const body: any = {
       logo,
       images
