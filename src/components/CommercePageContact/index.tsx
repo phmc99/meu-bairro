@@ -4,9 +4,13 @@ import { ICommerce } from '../../types';
 
 interface CommercePageContactProps {
   commerce: ICommerce;
+  openModal: () => void;
 }
 
-const CommercePageContact = ({ commerce }: CommercePageContactProps) => {
+const CommercePageContact = ({
+  commerce,
+  openModal
+}: CommercePageContactProps) => {
   return (
     <>
       <Flex gap={2} alignItems="center">
@@ -17,6 +21,7 @@ const CommercePageContact = ({ commerce }: CommercePageContactProps) => {
           aria-label="Editar Contato"
           size="sm"
           icon={<EditIcon />}
+          onClick={openModal}
         />
       </Flex>
       <List mt={2}>

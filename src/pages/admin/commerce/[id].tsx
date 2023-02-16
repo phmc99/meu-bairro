@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import CommerceImagesSlider from '../../../components/CommerceImagesSlider';
 import CommercePageAddress from '../../../components/CommercePageAddress';
 import CommercePageContact from '../../../components/CommercePageContact';
+import CommercePageContactForm from '../../../components/CommercePageForms/ContactForm';
 import CommercePageImageForm from '../../../components/CommercePageForms/ImageForm';
 import CommercePageHeader from '../../../components/CommercePageHeader';
 import { getCommerce } from '../../../services/commerce';
@@ -15,15 +16,15 @@ const CommercePage = () => {
   const router = useRouter();
 
   const [imageForm, setImageForm] = useState<boolean>(false);
-  // const [contactForm, setContactForm] = useState<boolean>(false);
+  const [contactForm, setContactForm] = useState<boolean>(false);
   // const [addressForm, setAddressForm] = useState<boolean>(false);
 
   const handleImageFormToggle = () => {
     setImageForm(!imageForm);
   };
-  // const handleContactFormToggle = () => {
-  //   setContactForm(!contactForm);
-  // };
+  const handleContactFormToggle = () => {
+    setContactForm(!contactForm);
+  };
   // const handleAddressFormToggle = () => {
   //   setAddressForm(!addressForm);
   // };
@@ -88,6 +89,12 @@ const CommercePage = () => {
           setToggle={handleImageFormToggle}
         />
       ) : null}
+      {contactForm ? (
+        <CommercePageContactForm
+          setToggle={handleContactFormToggle}
+          contact={data.commerce.contact}
+        />
+      ) : null}
       <Flex flexDirection="column" alignItems="center" gap={2}>
         <Flex
           w={['100%']}
@@ -123,12 +130,15 @@ const CommercePage = () => {
           </Button>
         </Box>
         <Divider />
-        <Flex w="100%" p={5}>
+        <Flex w="100%" p={5} gap={2}>
           <Flex w="100%" direction="column">
             <CommercePageAddress commerce={data.commerce} />
           </Flex>
           <Flex w="100%" direction="column">
-            <CommercePageContact commerce={data.commerce} />
+            <CommercePageContact
+              openModal={handleContactFormToggle}
+              commerce={data.commerce}
+            />
           </Flex>
         </Flex>
       </Flex>

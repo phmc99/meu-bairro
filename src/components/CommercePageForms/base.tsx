@@ -28,6 +28,17 @@ const CommercePageFormBase = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
 
+  const updateContact = async (elements: any) => {
+    const formData = new FormData(elements);
+    const body = { contact: Object.fromEntries(formData) };
+
+    await api.patch(`/commerce/${router.query.id}`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  };
+
   const updateImages = async (elements: any) => {
     const logo: any = elements[0].value;
     const images: any[] = elements[1].value.split(',');
@@ -50,6 +61,10 @@ const CommercePageFormBase = ({
 
     if (type === 'image') {
       await updateImages(e.target);
+    }
+
+    if (type === 'contact') {
+      await updateContact(e.target);
     }
 
     toast({
