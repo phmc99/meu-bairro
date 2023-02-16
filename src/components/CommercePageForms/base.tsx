@@ -28,6 +28,17 @@ const CommercePageFormBase = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
 
+  const updateAddress = async (elements: any) => {
+    const formData = new FormData(elements);
+    const body = { address: Object.fromEntries(formData) };
+
+    await api.patch(`/commerce/${router.query.id}`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  };
+
   const updateContact = async (elements: any) => {
     const formData = new FormData(elements);
     const body = { contact: Object.fromEntries(formData) };
@@ -67,6 +78,10 @@ const CommercePageFormBase = ({
       await updateContact(e.target);
     }
 
+    if (type === 'address') {
+      await updateAddress(e.target);
+    }
+
     toast({
       title: 'Comércio Atualizado',
       status: 'info',
@@ -89,7 +104,7 @@ const CommercePageFormBase = ({
       <Flex borderRadius={5} p={5} direction="column" bgColor="#fff">
         <Flex gap={5} justifyContent="space-between" alignItems="center">
           <Heading>{title}</Heading>
-          <CloseButton onClick={setToggle} />
+          <CloseButton disabled={isLoading} onClick={setToggle} />
         </Flex>
         <Box pointerEvents={isLoading ? 'none' : 'auto'} mt={10}>
           <form onSubmit={handleSubmit}>

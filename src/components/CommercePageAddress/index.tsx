@@ -4,8 +4,12 @@ import { ICommerce } from '../../types';
 
 interface CommercePageAddressProps {
   commerce: ICommerce;
+  openModal: () => void;
 }
-const CommercePageAddress = ({ commerce }: CommercePageAddressProps) => {
+const CommercePageAddress = ({
+  commerce,
+  openModal
+}: CommercePageAddressProps) => {
   if (commerce.address) {
     return (
       <>
@@ -17,6 +21,7 @@ const CommercePageAddress = ({ commerce }: CommercePageAddressProps) => {
             aria-label="Editar Contato"
             size="sm"
             icon={<EditIcon />}
+            onClick={openModal}
           />
         </Flex>
         <Text mt={2}>

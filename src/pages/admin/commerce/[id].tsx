@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import CommerceImagesSlider from '../../../components/CommerceImagesSlider';
 import CommercePageAddress from '../../../components/CommercePageAddress';
 import CommercePageContact from '../../../components/CommercePageContact';
+import CommercePageAddressForm from '../../../components/CommercePageForms/AddressForm';
 import CommercePageContactForm from '../../../components/CommercePageForms/ContactForm';
 import CommercePageImageForm from '../../../components/CommercePageForms/ImageForm';
 import CommercePageHeader from '../../../components/CommercePageHeader';
@@ -17,7 +18,7 @@ const CommercePage = () => {
 
   const [imageForm, setImageForm] = useState<boolean>(false);
   const [contactForm, setContactForm] = useState<boolean>(false);
-  // const [addressForm, setAddressForm] = useState<boolean>(false);
+  const [addressForm, setAddressForm] = useState<boolean>(false);
 
   const handleImageFormToggle = () => {
     setImageForm(!imageForm);
@@ -25,9 +26,9 @@ const CommercePage = () => {
   const handleContactFormToggle = () => {
     setContactForm(!contactForm);
   };
-  // const handleAddressFormToggle = () => {
-  //   setAddressForm(!addressForm);
-  // };
+  const handleAddressFormToggle = () => {
+    setAddressForm(!addressForm);
+  };
 
   const handleBackToDashboard = () => {
     Router.push('/admin/dashboard');
@@ -95,6 +96,12 @@ const CommercePage = () => {
           contact={data.commerce.contact}
         />
       ) : null}
+      {addressForm ? (
+        <CommercePageAddressForm
+          setToggle={handleAddressFormToggle}
+          address={data.commerce.address}
+        />
+      ) : null}
       <Flex flexDirection="column" alignItems="center" gap={2}>
         <Flex
           w={['100%']}
@@ -132,7 +139,10 @@ const CommercePage = () => {
         <Divider />
         <Flex w="100%" p={5} gap={2}>
           <Flex w="100%" direction="column">
-            <CommercePageAddress commerce={data.commerce} />
+            <CommercePageAddress
+              openModal={handleAddressFormToggle}
+              commerce={data.commerce}
+            />
           </Flex>
           <Flex w="100%" direction="column">
             <CommercePageContact
