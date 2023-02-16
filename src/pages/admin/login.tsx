@@ -2,13 +2,14 @@ import { Button, Flex, Heading, Input, useToast } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import Head from 'next/head';
 import Router from 'next/router';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../store';
 import { login } from '../../store/admin';
 
 const AdminLogin = () => {
   const dispatch = useDispatch<AppDispatch>();
   const toast = useToast();
+  const { loading } = useSelector((state: AppState) => state.admin);
 
   const handleLogin = async (email: string, password: string) => {
     await dispatch(login({ email, password }));
@@ -38,7 +39,13 @@ const AdminLogin = () => {
         <meta name="description" content="Meu Bairro - Admin Log In" />
       </Head>
       <Flex height="100vh" alignItems="center" justifyContent="center">
-        <Flex direction="column" background="gray.100" p={12} rounded={6}>
+        <Flex
+          textAlign="center"
+          direction="column"
+          background="gray.100"
+          p={12}
+          rounded={6}
+        >
           <Heading mb={5}>Log In - Meu Bairro</Heading>
           <form onSubmit={formik.handleSubmit}>
             <Input
@@ -49,6 +56,7 @@ const AdminLogin = () => {
               mb={3}
               onChange={formik.handleChange}
               value={formik.values.email}
+              disabled={loading}
             />
             <Input
               placeholder="Senha"
@@ -58,8 +66,14 @@ const AdminLogin = () => {
               mb={6}
               onChange={formik.handleChange}
               value={formik.values.password}
+              disabled={loading}
             />
-            <Button type="submit" colorScheme="blue">
+            <Button
+              isLoading={loading}
+              type="submit"
+              colorScheme="blue"
+              disabled={loading}
+            >
               Entrar
             </Button>
           </form>
