@@ -9,11 +9,11 @@ import {
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import DeleteModal from '../DeleteModal';
-import api from '../../services/api';
+import api from '../../../services/api';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, AppState } from '../../store';
-import { getCommerces } from '../../store/commerce';
+import { AppDispatch, AppState } from '../../../store';
+import { getCommerces } from '../../../store/commerce';
 
 interface CommerceItemProps {
   id: string;

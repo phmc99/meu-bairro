@@ -10,9 +10,9 @@ import {
 import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
-import { handleChangeFormData } from '../../store/commerce-create';
-import { IAddress } from '../../types';
+import { AppDispatch } from '../../../store';
+import { handleChangeFormData } from '../../../store/commerce-create';
+import { IAddress } from '../../../types';
 
 interface CepResponse {
   cep: string;

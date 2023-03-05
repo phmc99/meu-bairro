@@ -1,5 +1,5 @@
 import { Flex, Heading, Stack, Tag } from '@chakra-ui/react';
-import { ICommerce } from '../../types';
+import { ICommerce } from '../../../types';
 
 interface CommercePageHeaderProps {
   commerce: ICommerce;

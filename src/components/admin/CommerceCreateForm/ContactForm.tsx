@@ -1,9 +1,9 @@
 import { FormControl, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, AppState } from '../../store';
-import { handleChangeFormData } from '../../store/commerce-create';
-import { IContact } from '../../types';
+import { AppDispatch, AppState } from '../../../store';
+import { handleChangeFormData } from '../../../store/commerce-create';
+import { IContact } from '../../../types';
 
 export const ContactForm = () => {
   const dispatch = useDispatch<AppDispatch>();

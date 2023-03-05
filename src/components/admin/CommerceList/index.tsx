@@ -2,8 +2,8 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import { Flex, Heading, List, Progress } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, AppState } from '../../store';
-import { getCommerces } from '../../store/commerce';
+import { AppDispatch, AppState } from '../../../store';
+import { getCommerces } from '../../../store/commerce';
 import CommerceItem from '../CommerceItem';
 import { scrollBarStyle } from './style';
 

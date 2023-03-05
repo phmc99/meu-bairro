@@ -1,6 +1,6 @@
 import { EditIcon } from '@chakra-ui/icons';
 import { Flex, Heading, IconButton, Text } from '@chakra-ui/react';
-import { ICommerce } from '../../types';
+import { ICommerce } from '../../../types';
 
 interface CommercePageAddressProps {
   commerce: ICommerce;

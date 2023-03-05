@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { ReactNode, useState } from 'react';
-import api from '../../services/api';
+import api from '../../../services/api';
 
 interface CommercePageFormBaseProps {
   title: string;

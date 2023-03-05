@@ -1,10 +1,10 @@
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import { Button, Flex, Heading, IconButton, Input } from '@chakra-ui/react';
-import CommerceList from '../../components/CommerceList';
+import CommerceList from '../../components/admin/CommerceList';
 import { SearchIcon } from '@chakra-ui/icons';
 import Head from 'next/head';
-import CommerceCreateForm from '../../components/CommerceCreateForm';
+import CommerceCreateForm from '../../components/admin/CommerceCreateForm';
 
 const Dashboard = () => {
   useEffect(() => {

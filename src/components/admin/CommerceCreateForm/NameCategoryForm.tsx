@@ -8,9 +8,9 @@ import {
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import api from '../../services/api';
-import { AppDispatch, AppState } from '../../store';
-import { handleChangeFormData } from '../../store/commerce-create';
+import api from '../../../services/api';
+import { AppDispatch, AppState } from '../../../store';
+import { handleChangeFormData } from '../../../store/commerce-create';
 
 interface CategoriesResponse {
   description: string;

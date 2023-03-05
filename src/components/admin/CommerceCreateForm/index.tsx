@@ -12,8 +12,8 @@ import { NameCategoryForm } from './NameCategoryForm';
 import { ContactForm } from './ContactForm';
 import { AddressForm } from './AddressForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, AppState } from '../../store';
-import { postCommerce, resetFormData } from '../../store/commerce-create';
+import { AppDispatch, AppState } from '../../../store';
+import { postCommerce, resetFormData } from '../../../store/commerce-create';
 import { categoryExists, contactExists, nameExists } from './verify';
 
 interface ICommerceCreateForm {

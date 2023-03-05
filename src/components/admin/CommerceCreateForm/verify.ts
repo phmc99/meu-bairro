@@ -1,4 +1,4 @@
-import { IContact } from '../../types';
+import { IContact } from '../../../types';
 
 export const nameExists = (name: string | undefined | null) => {
   if (!name) {

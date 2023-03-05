@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useState } from 'react';
-import { IContact } from '../../../types';
+import { IContact } from '../../../../types';
 import CommercePageFormBase from '../base';
 
 interface CommercePageContactFormProps {
