@@ -1,7 +1,10 @@
 {
-  "name": "meu-bairro-admin",
+  "name": "meu-bairro",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "url": "https://github.com/phmc99/meu-bairro.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
