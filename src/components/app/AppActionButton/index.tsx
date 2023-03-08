@@ -3,10 +3,10 @@ import { ReactNode } from 'react';
 
 interface AppActionButtonProps {
   children: ReactNode;
-  rest?: any;
+  action: () => void;
 }
 
-const AppActionButton = ({ children, ...rest }: AppActionButtonProps) => {
+const AppActionButton = ({ children, action }: AppActionButtonProps) => {
   return (
     <>
       <Button
@@ -18,7 +18,7 @@ const AppActionButton = ({ children, ...rest }: AppActionButtonProps) => {
         style={{
           WebkitTapHighlightColor: 'transparent'
         }}
-        {...rest}
+        onClick={action}
       >
         <Text textTransform="uppercase" fontSize="sm" fontWeight="bold">
           {children}
