@@ -28,7 +28,7 @@ const NavigationHeader = ({ title }: NavigationHeaderProps) => {
         }}
         icon={<ChevronLeftIcon boxSize={6} />}
       />
-      <Heading fontWeight={700} size="md">
+      <Heading fontWeight={600} size="md">
         {title}
       </Heading>
     </Flex>

@@ -31,13 +31,13 @@ const AppNavBarButton = ({ type }: AppNavBarButtonProps) => {
     <>
       <IconButton
         colorScheme="blue"
-        variant="outline"
+        variant="ghost"
         aria-label="botão de navegação"
         onClick={changePage}
         style={{
           WebkitTapHighlightColor: 'transparent'
         }}
-        icon={<Icon as={icons[type]} />}
+        icon={<Icon boxSize={6} as={icons[type]} />}
       />
     </>
   );
