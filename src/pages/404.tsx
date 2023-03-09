@@ -30,7 +30,6 @@ const NotFound = () => {
           Página não encontrada
         </Heading>
         <Button
-          variant="ghost"
           colorScheme="blue"
           fontSize="xl"
           p={5}
