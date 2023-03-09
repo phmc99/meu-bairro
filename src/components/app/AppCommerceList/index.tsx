@@ -1,16 +1,45 @@
-import { List } from '@chakra-ui/react';
 import { ReactNode } from 'react';
-import { scrollBarStyle } from '../../admin/CommerceList/style';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Button, Progress } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 interface AppCommerceListProps {
   children: ReactNode;
+  fetchMoreData: () => void;
+  dataLength: number;
+  hasMore: boolean;
 }
 
-const AppCommerceList = ({ children }: AppCommerceListProps) => {
+const AppCommerceList = ({
+  children,
+  fetchMoreData,
+  dataLength,
+  hasMore
+}: AppCommerceListProps) => {
+  const router = useRouter();
+
   return (
-    <List overflowY="scroll" h="80vh" sx={scrollBarStyle}>
+    <InfiniteScroll
+      dataLength={dataLength}
+      next={fetchMoreData}
+      hasMore={hasMore}
+      loader={<Progress size="xs" isIndeterminate />}
+      endMessage={
+        <Button
+          variant="link"
+          colorScheme="blue"
+          p={5}
+          onClick={() => router.back()}
+        >
+          Voltar
+        </Button>
+      }
+      style={{
+        textAlign: 'center'
+      }}
+    >
       {children}
-    </List>
+    </InfiniteScroll>
   );
 };
 
