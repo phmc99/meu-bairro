@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useState } from 'react';
 import AppCommerceItem from '../../../../components/app/AppCommerceItem';
 import AppCommerceList from '../../../../components/app/AppCommerceList';
@@ -28,6 +29,13 @@ const NewCommerce = () => {
 
   return (
     <>
+      <Head>
+        <title>App Meu Bairro - Novos comércios</title>
+        <meta
+          name="description"
+          content="Meu Bairro - App de comércios locais"
+        />
+      </Head>
       <NavigationHeader title="Chegaram agora" />
       <AppCommerceList
         fetchMoreData={fetchMoreData}

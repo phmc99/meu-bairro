@@ -62,10 +62,7 @@ export default function Home() {
                 Cadastrar seu comércio
               </Button>
               <Button rounded={'full'}>
-                <Link
-                  target="_blank"
-                  href="https://play.google.com/store/apps/details?id=br.com.app.gpu2624201.gpu7ea40dfbda69c0ed0c0edea2a259918e"
-                >
+                <Link target="_blank" href="/app">
                   Conheça o app
                 </Link>
               </Button>

@@ -1,5 +1,6 @@
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Box, Button, Divider, Flex, Heading, Spinner } from '@chakra-ui/react';
+import Head from 'next/head';
 import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
@@ -83,6 +84,13 @@ const CommercePage = () => {
 
   return (
     <>
+      <Head>
+        <title>Meu Bairro - Comércio</title>
+        <meta
+          name="description"
+          content="Meu Bairro - App de comércios locais"
+        />
+      </Head>
       {imageForm ? (
         <CommercePageImageForm
           logo={data.commerce.logo}

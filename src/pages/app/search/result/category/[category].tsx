@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import AppNavBar from '../../../../../components/app/AppNavBar';
 import NavigationHeader from '../../../../../components/app/NavigationHeader';
@@ -17,6 +18,13 @@ const Category = () => {
 
   return (
     <>
+      <Head>
+        <title>App Meu Bairro - {category}</title>
+        <meta
+          name="description"
+          content="Meu Bairro - App de comércios locais"
+        />
+      </Head>
       <NavigationHeader title={`${category}`} />
       <AppNavBar />
     </>
