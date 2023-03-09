@@ -4,9 +4,14 @@ import { ReactNode } from 'react';
 interface AppActionButtonProps {
   children: ReactNode;
   action: () => void;
+  disabled?: boolean;
 }
 
-const AppActionButton = ({ children, action }: AppActionButtonProps) => {
+const AppActionButton = ({
+  children,
+  action,
+  disabled
+}: AppActionButtonProps) => {
   return (
     <>
       <Button
@@ -19,6 +24,7 @@ const AppActionButton = ({ children, action }: AppActionButtonProps) => {
           WebkitTapHighlightColor: 'transparent'
         }}
         onClick={action}
+        disabled={disabled ? true : false}
       >
         <Text textTransform="uppercase" fontSize="sm" fontWeight="bold">
           {children}

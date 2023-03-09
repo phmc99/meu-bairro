@@ -24,13 +24,16 @@ const MeuBairro = () => {
       <AppHeader />
       <AppSwiper />
       <VStack mt={5} textAlign="center">
-        <AppActionButton action={() => handleActionButton('closer')}>
+        <AppActionButton disabled action={() => handleActionButton('closer')}>
           Mais próximos
         </AppActionButton>
         <AppActionButton action={() => handleActionButton('new')}>
           Chegaram agora
         </AppActionButton>
-        <AppActionButton action={() => handleActionButton('bestrated')}>
+        <AppActionButton
+          disabled
+          action={() => handleActionButton('bestrated')}
+        >
           Melhores avaliados
         </AppActionButton>
       </VStack>

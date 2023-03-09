@@ -4,9 +4,10 @@ import { FaHome, FaUserAlt, FaSearch } from 'react-icons/fa';
 
 interface AppNavBarButtonProps {
   type: 'home' | 'user' | 'search';
+  disabled?: boolean;
 }
 
-const AppNavBarButton = ({ type }: AppNavBarButtonProps) => {
+const AppNavBarButton = ({ type, disabled }: AppNavBarButtonProps) => {
   const router = useRouter();
 
   const icons: any = {
@@ -37,6 +38,7 @@ const AppNavBarButton = ({ type }: AppNavBarButtonProps) => {
         style={{
           WebkitTapHighlightColor: 'transparent'
         }}
+        disabled={disabled ? true : false}
         icon={<Icon boxSize={6} as={icons[type]} />}
       />
     </>

@@ -23,6 +23,7 @@ const NotFound = () => {
         alignItems="center"
         justifyContent="center"
         gap={5}
+        textAlign="center"
       >
         <AppSvg />
         <Heading size="2xl" color="blue.600">

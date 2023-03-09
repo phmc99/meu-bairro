@@ -16,7 +16,7 @@ const AppNavBar = () => {
       bottom={0}
       as="nav"
     >
-      <AppNavBarButton type="user" />
+      <AppNavBarButton disabled type="user" />
       <AppNavBarButton type="home" />
       <AppNavBarButton type="search" />
     </Flex>
