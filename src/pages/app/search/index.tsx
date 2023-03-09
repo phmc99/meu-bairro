@@ -1,5 +1,7 @@
 import Head from 'next/head';
+import AppCategoryList from '../../../components/app/AppCategoryList';
 import AppNavBar from '../../../components/app/AppNavBar';
+import AppSearchInput from '../../../components/app/AppSearchInput';
 import NavigationHeader from '../../../components/app/NavigationHeader';
 
 const AppSearch = () => {
@@ -13,6 +15,8 @@ const AppSearch = () => {
         />
       </Head>
       <NavigationHeader title="Pesquisar comércios" />
+      <AppSearchInput />
+      <AppCategoryList />
       <AppNavBar />
     </>
   );
