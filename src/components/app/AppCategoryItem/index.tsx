@@ -6,6 +6,7 @@ interface ApppCategoryItemProps {
 }
 
 const AppCategoryItem = ({ name, imgUrl }: ApppCategoryItemProps) => {
+  name = name.charAt(0).toUpperCase() + name.slice(1);
   return (
     <GridItem w="100%" h={180} borderRadius={10}>
       <Flex
@@ -20,10 +21,12 @@ const AppCategoryItem = ({ name, imgUrl }: ApppCategoryItemProps) => {
           h="100%"
           alignItems="center"
           justifyContent="center"
-          bgColor="blackAlpha.500"
+          bgColor="blackAlpha.700"
           borderRadius={10}
         >
-          <Heading color="whiteAlpha.800">{name}</Heading>
+          <Heading color="whiteAlpha.800" fontWeight={600}>
+            {name}
+          </Heading>
         </Flex>
       </Flex>
     </GridItem>
