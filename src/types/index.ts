@@ -66,3 +66,20 @@ export interface ICommerceQuery {
   isLoading: boolean;
   error: unknown;
 }
+
+export interface ICategory {
+  imgUrl: string;
+  name: string;
+  description: string;
+}
+
+export interface ICategoryQuery {
+  data:
+    | {
+        categories: ICategory[];
+        status?: string;
+      }
+    | undefined;
+  isLoading: boolean;
+  error: unknown;
+}
