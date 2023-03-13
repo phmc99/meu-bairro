@@ -9,7 +9,7 @@ export const getCategory = async () => {
 export const getCommercesByCategory = async (
   value: string | string[],
   page: number,
-  perPage = 15
+  perPage = 10
 ) => {
   return await api
     .get(`/commerce/category?value=${value}&page=${page}&perPage=${perPage}`)

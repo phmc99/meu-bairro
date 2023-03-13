@@ -1,4 +1,4 @@
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Flex, Heading, Spinner } from '@chakra-ui/react';
 import Head from 'next/head';
 import AppCommerceList from '../../../../../components/app/AppCommerceList';
 import AppNavBar from '../../../../../components/app/AppNavBar';
@@ -16,6 +16,8 @@ const Category = ({ category }: CategoryPageProps) => {
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<ICommerce[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const title = category.charAt(0).toUpperCase() + category.slice(1);
 
   const fetchMoreData = async () => {
     const data = await getCommercesByCategory(category, page);
@@ -65,28 +67,34 @@ const Category = ({ category }: CategoryPageProps) => {
   return (
     <>
       <Head>
-        <title>App Meu Bairro - {category}</title>
+        <title>App Meu Bairro - {title}</title>
         <meta
           name="description"
           content="Meu Bairro - App de comércios locais"
         />
       </Head>
-      <NavigationHeader title={`${category}`} />
+      <NavigationHeader title={`${title}`} />
       <AppCommerceList
         fetchMoreData={fetchMoreData}
         dataLength={items.length}
         hasMore={page != null ? true : false}
       >
-        {items.map(item => (
-          <AppCommerceItem
-            key={item._id}
-            id={item._id}
-            logo={item.logo}
-            name={item.name}
-            category={item.category}
-            neighborhood={item.name}
-          />
-        ))}
+        {items.length > 0 ? (
+          items.map(item => (
+            <AppCommerceItem
+              key={item._id}
+              id={item._id}
+              logo={item.logo}
+              name={item.name}
+              category={item.category}
+              neighborhood={item.name}
+            />
+          ))
+        ) : (
+          <Heading p={5} color="gray.300" size="lg">
+            Nenhum comércio na categoria {category}
+          </Heading>
+        )}
       </AppCommerceList>
       <AppNavBar />
     </>

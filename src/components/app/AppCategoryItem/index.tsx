@@ -1,4 +1,5 @@
 import { Flex, GridItem, Heading } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 interface ApppCategoryItemProps {
   name: string;
@@ -6,9 +7,18 @@ interface ApppCategoryItemProps {
 }
 
 const AppCategoryItem = ({ name, imgUrl }: ApppCategoryItemProps) => {
+  const router = useRouter();
+  const handleCommerceCategoryPage = () => {
+    router.push(`/app/search/result/category/${name.toLowerCase()}`);
+  };
   name = name.charAt(0).toUpperCase() + name.slice(1);
   return (
-    <GridItem w="100%" h={180} borderRadius={10}>
+    <GridItem
+      w="100%"
+      h={180}
+      borderRadius={10}
+      onClick={handleCommerceCategoryPage}
+    >
       <Flex
         bgColor="black"
         w="100%"
