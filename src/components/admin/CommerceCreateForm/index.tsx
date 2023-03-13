@@ -68,7 +68,12 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
 
   const handleSubmit = async () => {
     const response = await dispatch(
-      postCommerce({ name, category, contact, address })
+      postCommerce({
+        name,
+        category,
+        contact,
+        address
+      })
     );
 
     if (response.payload.status === 'error') {

@@ -16,11 +16,12 @@ interface CommerceFormState {
     complement: string;
     number: string;
     street: string;
-    neighborhood: string;
     state: string;
     cep: string;
+    neighborhood: string;
   };
   name: string;
+  neighborhood?: string;
   error?: string;
   loading?: boolean;
 }
@@ -39,6 +40,10 @@ export const postCommerce = createAsyncThunk(
 
     if (!token) {
       return Router.push('/admin/login');
+    }
+
+    if (body.address) {
+      body.neighborhood = body.address.neighborhood;
     }
 
     return api

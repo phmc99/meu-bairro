@@ -6,6 +6,8 @@ export interface ICommerce {
   images: string[];
   logo: string;
   feedbacks: IFeedback[];
+  neighborhood: string;
+  totalRate: number;
   active: boolean;
   createdAt: string;
   updatedAt: string;
@@ -28,9 +30,9 @@ export interface IAddress {
   complement: string;
   number: string;
   street: string;
-  neighborhood: string;
   state: string;
   cep: string;
+  neighborhood: string;
 }
 
 export interface IContact {
