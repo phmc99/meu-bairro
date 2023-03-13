@@ -16,7 +16,7 @@ const CommerceList = () => {
   }, [dispatch]);
 
   const handleChangePage = (action: string | null | undefined) => {
-    action != null && dispatch(getCommerces(`/commerce${action}`));
+    action != null && dispatch(getCommerces(`/commerce?page=${action}`));
   };
 
   return (

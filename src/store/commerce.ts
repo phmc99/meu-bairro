@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import Router from 'next/router';
 
 import api from '../services/api';
 import { ICommerceResponse } from '../types';
@@ -19,28 +18,9 @@ const initialState: CommerceState = {
 export const getCommerces = createAsyncThunk(
   'admin/getCommerces',
   (endpoint: string) => {
-    const token = localStorage.getItem('admin-token');
-
-    if (!token) {
-      return Router.push('/admin/login');
-    }
-
-    return api
-      .get(endpoint, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(res => {
-        return res.data;
-      })
-      .catch(res => {
-        if (res.response.status === 401) {
-          localStorage.removeItem('admin-token');
-          Router.push('/admin/login');
-          return [];
-        }
-      });
+    return api.get(endpoint).then(res => {
+      return res.data;
+    });
   }
 );
 
