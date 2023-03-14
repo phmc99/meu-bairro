@@ -51,15 +51,24 @@ const CommercePageFormBase = ({
   };
 
   const updateImages = async (elements: any) => {
-    const logo: any = elements[0].value;
-    const images: any[] = elements[1].value.split(',');
+    const formData: any = {};
+    const images: string[] = [];
 
-    const body: any = {
-      logo,
-      images
-    };
+    for (const element of elements) {
+      if (element.getAttribute('data-img')) {
+        if (!(element.value.trim() === '')) {
+          images.push(element.value);
+        }
+      }
 
-    await api.patch(`/commerce/${router.query.id}`, body, {
+      if (element.name === 'logo') {
+        formData['logo'] = element.value;
+      }
+    }
+
+    formData.images = images;
+
+    await api.patch(`/commerce/${router.query.id}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`
       }
