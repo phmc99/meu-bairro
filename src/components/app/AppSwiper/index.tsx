@@ -6,7 +6,13 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-const AppSwiper = () => {
+interface AppSwiperProps {
+  type: 'home' | 'commerce';
+  images?: string[];
+  logo?: string;
+}
+
+const AppSwiper = ({ type, images, logo }: AppSwiperProps) => {
   const urls: string[] = [
     './swiper1.jpg',
     './swiper2.jpg',
@@ -28,16 +34,41 @@ const AppSwiper = () => {
         }}
         modules={[Pagination, Scrollbar, A11y, Autoplay]}
       >
-        {urls.map(url => (
-          <SwiperSlide key={url}>
+        {type === 'home' &&
+          urls.map(url => (
+            <SwiperSlide key={url}>
+              <Image
+                width="100%"
+                alt="Imagem do Swiper"
+                loading="lazy"
+                src={url}
+              />
+            </SwiperSlide>
+          ))}
+
+        {type === 'commerce' && (
+          <SwiperSlide key={logo}>
             <Image
               width="100%"
               alt="Imagem do Swiper"
               loading="lazy"
-              src={url}
+              src={logo}
             />
           </SwiperSlide>
-        ))}
+        )}
+
+        {type === 'commerce'
+          ? images?.map(url => (
+              <SwiperSlide key={url}>
+                <Image
+                  width="100%"
+                  alt="Imagem do Swiper"
+                  loading="lazy"
+                  src={url}
+                />
+              </SwiperSlide>
+            ))
+          : null}
       </Swiper>
     </Flex>
   );

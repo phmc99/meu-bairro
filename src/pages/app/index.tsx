@@ -22,7 +22,7 @@ const MeuBairro = () => {
         />
       </Head>
       <AppHeader />
-      <AppSwiper />
+      <AppSwiper type="home" />
       <VStack mt={5} textAlign="center">
         <AppActionButton disabled action={() => handleActionButton('closer')}>
           Mais próximos
