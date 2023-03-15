@@ -1,16 +1,40 @@
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
-import { Button, Flex, Heading, IconButton, Input } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  Heading,
+  IconButton,
+  Input,
+  useToast
+} from '@chakra-ui/react';
 import CommerceList from '../../components/admin/CommerceList';
 import { SearchIcon } from '@chakra-ui/icons';
 import Head from 'next/head';
 import CommerceCreateForm from '../../components/admin/CommerceCreateForm';
+import api from '../../services/api';
 
 const Dashboard = () => {
+  const toast = useToast();
+  const verifyToken = async (token: string) => {
+    const { data } = await api.post('/user/token', {
+      token
+    });
+    return data.isValid;
+  };
+
   useEffect(() => {
-    const token = localStorage.getItem('admin-token');
-    token ? Router.push('/admin/dashboard') : Router.push('/admin/login');
-  }, []);
+    const token = localStorage.getItem('admin-token') || '';
+    const isValidToken: any = verifyToken(token);
+    isValidToken
+      ? toast({
+          title: 'Bem-vindo!',
+          duration: 4000,
+          isClosable: true,
+          position: 'bottom-left'
+        })
+      : Router.push('/admin/login');
+  }, [toast]);
 
   const [newCommerceToggle, setNewCommerceToggle] = useState<boolean>(false);
 
