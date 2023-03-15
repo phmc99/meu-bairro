@@ -1,7 +1,30 @@
 import { HStack, IconButton } from '@chakra-ui/react';
 import { FaFacebook, FaInstagram, FaPhone, FaWhatsapp } from 'react-icons/fa';
+import { IContact } from '../../../types';
 
-const AppCommerceContact = () => {
+interface AppCommerceContactProps {
+  contact: IContact;
+}
+
+const AppCommerceContact = ({ contact }: AppCommerceContactProps) => {
+  const handleWhatsapp = () => {
+    window.open(
+      `https://wa.me/55${contact.whatsapp}?text=Gostaria%20de%20mais%20informações.%20Via:%20Meu%20Bairro`
+    );
+  };
+
+  const handlePhone = () => {
+    window.location.href = `tel:${contact.phone}`;
+  };
+
+  const handleInstagram = () => {
+    window.open(`https://www.instagram.com/${contact.instagram}/`);
+  };
+
+  const handleFacebook = () => {
+    window.open(`https://www.facebook.com/${contact.facebook}`);
+  };
+
   return (
     <HStack gap={2}>
       <IconButton
@@ -11,6 +34,7 @@ const AppCommerceContact = () => {
         _hover={{
           filter: 'brightness(0.85)'
         }}
+        onClick={handleWhatsapp}
       />
       <IconButton
         aria-label="phone"
@@ -19,6 +43,7 @@ const AppCommerceContact = () => {
         _hover={{
           filter: 'brightness(0.85)'
         }}
+        onClick={handlePhone}
       />
       <IconButton
         aria-label="ads"
@@ -27,6 +52,8 @@ const AppCommerceContact = () => {
         _hover={{
           filter: 'brightness(0.85)'
         }}
+        onClick={handleInstagram}
+        disabled={contact.instagram ? false : true}
       />
       <IconButton
         aria-label="ads"
@@ -35,6 +62,8 @@ const AppCommerceContact = () => {
         _hover={{
           filter: 'brightness(0.85)'
         }}
+        onClick={handleFacebook}
+        disabled={contact.facebook ? false : true}
       />
     </HStack>
   );

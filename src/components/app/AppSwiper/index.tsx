@@ -14,11 +14,15 @@ interface AppSwiperProps {
 
 const AppSwiper = ({ type, images, logo }: AppSwiperProps) => {
   const urls: string[] = [
-    './swiper1.jpg',
-    './swiper2.jpg',
-    './swiper3.jpg',
-    './swiper4.jpg'
+    'https://picsum.photos/id/1/600',
+    'https://picsum.photos/id/2/600',
+    'https://picsum.photos/id/3/600',
+    'https://picsum.photos/id/4/600'
   ];
+
+  if (images) {
+    images = images.length > 0 ? images : urls;
+  }
 
   return (
     <Flex maxHeight="45vh" w="100%">
@@ -52,7 +56,7 @@ const AppSwiper = ({ type, images, logo }: AppSwiperProps) => {
               width="100%"
               alt="Imagem do Swiper"
               loading="lazy"
-              src={logo}
+              src={logo || 'https://picsum.photos/2560'}
             />
           </SwiperSlide>
         )}

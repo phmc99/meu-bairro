@@ -6,28 +6,35 @@ import AppCommerceContact from '../../../components/app/AppCommerceContacts';
 import AppNavBar from '../../../components/app/AppNavBar';
 import AppSwiper from '../../../components/app/AppSwiper';
 import NavigationHeader from '../../../components/app/NavigationHeader';
+import { getCommerce } from '../../../services/commerce';
+import { ICommerce } from '../../../types';
 
 interface AppCommerceProps {
   id: string;
+  commerce: ICommerce;
 }
 
-const AppCommerce = ({ id }: AppCommerceProps) => {
-  const urls: string[] = [
-    '../../swiper1.jpg',
-    '../../swiper2.jpg',
-    '../../swiper4.jpg'
-  ];
+const AppCommerce = ({ commerce }: AppCommerceProps) => {
+  let address;
+  if (commerce.address) {
+    address = `${commerce.address.street}, ${commerce.address.number}, ${commerce.neighborhood}, ${commerce.address.city}, ${commerce.address.state}`;
+  }
+
   return (
     <>
       <Head>
-        <title>Meu Bairro - Nome Comercio</title>
+        <title>Meu Bairro - {commerce.name}</title>
         <meta
           name="description"
           content="Meu Bairro - App de comércios locais"
         />
       </Head>
-      <NavigationHeader title={id} />
-      <AppSwiper type="commerce" images={urls} logo={'../../swiper3.jpg'} />
+      <NavigationHeader title={commerce.name} />
+      <AppSwiper
+        type="commerce"
+        images={commerce.images}
+        logo={commerce.logo}
+      />
       <Flex h="35vh" w="100%" direction="column" alignItems="center">
         <Flex
           w="100%"
@@ -36,21 +43,30 @@ const AppCommerce = ({ id }: AppCommerceProps) => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Heading size="md" fontWeight={500} color="blue.600">
-            Nome Comercio
+          <Heading
+            size="md"
+            fontWeight={500}
+            color="blue.600"
+            width={[200, 400]}
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+          >
+            {commerce.name}
           </Heading>
           <Flex alignItems="center" gap={2}>
             <Icon color="yellow.400" as={FaStar} />
             <Text color="yellow.400" fontWeight={700}>
-              5.0
+              {commerce.totalRate.toFixed(1)}
             </Text>
+            <Text>({commerce.feedbacks.length})</Text>
           </Flex>
         </Flex>
-        <AppCommerceAddress />
+        <AppCommerceAddress address={commerce.address && address} />
         <Heading my={2} size="md" fontWeight={500} color="blue.600">
           Contatos
         </Heading>
-        <AppCommerceContact />
+        <AppCommerceContact contact={commerce.contact} />
       </Flex>
       <AppNavBar />
     </>
@@ -61,5 +77,6 @@ export default AppCommerce;
 
 export async function getServerSideProps(context: any) {
   const { id } = context.query;
-  return { props: { id } };
+  const { commerce } = await getCommerce(id);
+  return { props: { id, commerce } };
 }

@@ -13,7 +13,18 @@ const AppCommerceAddress = ({ address }: AppCommerceAddressProps) => {
   return (
     <HStack my={2} textAlign="center" w="80%" justifyContent="center">
       <Icon boxSize={6} color="red.600" as={MdLocationOn} />
-      <Text fontSize="md">{address}</Text>
+      <Text
+        fontSize="md"
+        sx={{
+          display: '-webkit-box',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          WebkitLineClamp: '2',
+          WebkitBoxOrient: 'vertical'
+        }}
+      >
+        {address}
+      </Text>
     </HStack>
   );
 };
