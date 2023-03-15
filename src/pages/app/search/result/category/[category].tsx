@@ -87,7 +87,7 @@ const Category = ({ category }: CategoryPageProps) => {
               logo={item.logo}
               name={item.name}
               category={item.category}
-              neighborhood={item.name}
+              neighborhood={item.neighborhood}
             />
           ))
         ) : (

@@ -1,4 +1,5 @@
 import { Avatar, Flex, Heading, Text } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 interface AppCommerceItemProps {
   id: string;
@@ -15,6 +16,11 @@ const AppCommerceItem = ({
   category,
   neighborhood
 }: AppCommerceItemProps) => {
+  const router = useRouter();
+  const handleChangeToCommercePage = () => {
+    router.push(`/app/commerce/${id}`);
+  };
+  category = category.charAt(0).toUpperCase() + category.slice(1);
   return (
     <Flex
       id={id}
@@ -27,6 +33,7 @@ const AppCommerceItem = ({
       p={3}
       borderRadius={10}
       textAlign="left"
+      onClick={handleChangeToCommercePage}
     >
       <Avatar size="lg" src={logo} />
       <Flex direction="column">
