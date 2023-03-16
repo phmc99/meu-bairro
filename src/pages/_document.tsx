@@ -97,7 +97,6 @@ class MyDocument extends NextDocument {
           <link rel="manifest" href="/manifest.json" />
           <link rel="canonical" href="https://meubairro.vercel.app/app" />
           <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, inicial-scale=1" />
           <meta name="msapplication-TileColor" content="#f3f3f3" />
           <meta
             name="msapplication-TileImage"
