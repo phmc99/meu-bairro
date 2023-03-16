@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { Button } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { FaDownload } from 'react-icons/fa';
 
 const BeforeInstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -37,8 +38,14 @@ const BeforeInstallPrompt = () => {
   };
 
   return showInstallButton ? (
-    <Button position="absolute" onClick={handleInstallClick}>
-      Instalar meu app
+    <Button
+      onClick={handleInstallClick}
+      leftIcon={<FaDownload />}
+      colorScheme="blue"
+      w="100%"
+      borderRadius={0}
+    >
+      Instalar Meu Bairro
     </Button>
   ) : null;
 };

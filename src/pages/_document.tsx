@@ -98,12 +98,12 @@ class MyDocument extends NextDocument {
           <link rel="canonical" href="https://meubairro.vercel.app/app" />
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, inicial-scale=1" />
-          <meta name="msapplication-TileColor" content="#ffffff" />
+          <meta name="msapplication-TileColor" content="#f3f3f3" />
           <meta
             name="msapplication-TileImage"
             content="/favicons/ms-icon-144x144.png"
           />
-          <meta name="theme-color" content="#ffffff" />
+          <meta name="theme-color" content="#f3f3f3" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="black" />
           <meta name="apple-mobile-web-app-title" content="Meu Bairro" />

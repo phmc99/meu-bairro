@@ -1,7 +1,7 @@
 {
   "name": "Meu Bairro",
   "short_name": "Meu Bairro",
-  "theme_color": "#fff",
+  "theme_color": "#f3f3f3",
   "background_color": "#fff",
   "description": "O melhor do seu bairro esta aqui!",
   "display": "standalone",
