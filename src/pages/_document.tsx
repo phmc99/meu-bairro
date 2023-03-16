@@ -5,7 +5,6 @@ import NextDocument, {
   NextScript,
   DocumentContext
 } from 'next/document';
-import Script from 'next/script';
 
 class MyDocument extends NextDocument {
   static getInitialProps(ctx: DocumentContext) {
@@ -85,9 +84,20 @@ class MyDocument extends NextDocument {
             sizes="16x16"
             href="/favicons/favicon-16x16.png"
           />
+          <link
+            rel="apple-touch-icon"
+            sizes="512x512"
+            href="/icone-meubairro512.png"
+          />
+          <link
+            rel="shortcut-icon"
+            sizes="512x512"
+            href="/icone-meubairro512.png"
+          />
           <link rel="manifest" href="/manifest.json" />
           <link rel="canonical" href="https://meubairro.vercel.app/app" />
           <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, inicial-scale=1" />
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta
             name="msapplication-TileImage"
@@ -97,7 +107,6 @@ class MyDocument extends NextDocument {
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="black" />
           <meta name="apple-mobile-web-app-title" content="Meu Bairro" />
-          <Script src="/sw.js" />
         </Head>
         <body>
           <Main />

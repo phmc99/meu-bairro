@@ -5,6 +5,7 @@ import AppNavBar from '../../components/app/AppNavBar';
 import AppSwiper from '../../components/app/AppSwiper';
 import Router from 'next/router';
 import Head from 'next/head';
+import BeforeInstallPrompt from '../../components/app/PwaPopUp/beforeinstall';
 
 const MeuBairro = () => {
   const handleActionButton = (page: string) => {
@@ -21,6 +22,7 @@ const MeuBairro = () => {
           content="Meu Bairro - App de comércios locais"
         />
       </Head>
+      <BeforeInstallPrompt />
       <AppHeader />
       <AppSwiper type="home" />
       <VStack mt={5} textAlign="center">
