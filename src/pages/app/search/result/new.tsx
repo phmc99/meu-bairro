@@ -1,19 +1,21 @@
 import { Flex, Heading, Spinner } from '@chakra-ui/react';
-import axios from 'axios';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import AppCommerceItem from '../../../../components/app/AppCommerceItem';
 import AppCommerceList from '../../../../components/app/AppCommerceList';
 import NavigationHeader from '../../../../components/app/NavigationHeader';
-import api from '../../../../services/api';
+import { getNearestNeighborhood } from '../../../../services/cep';
 import { getNewCommerces } from '../../../../services/commerce';
 import { ICommerce } from '../../../../types';
 
-const NewCommerce = () => {
+interface NewCommerceProps {
+  neighborhood: string;
+}
+
+const NewCommerce = ({ neighborhood }: NewCommerceProps) => {
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<ICommerce[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [neighborhood, setNeighborhood] = useState<string | undefined>('');
 
   const fetchMoreData = async () => {
     const data = await getNewCommerces(neighborhood, page);
@@ -23,44 +25,9 @@ const NewCommerce = () => {
   };
 
   useEffect(() => {
-    const token = process.env.NEXT_PUBLIC_CEP_ABERTO_TOKEN;
-    const userCords = JSON.parse(
-      localStorage.getItem('user-cords') || 'undefined'
-    );
-
-    if (!userCords) {
-      return;
-    }
-    axios
-      .get(
-        `https://www.cepaberto.com/api/v3/nearest?lat=${userCords.lat}&lng=${userCords.lng}`,
-        {
-          headers: {
-            Authorization: `Token token=${token}`
-          }
-        }
-      )
-      .then(({ data }) => {
-        axios
-          .get(`https://viacep.com.br/ws/${data.cep}/json/`)
-          .then(({ data }) => {
-            if (data.bairro) {
-              setNeighborhood(data.bairro);
-            }
-            setNeighborhood(undefined);
-          });
-      });
+    fetchMoreData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    api
-      .get(`/commerce/new?neighborhood=${neighborhood}page=${page}&perPage=10`)
-      .then(({ data }) => {
-        setItems([...items, ...data.data]);
-        setPage(data.next_page);
-        setLoading(false);
-      });
-  }, [items, neighborhood, page]);
 
   if (loading) {
     return (
@@ -113,3 +80,15 @@ const NewCommerce = () => {
 };
 
 export default NewCommerce;
+
+export async function getServerSideProps(context: any) {
+  const { lat, lng } = context.query;
+
+  if (!lat || !lng) {
+    return { props: {} };
+  }
+
+  const neighborhood = await getNearestNeighborhood(lat, lng);
+
+  return { props: { neighborhood } };
+}

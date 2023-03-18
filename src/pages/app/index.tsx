@@ -1,4 +1,4 @@
-import { useToast, VStack } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
 import AppActionButton from '../../components/app/AppActionButton';
 import AppHeader from '../../components/app/AppHeader';
 import AppNavBar from '../../components/app/AppNavBar';
@@ -9,37 +9,31 @@ import BeforeInstallPrompt from '../../components/app/PwaPopUp/beforeinstall';
 import { useEffect } from 'react';
 
 const MeuBairro = () => {
-  const toast = useToast();
-
   const handleActionButton = (page: string) => {
-    Router.push(`/app/search/result/${page}`);
+    const cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
+
+    if (!cords.lat && !cords.lng) {
+      Router.push(`/app/search/result/${page}`);
+      return;
+    }
+
+    Router.push(`/app/search/result/${page}?lat=${cords.lat}&lng=${cords.lng}`);
     return;
   };
 
   useEffect(() => {
-    const cords = localStorage.getItem('user-cords');
+    const cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
 
-    if (!cords) {
-      navigator.geolocation.getCurrentPosition(
-        posicao => {
-          const userCords = {
-            lat: posicao.coords.latitude,
-            lng: posicao.coords.longitude
-          };
-          localStorage.setItem('user-cords', JSON.stringify(userCords));
-        },
-        () => {
-          return toast({
-            title: 'Não conseguimos obter sua localização',
-            status: 'error',
-            duration: 2000,
-            isClosable: true,
-            position: 'bottom'
-          });
-        }
-      );
+    if (!cords.lat && !cords.lng) {
+      navigator.geolocation.getCurrentPosition(posicao => {
+        const userCords = {
+          lat: posicao.coords.latitude,
+          lng: posicao.coords.longitude
+        };
+        localStorage.setItem('user-cords', JSON.stringify(userCords));
+      });
     }
-  }, [toast]);
+  }, []);
 
   return (
     <>

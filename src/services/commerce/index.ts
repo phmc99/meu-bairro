@@ -13,7 +13,7 @@ export const getNewCommerces = async (
 ) => {
   return await api
     .get(
-      `/commerce/new?neighborhood=${neighborhood}page=${page}&perPage=${perPage}`
+      `/commerce/new?neighborhood=${neighborhood}&page=${page}&perPage=${perPage}`
     )
     .then(res => res.data);
 };
