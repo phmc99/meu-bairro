@@ -21,11 +21,22 @@ export const getNearestNeighborhood = async (lat: number, lng: number) => {
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat}, ${lng}&key=${token}`
   );
 
-  const neighborhood = data.results[0].address_components[2].long_name;
-
-  if (!neighborhood) {
-    return;
+  if (data.results) {
+    const { results } = data;
+    if (results.length > 0) {
+      if (results[0].address_components) {
+        const { address_components } = results[0];
+        if (address_components[2]) {
+          const { long_name } = address_components[2];
+          if (long_name) {
+            return long_name;
+          }
+        }
+      }
+    }
   }
 
-  return neighborhood;
+  // const neighborhood = data.results[0].address_components[2].long_name;
+
+  return;
 };
