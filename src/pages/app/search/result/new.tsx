@@ -1,31 +1,42 @@
+import { Flex, Heading, Spinner } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AppCommerceItem from '../../../../components/app/AppCommerceItem';
 import AppCommerceList from '../../../../components/app/AppCommerceList';
 import NavigationHeader from '../../../../components/app/NavigationHeader';
+import { getNewCommerces } from '../../../../services/commerce';
+import { ICommerce } from '../../../../types';
 
 const NewCommerce = () => {
-  const [items, setItems] = useState<any[]>([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [counter, setCounter] = useState(0);
+  const [page, setPage] = useState(1);
+  const [items, setItems] = useState<ICommerce[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const fetchMoreData = () => {
-    setItems([
-      ...items,
-      {
-        id: counter * 13,
-        logo: 'https://picsum.photos/2560',
-        name: `Comércio ${counter * 13}`,
-        category: 'Comércio',
-        neighborhood: 'Del Castilho'
-      }
-    ]);
-    setCounter(counter + 1);
-
-    if (counter === 10) {
-      setHasMore(false);
-    }
+  const fetchMoreData = async () => {
+    const data = await getNewCommerces(page);
+    setItems([...items, ...data.data]);
+    setPage(data.next_page);
+    setLoading(false);
   };
+
+  useEffect(() => {
+    fetchMoreData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loading) {
+    return (
+      <Flex w="100%" h="50vh" justifyContent="center" alignItems="center">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      </Flex>
+    );
+  }
 
   return (
     <>
@@ -40,95 +51,24 @@ const NewCommerce = () => {
       <AppCommerceList
         fetchMoreData={fetchMoreData}
         dataLength={items.length}
-        hasMore={hasMore}
+        hasMore={page != null ? true : false}
       >
-        <AppCommerceItem
-          id="1"
-          logo="https://picsum.photos/2560"
-          name="Comércio 1"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        <AppCommerceItem
-          id="2"
-          logo="https://picsum.photos/2560"
-          name="Comércio 2"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        <AppCommerceItem
-          id="3"
-          logo="https://picsum.photos/2560"
-          name="Comércio 3"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        <AppCommerceItem
-          id="4"
-          logo="https://picsum.photos/2560"
-          name="Comércio 4"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        <AppCommerceItem
-          id="5"
-          logo="https://picsum.photos/2560"
-          name="Comércio 5"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        <AppCommerceItem
-          id="6"
-          logo="https://picsum.photos/2560"
-          name="Comércio 6"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        <AppCommerceItem
-          id="7"
-          logo="https://picsum.photos/2560"
-          name="Comércio 7"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        <AppCommerceItem
-          id="8"
-          logo="https://picsum.photos/2560"
-          name="Comércio 8"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        <AppCommerceItem
-          id="9"
-          logo="https://picsum.photos/2560"
-          name="Comércio 9"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        <AppCommerceItem
-          id="10"
-          logo="https://picsum.photos/2560"
-          name="Comércio 10"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        <AppCommerceItem
-          id="11"
-          logo="https://picsum.photos/2560"
-          name="Comércio 11"
-          category="Comércio"
-          neighborhood="Del Castilho"
-        />
-        {items.map((item: any) => (
-          <AppCommerceItem
-            key={item.id}
-            id={item.id}
-            logo={item.logo}
-            name={item.name}
-            category={item.category}
-            neighborhood={item.neighborhood}
-          />
-        ))}
+        {items.length > 0 ? (
+          items.map(item => (
+            <AppCommerceItem
+              key={item._id}
+              id={item._id}
+              logo={item.logo}
+              name={item.name}
+              category={item.category}
+              neighborhood={item.neighborhood}
+            />
+          ))
+        ) : (
+          <Heading p={5} color="gray.300" size="lg">
+            Nenhum comércio novo.
+          </Heading>
+        )}
       </AppCommerceList>
     </>
   );
