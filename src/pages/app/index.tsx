@@ -16,31 +16,30 @@ const MeuBairro = () => {
     return;
   };
 
-  const getGeolocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      posicao => {
-        const userCords = {
-          lat: posicao.coords.latitude,
-          lng: posicao.coords.longitude
-        };
-        localStorage.setItem('user-cords', JSON.stringify(userCords));
-      },
-      () => {
-        return toast({
-          title: 'Não conseguimos obter sua localização',
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-          position: 'top'
-        });
-      }
-    );
-  };
-
   useEffect(() => {
-    getGeolocation();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const cords = localStorage.getItem('user-cords');
+
+    if (!cords) {
+      navigator.geolocation.getCurrentPosition(
+        posicao => {
+          const userCords = {
+            lat: posicao.coords.latitude,
+            lng: posicao.coords.longitude
+          };
+          localStorage.setItem('user-cords', JSON.stringify(userCords));
+        },
+        () => {
+          return toast({
+            title: 'Não conseguimos obter sua localização',
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+            position: 'bottom'
+          });
+        }
+      );
+    }
+  }, [toast]);
 
   return (
     <>
