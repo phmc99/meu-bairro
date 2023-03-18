@@ -6,8 +6,14 @@ export const getCommerce = async (id: string) => {
   });
 };
 
-export const getNewCommerces = async (page: number, perPage = 10) => {
+export const getNewCommerces = async (
+  neighborhood: string | undefined,
+  page: number,
+  perPage = 10
+) => {
   return await api
-    .get(`/commerce/new?page=${page}&perPage=${perPage}`)
+    .get(
+      `/commerce/new?neighborhood=${neighborhood}page=${page}&perPage=${perPage}`
+    )
     .then(res => res.data);
 };
