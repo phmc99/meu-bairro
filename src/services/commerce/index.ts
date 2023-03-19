@@ -29,3 +29,15 @@ export const getCloserCommerces = async (
     )
     .then(res => res.data);
 };
+
+export const getBestRatedCommerces = async (
+  neighborhood: string | undefined,
+  page: number,
+  perPage = 10
+) => {
+  return await api
+    .get(
+      `/commerce/bestrated?neighborhood=${neighborhood}&page=${page}&perPage=${perPage}`
+    )
+    .then(res => res.data);
+};

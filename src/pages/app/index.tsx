@@ -54,10 +54,7 @@ const MeuBairro = () => {
         <AppActionButton action={() => handleActionButton('new')}>
           Chegaram agora
         </AppActionButton>
-        <AppActionButton
-          disabled
-          action={() => handleActionButton('bestrated')}
-        >
+        <AppActionButton action={() => handleActionButton('bestrated')}>
           Melhores avaliados
         </AppActionButton>
       </VStack>
