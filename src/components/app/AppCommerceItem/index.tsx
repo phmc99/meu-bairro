@@ -1,5 +1,6 @@
-import { Avatar, Flex, Heading, Text } from '@chakra-ui/react';
+import { Avatar, Flex, Heading, Icon, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { FaStar } from 'react-icons/fa';
 
 interface AppCommerceItemProps {
   id: string;
@@ -7,6 +8,7 @@ interface AppCommerceItemProps {
   name: string;
   category: string;
   neighborhood: string;
+  totalRate: number;
 }
 
 const AppCommerceItem = ({
@@ -14,7 +16,8 @@ const AppCommerceItem = ({
   logo,
   name,
   category,
-  neighborhood
+  neighborhood,
+  totalRate
 }: AppCommerceItemProps) => {
   const router = useRouter();
   const handleChangeToCommercePage = () => {
@@ -48,6 +51,12 @@ const AppCommerceItem = ({
           {name}
         </Heading>
         <Text fontSize="sm">{`${category}, ${neighborhood}`}</Text>
+        <Flex alignItems="center" fontSize="sm" gap={2}>
+          <Icon color="yellow.400" as={FaStar} />
+          <Text color="yellow.400" fontWeight={700}>
+            {totalRate.toFixed(1)}
+          </Text>
+        </Flex>
       </Flex>
     </Flex>
   );

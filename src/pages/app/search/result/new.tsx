@@ -68,6 +68,7 @@ const NewCommerce = ({ neighborhood }: NewCommerceProps) => {
               name={item.name}
               category={item.category}
               neighborhood={item.neighborhood}
+              totalRate={item.totalRate}
             />
           ))
         ) : (

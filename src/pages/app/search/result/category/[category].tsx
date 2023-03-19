@@ -88,6 +88,7 @@ const Category = ({ category }: CategoryPageProps) => {
               name={item.name}
               category={item.category}
               neighborhood={item.neighborhood}
+              totalRate={item.totalRate}
             />
           ))
         ) : (
