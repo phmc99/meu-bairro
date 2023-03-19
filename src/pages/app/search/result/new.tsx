@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import AppCommerceItem from '../../../../components/app/AppCommerceItem';
 import AppCommerceList from '../../../../components/app/AppCommerceList';
+import AppNavBar from '../../../../components/app/AppNavBar';
 import NavigationHeader from '../../../../components/app/NavigationHeader';
 import { getNearestNeighborhood } from '../../../../services/cep';
 import { getNewCommerces } from '../../../../services/commerce';
@@ -75,6 +76,7 @@ const NewCommerce = ({ neighborhood }: NewCommerceProps) => {
           </Heading>
         )}
       </AppCommerceList>
+      <AppNavBar />
     </>
   );
 };
