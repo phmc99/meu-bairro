@@ -48,7 +48,7 @@ const MeuBairro = () => {
       <AppHeader />
       <AppSwiper type="home" />
       <VStack mt={5} textAlign="center">
-        <AppActionButton disabled action={() => handleActionButton('closer')}>
+        <AppActionButton action={() => handleActionButton('closer')}>
           Mais próximos
         </AppActionButton>
         <AppActionButton action={() => handleActionButton('new')}>

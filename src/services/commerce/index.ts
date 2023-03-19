@@ -17,3 +17,15 @@ export const getNewCommerces = async (
     )
     .then(res => res.data);
 };
+
+export const getCloserCommerces = async (
+  neighborhood: string | undefined,
+  page: number,
+  perPage = 10
+) => {
+  return await api
+    .get(
+      `/commerce/neighborhood?value=${neighborhood}&page=${page}&perPage=${perPage}`
+    )
+    .then(res => res.data);
+};
