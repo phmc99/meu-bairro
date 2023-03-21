@@ -7,16 +7,15 @@ import AppCommerceList from '../../../../components/app/AppCommerceList';
 import AppCommerceItem from '../../../../components/app/AppCommerceItem';
 import { ICommerce } from '../../../../types';
 import { getCloserCommerces } from '../../../../services/commerce';
-import { getNearestNeighborhood } from '../../../../services/cep';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../../store';
 
-interface CloserCommerceProps {
-  neighborhood: string;
-}
-
-const Closer = ({ neighborhood }: CloserCommerceProps) => {
+const Closer = () => {
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<ICommerce[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { neighborhood } = useSelector((state: AppState) => state.location);
 
   const fetchMoreData = async () => {
     const data = await getCloserCommerces(neighborhood, page);
@@ -83,15 +82,3 @@ const Closer = ({ neighborhood }: CloserCommerceProps) => {
 };
 
 export default Closer;
-
-export async function getServerSideProps(context: any) {
-  const { lat, lng } = context.query;
-
-  if (!lat || !lng) {
-    return { props: {} };
-  }
-
-  const neighborhood = await getNearestNeighborhood(lat, lng);
-
-  return { props: { neighborhood } };
-}

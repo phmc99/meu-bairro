@@ -7,6 +7,7 @@ import {
 } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { adminSlice } from './admin';
+import { locationSlicer } from './app/location';
 import { commerceSlice } from './commerce';
 import { commerceFormSlice } from './commerce-create';
 
@@ -15,7 +16,8 @@ const makeStore = () =>
     reducer: {
       [adminSlice.name]: adminSlice.reducer,
       [commerceSlice.name]: commerceSlice.reducer,
-      [commerceFormSlice.name]: commerceFormSlice.reducer
+      [commerceFormSlice.name]: commerceFormSlice.reducer,
+      [locationSlicer.name]: locationSlicer.reducer
     },
     devTools: true
   });

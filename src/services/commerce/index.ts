@@ -41,3 +41,16 @@ export const getBestRatedCommerces = async (
     )
     .then(res => res.data);
 };
+
+export const getCommercesByCategory = async (
+  value: string | string[],
+  neighborhood: string | undefined,
+  page: number,
+  perPage = 10
+) => {
+  return await api
+    .get(
+      `/commerce/category?value=${value}&page=${page}&perPage=${perPage}&neighborhood=${neighborhood}`
+    )
+    .then(res => res.data);
+};

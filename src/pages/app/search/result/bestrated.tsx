@@ -6,17 +6,16 @@ import { ICommerce } from '../../../../types';
 import { useState, useEffect } from 'react';
 import AppCommerceItem from '../../../../components/app/AppCommerceItem';
 import AppCommerceList from '../../../../components/app/AppCommerceList';
-import { getNearestNeighborhood } from '../../../../services/cep';
 import { getBestRatedCommerces } from '../../../../services/commerce';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../../store';
 
-interface BestRatedCommerceProps {
-  neighborhood: string;
-}
-
-const BestRated = ({ neighborhood }: BestRatedCommerceProps) => {
+const BestRated = () => {
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<ICommerce[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { neighborhood } = useSelector((state: AppState) => state.location);
 
   const fetchMoreData = async () => {
     const data = await getBestRatedCommerces(neighborhood, page);
@@ -82,15 +81,3 @@ const BestRated = ({ neighborhood }: BestRatedCommerceProps) => {
 };
 
 export default BestRated;
-
-export async function getServerSideProps(context: any) {
-  const { lat, lng } = context.query;
-
-  if (!lat || !lng) {
-    return { props: {} };
-  }
-
-  const neighborhood = await getNearestNeighborhood(lat, lng);
-
-  return { props: { neighborhood } };
-}

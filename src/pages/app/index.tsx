@@ -7,9 +7,14 @@ import Router from 'next/router';
 import Head from 'next/head';
 import BeforeInstallPrompt from '../../components/app/PwaPopUp/beforeinstall';
 import { useEffect } from 'react';
+import { getLocation } from '../../store/app/location';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
 
 const MeuBairro = () => {
-  const handleActionButton = (page: string) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleActionButton = async (page: string) => {
     const cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
 
     if (!cords.lat && !cords.lng) {
@@ -22,17 +27,20 @@ const MeuBairro = () => {
   };
 
   useEffect(() => {
-    const cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
+    let cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
 
     if (!cords.lat && !cords.lng) {
-      navigator.geolocation.getCurrentPosition(posicao => {
-        const userCords = {
-          lat: posicao.coords.latitude,
-          lng: posicao.coords.longitude
+      navigator.geolocation.getCurrentPosition(postion => {
+        cords = {
+          lat: postion.coords.latitude,
+          lng: postion.coords.longitude
         };
-        localStorage.setItem('user-cords', JSON.stringify(userCords));
+        localStorage.setItem('user-cords', JSON.stringify(cords));
       });
     }
+
+    dispatch(getLocation(cords));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

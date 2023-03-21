@@ -3,10 +3,12 @@ import Head from 'next/head';
 import AppCommerceList from '../../../../../components/app/AppCommerceList';
 import AppNavBar from '../../../../../components/app/AppNavBar';
 import NavigationHeader from '../../../../../components/app/NavigationHeader';
-import { getCommercesByCategory } from '../../../../../services/category';
 import { ICommerce } from '../../../../../types';
 import { useEffect, useState } from 'react';
 import AppCommerceItem from '../../../../../components/app/AppCommerceItem';
+import { getCommercesByCategory } from '../../../../../services/commerce';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../../../store';
 
 interface CategoryPageProps {
   category: string;
@@ -19,8 +21,10 @@ const Category = ({ category }: CategoryPageProps) => {
 
   const title = category.charAt(0).toUpperCase() + category.slice(1);
 
+  const { neighborhood } = useSelector((state: AppState) => state.location);
+
   const fetchMoreData = async () => {
-    const data = await getCommercesByCategory(category, page);
+    const data = await getCommercesByCategory(category, neighborhood, page);
     setItems([...items, ...data.data]);
     setPage(data.next_page);
     setLoading(false);

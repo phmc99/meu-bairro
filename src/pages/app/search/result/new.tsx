@@ -5,18 +5,17 @@ import AppCommerceItem from '../../../../components/app/AppCommerceItem';
 import AppCommerceList from '../../../../components/app/AppCommerceList';
 import AppNavBar from '../../../../components/app/AppNavBar';
 import NavigationHeader from '../../../../components/app/NavigationHeader';
-import { getNearestNeighborhood } from '../../../../services/cep';
 import { getNewCommerces } from '../../../../services/commerce';
 import { ICommerce } from '../../../../types';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../../store';
 
-interface NewCommerceProps {
-  neighborhood: string;
-}
-
-const NewCommerce = ({ neighborhood }: NewCommerceProps) => {
+const NewCommerce = () => {
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<ICommerce[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { neighborhood } = useSelector((state: AppState) => state.location);
 
   const fetchMoreData = async () => {
     const data = await getNewCommerces(neighborhood, page);
@@ -83,15 +82,3 @@ const NewCommerce = ({ neighborhood }: NewCommerceProps) => {
 };
 
 export default NewCommerce;
-
-export async function getServerSideProps(context: any) {
-  const { lat, lng } = context.query;
-
-  if (!lat || !lng) {
-    return { props: {} };
-  }
-
-  const neighborhood = await getNearestNeighborhood(lat, lng);
-
-  return { props: { neighborhood } };
-}
