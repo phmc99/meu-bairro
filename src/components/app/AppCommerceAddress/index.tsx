@@ -8,7 +8,7 @@ interface AppCommerceAddressProps {
 
 const AppCommerceAddress = ({ address }: AppCommerceAddressProps) => {
   if (!address) {
-    address = 'Comércio sem endereço';
+    address = 'Sem endereço';
   }
   return (
     <HStack my={2} textAlign="center" w="80%" justifyContent="center">

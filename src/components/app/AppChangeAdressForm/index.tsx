@@ -19,9 +19,7 @@ const AppChangeAddressForm = ({
   isOpen,
   onClose
 }: Required<UseDisclosureProps>) => {
-  const { address, neighborhood, loading } = useSelector(
-    (state: AppState) => state.location
-  );
+  const { address, loading } = useSelector((state: AppState) => state.location);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleGetLocation = () => {
@@ -34,12 +32,13 @@ const AppChangeAddressForm = ({
           lng: postion.coords.longitude
         };
         localStorage.setItem('user-cords', JSON.stringify(cords));
+        dispatch(getLocation(cords));
       });
     }
 
-    dispatch(getLocation(cords));
-    localStorage.setItem('address', JSON.stringify(address));
-    localStorage.setItem('neighborhood', JSON.stringify(neighborhood));
+    if (cords.lat && cords.lng) {
+      dispatch(getLocation(cords));
+    }
   };
 
   return (

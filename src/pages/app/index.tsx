@@ -28,6 +28,7 @@ const MeuBairro = () => {
 
   useEffect(() => {
     let cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
+    const address = localStorage.getItem('address');
 
     if (!cords.lat && !cords.lng) {
       navigator.geolocation.getCurrentPosition(postion => {
@@ -36,10 +37,12 @@ const MeuBairro = () => {
           lng: postion.coords.longitude
         };
         localStorage.setItem('user-cords', JSON.stringify(cords));
+        if (address == null) {
+          dispatch(getLocation(cords));
+        }
       });
     }
 
-    dispatch(getLocation(cords));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

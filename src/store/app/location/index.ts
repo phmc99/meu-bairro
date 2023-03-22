@@ -51,8 +51,11 @@ export const locationSlicer = createSlice({
       state.loading = false;
       if (action.payload.results) {
         const address = action.payload.results[0].formatted_address;
+        const neighborhood = address.split(' - ')[1].split(',')[0];
         state.address = address;
-        state.neighborhood = address.split(' - ')[1].split(',')[0];
+        state.neighborhood = neighborhood;
+        localStorage.setItem('address', JSON.stringify(address));
+        localStorage.setItem('neighborhood', JSON.stringify(neighborhood));
       }
     });
     builder.addCase(getLocation.rejected, (state, action) => {
