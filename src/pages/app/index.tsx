@@ -7,12 +7,13 @@ import Router from 'next/router';
 import Head from 'next/head';
 import BeforeInstallPrompt from '../../components/app/PwaPopUp/beforeinstall';
 import { useEffect } from 'react';
-import { getLocation } from '../../store/app/location';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
+import { getLocalStorageLocation, getLocation } from '../../store/app/location';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../store';
 
 const MeuBairro = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { address } = useSelector((state: AppState) => state.location);
 
   const handleActionButton = async (page: string) => {
     const cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
@@ -28,7 +29,7 @@ const MeuBairro = () => {
 
   useEffect(() => {
     let cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
-    const address = localStorage.getItem('address');
+    dispatch(getLocalStorageLocation());
 
     if (!cords.lat && !cords.lng) {
       navigator.geolocation.getCurrentPosition(postion => {

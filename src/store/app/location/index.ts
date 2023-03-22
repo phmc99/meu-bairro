@@ -42,7 +42,14 @@ export const getLocation = createAsyncThunk(
 export const locationSlicer = createSlice({
   name: 'location',
   initialState,
-  reducers: {},
+  reducers: {
+    getLocalStorageLocation(state) {
+      state.address =
+        JSON.parse(localStorage.getItem('address') || 'null') || undefined;
+      state.neighborhood =
+        JSON.parse(localStorage.getItem('neighborhood') || 'null') || undefined;
+    }
+  },
   extraReducers: builder => {
     builder.addCase(getLocation.pending, state => {
       state.loading = true;
@@ -66,5 +73,7 @@ export const locationSlicer = createSlice({
     });
   }
 });
+
+export const { getLocalStorageLocation } = locationSlicer.actions;
 
 export default locationSlicer.reducer;
