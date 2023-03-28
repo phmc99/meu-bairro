@@ -41,8 +41,3 @@ const AppNavBar = () => {
 };
 
 export default AppNavBar;
-
-export async function getServerSideProps(context: any) {
-  const { pathname } = context;
-  return { props: { id } };
-}
