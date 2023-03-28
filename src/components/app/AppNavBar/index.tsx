@@ -1,7 +1,18 @@
 import { Flex } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import AppNavBarButton from '../AppNavBarButton';
+import { useState, useEffect } from 'react';
 
 const AppNavBar = () => {
+  const router = useRouter();
+  const [path, setPath] = useState('');
+
+  useEffect(() => {
+    if (router.pathname) {
+      setPath(router.pathname);
+    }
+  }, [router.pathname]);
+
   return (
     <Flex
       w="100%"
@@ -16,11 +27,22 @@ const AppNavBar = () => {
       bottom={0}
       as="nav"
     >
-      <AppNavBarButton type="user" />
-      <AppNavBarButton type="home" />
-      <AppNavBarButton type="search" />
+      <AppNavBarButton
+        disabled={path === '/app/user' ? true : false}
+        type="user"
+      />
+      <AppNavBarButton disabled={path === '/app' ? true : false} type="home" />
+      <AppNavBarButton
+        disabled={path === '/app/search' ? true : false}
+        type="search"
+      />
     </Flex>
   );
 };
 
 export default AppNavBar;
+
+export async function getServerSideProps(context: any) {
+  const { pathname } = context;
+  return { props: { id } };
+}
