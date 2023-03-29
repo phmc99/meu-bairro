@@ -85,3 +85,10 @@ export interface ICategoryQuery {
   isLoading: boolean;
   error: unknown;
 }
+
+export interface IBanner {
+  _id: string;
+  __v: number;
+  imgUrl: string;
+  createdAt: string;
+}

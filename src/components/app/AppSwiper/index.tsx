@@ -39,7 +39,7 @@ const AppSwiper = ({ type, images, logo }: AppSwiperProps) => {
         modules={[Pagination, Scrollbar, A11y, Autoplay]}
       >
         {type === 'home' &&
-          urls.map(url => (
+          images?.map(url => (
             <SwiperSlide key={url}>
               <Image
                 width="100%"

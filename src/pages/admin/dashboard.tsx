@@ -6,6 +6,9 @@ import {
   Heading,
   IconButton,
   Input,
+  Modal,
+  Stack,
+  useDisclosure,
   useToast
 } from '@chakra-ui/react';
 import CommerceList from '../../components/admin/CommerceList';
@@ -13,9 +16,12 @@ import { SearchIcon } from '@chakra-ui/icons';
 import Head from 'next/head';
 import CommerceCreateForm from '../../components/admin/CommerceCreateForm';
 import api from '../../services/api';
+import BannersModal from '../../components/admin/BannersModal';
 
 const Dashboard = () => {
   const toast = useToast();
+  const [token, setToken] = useState<string>('');
+
   const verifyToken = async (token: string) => {
     const { data } = await api.post('/user/token', {
       token
@@ -26,14 +32,17 @@ const Dashboard = () => {
   useEffect(() => {
     const token = localStorage.getItem('admin-token') || '';
     const isValidToken: any = verifyToken(token);
-    isValidToken
-      ? toast({
-          title: 'Bem-vindo!',
-          duration: 4000,
-          isClosable: true,
-          position: 'bottom-left'
-        })
-      : Router.push('/admin/login');
+    if (isValidToken) {
+      setToken(token);
+      toast({
+        title: 'Bem-vindo!',
+        duration: 4000,
+        isClosable: true,
+        position: 'bottom-left'
+      });
+    } else {
+      Router.push('/admin/login');
+    }
   }, [toast]);
 
   const [newCommerceToggle, setNewCommerceToggle] = useState<boolean>(false);
@@ -41,6 +50,12 @@ const Dashboard = () => {
   const handleOpenNewCommerceForm = () => {
     setNewCommerceToggle(!newCommerceToggle);
   };
+
+  const {
+    isOpen: bannerModalIsOpen,
+    onClose: bannerModalOnClose,
+    onOpen: bannerModalOnOpen
+  } = useDisclosure();
 
   return (
     <>
@@ -51,18 +66,20 @@ const Dashboard = () => {
       {newCommerceToggle ? (
         <CommerceCreateForm setToggle={handleOpenNewCommerceForm} />
       ) : null}
+      <Modal isOpen={bannerModalIsOpen} onClose={bannerModalOnClose}>
+        <BannersModal token={token} />
+      </Modal>
       <Flex height="100vh" justifyContent="center">
         <Flex direction="column" width={'100%'} maxW={600} p={2}>
-          <Flex gap={[2, 0]} justifyContent="space-between">
+          <Stack direction={['column', 'row']} justifyContent="space-between">
             <Button
               onClick={handleOpenNewCommerceForm}
               colorScheme="blue"
-              width={120}
               p={5}
             >
-              Adicionar
+              Adicionar comércio
             </Button>
-            <Flex gap={[0, 2]}>
+            <Flex gap={2}>
               <Input placeholder="Buscar comércio" />
               <IconButton
                 colorScheme="blue"
@@ -70,9 +87,17 @@ const Dashboard = () => {
                 icon={<SearchIcon />}
               />
             </Flex>
-          </Flex>
+          </Stack>
           <Heading>Comercios</Heading>
           <CommerceList />
+          <Stack direction={['column', 'row']} my={5}>
+            <Button boxShadow={'base'} onClick={bannerModalOnOpen}>
+              Banners
+            </Button>
+            <Button disabled boxShadow={'base'}>
+              Notificações
+            </Button>
+          </Stack>
         </Flex>
       </Flex>
     </>
