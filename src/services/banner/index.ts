@@ -17,3 +17,22 @@ export const deleteBanner = (token: string, id: string) => {
       return res.data;
     });
 };
+
+export const createBanner = (token: string, imgUrl: string) => {
+  return api
+    .post(
+      `/banner`,
+      { imgUrl },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    )
+    .then(res => {
+      return res.data;
+    })
+    .catch(({ response }) => {
+      return response.data;
+    });
+};

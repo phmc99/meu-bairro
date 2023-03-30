@@ -15,7 +15,7 @@ const BannersModalInput = ({
 }: BannersModalInputProps) => {
   return (
     <Flex gap={2} my={4}>
-      <Input disabled={loading} value={imgUrl} placeholder={'URL da imagem'} />
+      <Input disabled value={imgUrl} placeholder={'URL da imagem'} />
       <IconButton
         colorScheme="red"
         aria-label="Delete banner"
