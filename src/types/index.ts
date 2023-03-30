@@ -1,5 +1,6 @@
 export interface ICommerce {
   name: string;
+  description: string;
   category: string;
   address: IAddress;
   contact: IContact;

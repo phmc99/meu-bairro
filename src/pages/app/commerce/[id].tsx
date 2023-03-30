@@ -62,6 +62,21 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
             <Text>({commerce.feedbacks.length})</Text>
           </Flex>
         </Flex>
+        <Text
+          mb={5}
+          w="80%"
+          textAlign="left"
+          color="gray.500"
+          sx={{
+            display: '-webkit-box',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            WebkitLineClamp: '4',
+            WebkitBoxOrient: 'vertical'
+          }}
+        >
+          {commerce.description}
+        </Text>
         <AppCommerceAddress address={commerce.address && address} />
         <Heading my={2} size="md" fontWeight={500} color="blue.600">
           Contatos
