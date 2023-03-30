@@ -1,4 +1,4 @@
-import { VStack } from '@chakra-ui/react';
+import { Flex, Spinner, VStack } from '@chakra-ui/react';
 import AppActionButton from '../../components/app/AppActionButton';
 import AppHeader from '../../components/app/AppHeader';
 import AppNavBar from '../../components/app/AppNavBar';
@@ -10,10 +10,17 @@ import { useEffect } from 'react';
 import { getLocalStorageLocation, getLocation } from '../../store/app/location';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from '../../store';
+import { useQuery } from 'react-query';
+import { getBanners } from '../../services/banner';
 
 const MeuBairro = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { address } = useSelector((state: AppState) => state.location);
+
+  const { data, isLoading }: any = useQuery(['banners'], async () => {
+    const response = await getBanners();
+    return response.banners.map((item: any) => item.imgUrl);
+  });
 
   const handleActionButton = async (page: string) => {
     const cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
@@ -47,6 +54,20 @@ const MeuBairro = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (isLoading) {
+    return (
+      <Flex w="100%" h="50vh" justifyContent="center" alignItems="center">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      </Flex>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -58,7 +79,7 @@ const MeuBairro = () => {
       </Head>
       <BeforeInstallPrompt />
       <AppHeader />
-      <AppSwiper type="home" />
+      <AppSwiper type="home" images={data} />
       <VStack mt={5} textAlign="center">
         <AppActionButton action={() => handleActionButton('closer')}>
           Mais próximos

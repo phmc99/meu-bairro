@@ -92,3 +92,14 @@ export interface IBanner {
   imgUrl: string;
   createdAt: string;
 }
+
+export interface IBannersQuery {
+  data:
+    | {
+        banners: IBanner[];
+        status?: string;
+      }
+    | undefined;
+  isLoading: boolean;
+  error: unknown;
+}

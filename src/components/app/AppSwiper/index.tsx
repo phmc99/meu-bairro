@@ -13,12 +13,7 @@ interface AppSwiperProps {
 }
 
 const AppSwiper = ({ type, images, logo }: AppSwiperProps) => {
-  const urls: string[] = [
-    'https://picsum.photos/id/1/600',
-    'https://picsum.photos/id/2/600',
-    'https://picsum.photos/id/3/600',
-    'https://picsum.photos/id/4/600'
-  ];
+  const urls: string[] = ['./swiper1.jpg'];
 
   if (images) {
     images = images.length > 0 ? images : urls;
