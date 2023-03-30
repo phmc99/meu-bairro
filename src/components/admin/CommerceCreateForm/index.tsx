@@ -8,7 +8,7 @@ import {
   useToast,
   CloseButton
 } from '@chakra-ui/react';
-import { NameCategoryForm } from './NameCategoryForm';
+import { FirstForm } from './FirstForm';
 import { ContactForm } from './ContactForm';
 import { AddressForm } from './AddressForm';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,7 +26,7 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
   const [progress, setProgress] = useState(33.33);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { name, category, contact, address } = useSelector(
+  const { name, category, description, contact, address } = useSelector(
     (state: AppState) => state.commerceForm
   );
 
@@ -71,6 +71,7 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
       postCommerce({
         name,
         category,
+        description,
         contact,
         address
       })
@@ -133,7 +134,7 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
         </Flex>
 
         {step === 1 ? (
-          <NameCategoryForm />
+          <FirstForm />
         ) : step === 2 ? (
           <ContactForm />
         ) : (

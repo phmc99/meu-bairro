@@ -21,6 +21,7 @@ interface CommerceFormState {
     neighborhood: string;
   };
   name: string;
+  description: string;
   neighborhood?: string;
   error?: string;
   loading?: boolean;
@@ -71,10 +72,13 @@ export const commerceFormSlice = createSlice({
   initialState,
   reducers: {
     handleChangeFormData(state, action) {
-      const { name, category, contact, address } = action.payload;
+      const { name, description, category, contact, address } = action.payload;
 
       if (name) {
         state.name = name;
+      }
+      if (description) {
+        state.description = description;
       }
       if (category) {
         state.category = category;
