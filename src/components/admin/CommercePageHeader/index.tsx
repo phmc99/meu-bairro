@@ -12,7 +12,7 @@ const CommercePageHeader = ({ commerce }: CommercePageHeaderProps) => {
         {commerce.name}
       </Heading>
       <Text
-        w="40%"
+        w="60%"
         color="gray.600"
         sx={{
           display: '-webkit-box',

@@ -26,9 +26,14 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
   const [progress, setProgress] = useState(33.33);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { name, category, description, contact, address } = useSelector(
-    (state: AppState) => state.commerceForm
-  );
+  const {
+    name,
+    category,
+    description,
+    contact,
+    address,
+    neighborhood
+  } = useSelector((state: AppState) => state.commerceForm);
 
   const handleNextSetp = () => {
     if (step === 1 && !nameExists(name)) {
@@ -73,7 +78,8 @@ const CommerceCreateForm = ({ setToggle }: ICommerceCreateForm) => {
         category,
         description,
         contact,
-        address
+        address,
+        neighborhood
       })
     );
 

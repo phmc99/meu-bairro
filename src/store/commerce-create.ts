@@ -22,7 +22,7 @@ interface CommerceFormState {
   };
   name: string;
   description: string;
-  neighborhood?: string;
+  neighborhood: string;
   error?: string;
   loading?: boolean;
 }
@@ -30,6 +30,7 @@ interface CommerceFormState {
 const initialState: CommerceFormState = {
   name: '',
   category: '',
+  neighborhood: '',
   contact: {},
   address: {}
 } as CommerceFormState;
@@ -41,10 +42,6 @@ export const postCommerce = createAsyncThunk(
 
     if (!token) {
       return Router.push('/admin/login');
-    }
-
-    if (body.address) {
-      body.neighborhood = body.address.neighborhood;
     }
 
     return api
@@ -72,7 +69,14 @@ export const commerceFormSlice = createSlice({
   initialState,
   reducers: {
     handleChangeFormData(state, action) {
-      const { name, description, category, contact, address } = action.payload;
+      const {
+        name,
+        description,
+        category,
+        contact,
+        address,
+        neighborhood
+      } = action.payload;
 
       if (name) {
         state.name = name;
@@ -88,6 +92,9 @@ export const commerceFormSlice = createSlice({
       }
       if (address) {
         state.address = address;
+      }
+      if (neighborhood) {
+        state.neighborhood = neighborhood;
       }
     },
     resetFormData: () => initialState

@@ -25,6 +25,8 @@ export const AddressForm = () => {
   const [cepResponse, setCepResponse] = useState({} as CepResponse);
   const [address, setAddress] = useState({} as IAddress);
   const [noAddress, setNoAddress] = useState<boolean>(false);
+  const [neighborhood, setNeighborhood] = useState<string>('');
+
   const dispatch = useDispatch<AppDispatch>();
   const toast = useToast();
 
@@ -94,6 +96,11 @@ export const AddressForm = () => {
     dispatch(handleChangeFormData({ address: undefined }));
   };
 
+  const handleChangeNeighborhood = (e: any) => {
+    setNeighborhood(e.target.value);
+    dispatch(handleChangeFormData({ neighborhood }));
+  };
+
   return (
     <>
       <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
@@ -124,11 +131,14 @@ export const AddressForm = () => {
             Bairro
           </FormLabel>
           <Input
-            value={cepResponse.bairro != null ? cepResponse.bairro : ''}
-            disabled
+            value={
+              cepResponse.bairro != null ? cepResponse.bairro : neighborhood
+            }
+            disabled={noAddress ? false : true}
             type="text"
             name="neighborhood"
             id="neighborhood"
+            onChange={noAddress ? handleChangeNeighborhood : undefined}
           />
         </FormControl>
       </Flex>
