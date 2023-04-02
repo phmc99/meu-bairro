@@ -82,7 +82,8 @@ export const commerceFormSlice = createSlice({
         state.name = name;
       }
       if (description) {
-        state.description = description;
+        const formatedValue = description.replace(/\n/g, '<br />');
+        state.description = formatedValue;
       }
       if (category) {
         state.category = category;

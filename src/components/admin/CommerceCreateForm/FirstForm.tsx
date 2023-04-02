@@ -3,7 +3,8 @@ import {
   FormLabel,
   Heading,
   Input,
-  Select
+  Select,
+  Textarea
 } from '@chakra-ui/react';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
@@ -28,6 +29,7 @@ export const FirstForm = () => {
   const [categories, setCategories] = useState<CategoriesResponse[]>([]);
   const [nameInput, setNameInput] = useState<string>(name);
   const [descriptionInput, setDescriptionInput] = useState<string>(description);
+  const descriptionMaxRows = 3;
 
   const getCategories = () => {
     const token = localStorage.getItem('admin-token');
@@ -62,8 +64,11 @@ export const FirstForm = () => {
 
   const handleChangeDescription = (e: any) => {
     const value = e.target.value;
-    dispatch(handleChangeFormData({ description: value }));
-    setDescriptionInput(e.target.value);
+    const valueRows = value.split('\n').length;
+    if (valueRows <= descriptionMaxRows) {
+      dispatch(handleChangeFormData({ description: value }));
+      setDescriptionInput(value);
+    }
   };
 
   useEffect(() => {
@@ -91,10 +96,9 @@ export const FirstForm = () => {
         <FormLabel htmlFor="name" fontWeight="md">
           Descrição do comércio
         </FormLabel>
-        <Input
-          type="text"
+        <Textarea
           name="description"
-          placeholder="Descrição do comércio"
+          placeholder="Descrição do comércio (Máx. 3 linhas)"
           onChange={handleChangeDescription}
           value={descriptionInput}
         />

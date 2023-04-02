@@ -1,4 +1,4 @@
-import { Flex, Heading, Icon, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Icon, Text } from '@chakra-ui/react';
 import Head from 'next/head';
 import { FaStar } from 'react-icons/fa';
 import AppCommerceAddress from '../../../components/app/AppCommerceAddress';
@@ -62,9 +62,10 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
             <Text>({commerce.feedbacks.length})</Text>
           </Flex>
         </Flex>
-        <Text
-          mb={5}
-          w="80%"
+        <Box
+          dangerouslySetInnerHTML={{ __html: commerce.description }}
+          mb={2}
+          w={['85%', '95%']}
           textAlign="left"
           color="gray.500"
           sx={{
@@ -74,9 +75,7 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
             WebkitLineClamp: '4',
             WebkitBoxOrient: 'vertical'
           }}
-        >
-          {commerce.description}
-        </Text>
+        />
         <AppCommerceAddress address={commerce.address && address} />
         <Heading my={2} size="md" fontWeight={500} color="blue.600">
           Contatos

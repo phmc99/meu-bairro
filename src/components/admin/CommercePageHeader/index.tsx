@@ -1,4 +1,4 @@
-import { Flex, Heading, Stack, Tag, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Stack, Tag } from '@chakra-ui/react';
 import { ICommerce } from '../../../types';
 
 interface CommercePageHeaderProps {
@@ -11,19 +11,18 @@ const CommercePageHeader = ({ commerce }: CommercePageHeaderProps) => {
       <Heading textAlign="center" size={['md', 'xl']}>
         {commerce.name}
       </Heading>
-      <Text
+      <Box
+        dangerouslySetInnerHTML={{ __html: commerce.description }}
         w="60%"
         color="gray.600"
         sx={{
           display: '-webkit-box',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
-          WebkitLineClamp: '2',
+          WebkitLineClamp: '3',
           WebkitBoxOrient: 'vertical'
         }}
-      >
-        {commerce.description}
-      </Text>
+      />
       <Stack direction={['column', 'row']}>
         <Tag size={['sm', 'md']}>{commerce.category}</Tag>
         <Tag size={['sm', 'md']}>ID: {commerce._id}</Tag>
