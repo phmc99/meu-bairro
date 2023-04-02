@@ -101,6 +101,7 @@ export const FirstForm = () => {
           placeholder="Descrição do comércio (Máx. 3 linhas)"
           onChange={handleChangeDescription}
           value={descriptionInput}
+          maxLength={120}
         />
       </FormControl>
       <FormControl mt="2%">

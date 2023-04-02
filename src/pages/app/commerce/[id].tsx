@@ -72,7 +72,7 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
             display: '-webkit-box',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            WebkitLineClamp: '4',
+            WebkitLineClamp: '3',
             WebkitBoxOrient: 'vertical'
           }}
         />
