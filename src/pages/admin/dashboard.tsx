@@ -22,27 +22,27 @@ const Dashboard = () => {
   const toast = useToast();
   const [token, setToken] = useState<string>('');
 
-  const verifyToken = async (token: string) => {
-    const { data } = await api.post('/user/token', {
-      token
-    });
-    return data.isValid;
-  };
-
   useEffect(() => {
     const token = localStorage.getItem('admin-token') || '';
-    const isValidToken: any = verifyToken(token);
-    if (isValidToken) {
-      setToken(token);
-      toast({
-        title: 'Bem-vindo!',
-        duration: 4000,
-        isClosable: true,
-        position: 'bottom-left'
+    api
+      .post('/user/token', {
+        token
+      })
+      .then(({ data }) => {
+        if (data.isValid) {
+          setToken(token);
+          return toast({
+            title: 'Bem-vindo!',
+            duration: 4000,
+            isClosable: true,
+            position: 'bottom-left'
+          });
+        } else {
+          localStorage.removeItem('admin-token');
+          Router.push('/admin/login');
+          return;
+        }
       });
-    } else {
-      Router.push('/admin/login');
-    }
   }, [toast]);
 
   const [newCommerceToggle, setNewCommerceToggle] = useState<boolean>(false);

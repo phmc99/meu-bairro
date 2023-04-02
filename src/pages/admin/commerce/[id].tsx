@@ -2,7 +2,7 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Box, Button, Divider, Flex, Heading, Spinner } from '@chakra-ui/react';
 import Head from 'next/head';
 import Router, { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import CommerceImagesSlider from '../../../components/admin/CommerceImagesSlider';
 import CommercePageAddress from '../../../components/admin/CommercePageAddress';
@@ -13,9 +13,27 @@ import CommercePageImageForm from '../../../components/admin/CommercePageForms/I
 import CommercePageHeader from '../../../components/admin/CommercePageHeader';
 import { getCommerce } from '../../../services/commerce';
 import { ICommerceQuery } from '../../../types';
+import api from '../../../services/api';
 
 const CommercePage = () => {
   const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('admin-token') || '';
+    api
+      .post('/user/token', {
+        token
+      })
+      .then(({ data }) => {
+        if (data.isValid) {
+          return;
+        } else {
+          localStorage.removeItem('admin-token');
+          Router.push('/admin/login');
+          return;
+        }
+      });
+  }, []);
 
   const [imageForm, setImageForm] = useState<boolean>(false);
   const [contactForm, setContactForm] = useState<boolean>(false);
