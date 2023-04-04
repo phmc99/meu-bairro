@@ -43,10 +43,23 @@ const User = () => {
           Atualizar endereço
         </Button>
         <Divider my={5} />
-        <Button disabled colorScheme="blue" w="80%">
+        <Button
+          onClick={() => {
+            window.location.href = '/app/auth/signup';
+          }}
+          colorScheme="blue"
+          w="80%"
+        >
           Registre-se
         </Button>
-        <Button disabled colorScheme="blue" variant="outline" w="80%">
+        <Button
+          onClick={() => {
+            window.location.href = '/app/auth/signin';
+          }}
+          colorScheme="blue"
+          variant="outline"
+          w="80%"
+        >
           Fazer Login
         </Button>
       </Flex>
