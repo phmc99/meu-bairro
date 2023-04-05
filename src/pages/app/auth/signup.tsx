@@ -12,14 +12,46 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Link
+  Link,
+  FormErrorMessage,
+  useToast
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { Field, Form, Formik } from 'formik';
+import api from '../../../services/api';
+import { IUser } from '../../../types';
+import { useRouter } from 'next/router';
 
 const SignUpPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const router = useRouter();
+  const toast = useToast();
 
+  const initalValues = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    password: ''
+  };
+
+  const handleCreateUser = async (body: IUser) => {
+    await api
+      .post('/user', body)
+      .then(() => router.push('/app/auth/signin'))
+      .catch(({ response }) => {
+        if (response.data.message) {
+          return toast({
+            title: response.data.message,
+            duration: 4000,
+            status: 'error',
+            isClosable: true
+          });
+        }
+      });
+    return;
+  };
   return (
     <Flex
       minH={'100vh'}
@@ -44,68 +76,139 @@ const SignUpPage = () => {
           boxShadow={'lg'}
           p={8}
         >
-          <Stack spacing={4}>
-            <HStack>
-              <Box>
-                <FormControl id="firstName" isRequired>
-                  <FormLabel>Nome</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl id="lastName" isRequired>
-                  <FormLabel>Sobrenome</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-            </HStack>
-            <FormControl id="email" isRequired>
-              <FormLabel>E-mail</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="phone" isRequired>
-              <FormLabel>Telefone</FormLabel>
-              <Input name="phone" />
-            </FormControl>
+          <Formik
+            initialValues={initalValues}
+            onSubmit={async (values, actions) => {
+              await handleCreateUser(values);
+              actions.setSubmitting(false);
+              actions.resetForm();
+              actions.setValues(initalValues);
+            }}
+          >
+            {(props: any) => (
+              <Form>
+                <Stack spacing={4}>
+                  <HStack>
+                    <Box>
+                      <Field name="firstName">
+                        {({ field, form }: any) => (
+                          <FormControl id="firstName" isRequired>
+                            <FormLabel>Nome</FormLabel>
+                            <Input
+                              disabled={props.isSubmitting}
+                              {...field}
+                              type="text"
+                            />
+                            <FormErrorMessage>
+                              {form.errors.firstName}
+                            </FormErrorMessage>
+                          </FormControl>
+                        )}
+                      </Field>
+                    </Box>
+                    <Box>
+                      <Field name="lastName">
+                        {({ field, form }: any) => (
+                          <FormControl id="lastName" isRequired>
+                            <FormLabel>Sobrenome</FormLabel>
+                            <Input
+                              disabled={props.isSubmitting}
+                              {...field}
+                              type="text"
+                            />
+                            <FormErrorMessage>
+                              {form.errors.lastName}
+                            </FormErrorMessage>
+                          </FormControl>
+                        )}
+                      </Field>
+                    </Box>
+                  </HStack>
 
-            <FormControl id="password" isRequired>
-              <FormLabel>Senha</FormLabel>
-              <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
-                <InputRightElement h={'full'}>
-                  <Button
-                    variant={'ghost'}
-                    onClick={() =>
-                      setShowPassword(showPassword => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <Stack spacing={10} pt={2}>
-              <Button
-                loadingText="Submitting"
-                size="lg"
-                bg={'blue.500'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.400'
-                }}
-              >
-                Cadastrar
-              </Button>
-            </Stack>
-            <Stack pt={6}>
-              <Text align={'center'}>
-                Já tem uma conta?{' '}
-                <Link color={'blue.500'} href="/app/auth/signin">
-                  Login
-                </Link>
-              </Text>
-            </Stack>
-          </Stack>
+                  <Field name="email">
+                    {({ field, form }: any) => (
+                      <FormControl id="email" isRequired>
+                        <FormLabel>E-mail</FormLabel>
+                        <Input
+                          disabled={props.isSubmitting}
+                          {...field}
+                          name="email"
+                          type="email"
+                        />
+                        <FormErrorMessage>{form.errors.email}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+
+                  <Field name="phone">
+                    {({ field, form }: any) => (
+                      <FormControl id="phone" isRequired>
+                        <FormLabel>Telefone</FormLabel>
+                        <Input
+                          disabled={props.isSubmitting}
+                          {...field}
+                          name="phone"
+                        />
+                        <FormErrorMessage>{form.errors.phone}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+
+                  <Field name="password">
+                    {({ field, form }: any) => (
+                      <FormControl id="password" isRequired>
+                        <FormLabel>Senha</FormLabel>
+                        <InputGroup>
+                          <Input
+                            disabled={props.isSubmitting}
+                            {...field}
+                            autoComplete="new-password"
+                            type={showPassword ? 'text' : 'password'}
+                          />
+                          <FormErrorMessage>
+                            {form.errors.password}
+                          </FormErrorMessage>
+                          <InputRightElement h={'full'}>
+                            <Button
+                              isLoading={props.isSubmitting}
+                              variant={'ghost'}
+                              onClick={() =>
+                                setShowPassword(showPassword => !showPassword)
+                              }
+                            >
+                              {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                            </Button>
+                          </InputRightElement>
+                        </InputGroup>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Stack spacing={10} pt={2}>
+                    <Button
+                      type="submit"
+                      isLoading={props.isSubmitting}
+                      size="lg"
+                      bg={'blue.500'}
+                      color={'white'}
+                      _hover={{
+                        bg: 'blue.400'
+                      }}
+                    >
+                      Cadastrar
+                    </Button>
+                  </Stack>
+                  <Stack pt={6}>
+                    <Text align={'center'}>
+                      Já tem uma conta?{' '}
+                      <Link color={'blue.500'} href="/app/auth/signin">
+                        Login
+                      </Link>
+                    </Text>
+                  </Stack>
+                </Stack>
+              </Form>
+            )}
+          </Formik>
         </Box>
       </Stack>
     </Flex>

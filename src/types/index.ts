@@ -104,3 +104,11 @@ export interface IBannersQuery {
   isLoading: boolean;
   error: unknown;
 }
+
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+}
