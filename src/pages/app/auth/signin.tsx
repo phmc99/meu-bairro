@@ -10,10 +10,41 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue
+  useColorModeValue,
+  FormErrorMessage,
+  useToast
 } from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
+import { useRouter } from 'next/router';
+import { signin } from '../../../store/app/auth';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../store';
 
 const SignInPage = () => {
+  const toast = useToast();
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const initalValues = {
+    email: '',
+    password: ''
+  };
+
+  const handleLogin = async (email: string, password: string) => {
+    const result = await dispatch(signin({ email, password }));
+    if (result.payload.token) {
+      router.push('/app/user');
+      return;
+    } else {
+      return toast({
+        title: result.payload.message,
+        duration: 4000,
+        status: 'error',
+        isClosable: true
+      });
+    }
+  };
+
   return (
     <Flex
       minH={'100vh'}
@@ -38,35 +69,74 @@ const SignInPage = () => {
           boxShadow={'lg'}
           p={8}
         >
-          <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>E-mail</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Senha</FormLabel>
-              <Input type="password" />
-            </FormControl>
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: 'column', sm: 'row' }}
-                align={'start'}
-                justify={'space-between'}
-              >
-                <Checkbox>Lembrar de mim</Checkbox>
-                <Link color={'blue.500'}>Esqueceu a senha?</Link>
-              </Stack>
-              <Button
-                bg={'blue.500'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.400'
-                }}
-              >
-                Entrar
-              </Button>
-            </Stack>
-          </Stack>
+          <Formik
+            initialValues={initalValues}
+            onSubmit={async (values, actions) => {
+              await handleLogin(values.email, values.password);
+              actions.setSubmitting(false);
+              actions.resetForm();
+              actions.setValues(initalValues);
+            }}
+          >
+            {(props: any) => (
+              <Form>
+                <Stack spacing={4}>
+                  <Field name="email">
+                    {({ field, form }: any) => (
+                      <FormControl id="email">
+                        <FormLabel>E-mail</FormLabel>
+                        <Input
+                          {...field}
+                          type="email"
+                          placeholder="Digite seu email"
+                          disabled={props.isSubmitting}
+                        />
+                        <FormErrorMessage>{form.errors.email}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+
+                  <Field name="password">
+                    {({ field, form }: any) => (
+                      <FormControl id="password">
+                        <FormLabel>Senha</FormLabel>
+                        <Input
+                          {...field}
+                          type="password"
+                          placeholder="Digite sua senha"
+                          disabled={props.isSubmitting}
+                        />
+                        <FormErrorMessage>
+                          {form.errors.password}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Stack spacing={10}>
+                    <Stack
+                      direction={{ base: 'column', sm: 'row' }}
+                      align={'start'}
+                      justify={'space-between'}
+                    >
+                      <Checkbox>Lembrar de mim</Checkbox>
+                      <Link color={'blue.500'}>Esqueceu a senha?</Link>
+                    </Stack>
+                    <Button
+                      type="submit"
+                      isLoading={props.isSubmitting}
+                      bg={'blue.500'}
+                      color={'white'}
+                      _hover={{
+                        bg: 'blue.400'
+                      }}
+                    >
+                      Entrar
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Form>
+            )}
+          </Formik>
           <Stack pt={6}>
             <Text align={'center'}>
               Não tem uma conta?{' '}
