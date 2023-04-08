@@ -72,7 +72,7 @@ const User = () => {
           Atualizar endereço
         </Button>
         <Divider my={5} />
-        {!loading && user ? <h1>{user?.firstName}</h1> : <AppUserAuthButtons />}
+        {user ? <h1>{user?.firstName}</h1> : <AppUserAuthButtons />}
       </Flex>
       <AppNavBar />
     </>

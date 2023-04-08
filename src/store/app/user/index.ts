@@ -11,7 +11,7 @@ interface authState {
 
 const initialState: authState = {
   loading: false,
-  user: {} as IUserResponse,
+  user: null,
   error: ''
 };
 
