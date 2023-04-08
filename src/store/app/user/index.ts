@@ -44,6 +44,7 @@ export const userSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(getUserData.pending, state => {
       state.loading = true;
+      state.user = null;
     });
     builder.addCase(getUserData.fulfilled, (state, action) => {
       state.loading = false;
