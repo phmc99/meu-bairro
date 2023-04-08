@@ -11,6 +11,7 @@ import { locationSlicer } from './app/location';
 import { commerceSlice } from './commerce';
 import { commerceFormSlice } from './commerce-create';
 import { authSlice } from './app/auth';
+import { userSlice } from './app/user';
 
 const makeStore = () =>
   configureStore({
@@ -19,7 +20,8 @@ const makeStore = () =>
       [commerceSlice.name]: commerceSlice.reducer,
       [commerceFormSlice.name]: commerceFormSlice.reducer,
       [locationSlicer.name]: locationSlicer.reducer,
-      [authSlice.name]: authSlice.reducer
+      [authSlice.name]: authSlice.reducer,
+      [userSlice.name]: userSlice.reducer
     },
     devTools: true
   });

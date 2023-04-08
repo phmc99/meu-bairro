@@ -1,4 +1,10 @@
-import { Button, Divider, Flex, useDisclosure } from '@chakra-ui/react';
+import {
+  Button,
+  Divider,
+  Flex,
+  Spinner,
+  useDisclosure
+} from '@chakra-ui/react';
 import AppNavBar from '../../../components/app/AppNavBar';
 import NavigationHeader from '../../../components/app/NavigationHeader';
 import AppCommerceAddress from '../../../components/app/AppCommerceAddress';
@@ -7,16 +13,39 @@ import { AppDispatch, AppState } from '../../../store';
 import AppChangeAddressForm from '../../../components/app/AppChangeAdressForm';
 import { getLocalStorageLocation } from '../../../store/app/location';
 import { useEffect } from 'react';
+import { getUserData } from '../../../store/app/user';
+import AppUserAuthButtons from '../../../components/app/AppUserAuthButtons';
 
 const User = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { address } = useSelector((state: AppState) => state.location);
+  const { loading, user } = useSelector((state: AppState) => state.user);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
+    const token = localStorage.getItem('user-token') || '';
+
+    if (token.trim() !== '') {
+      dispatch(getUserData(token));
+    }
+
     dispatch(getLocalStorageLocation());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (loading) {
+    return (
+      <Flex w="100%" h="50vh" justifyContent="center" alignItems="center">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      </Flex>
+    );
+  }
 
   return (
     <>
@@ -43,25 +72,7 @@ const User = () => {
           Atualizar endereço
         </Button>
         <Divider my={5} />
-        <Button
-          onClick={() => {
-            window.location.href = '/app/auth/signup';
-          }}
-          colorScheme="blue"
-          w="80%"
-        >
-          Registre-se
-        </Button>
-        <Button
-          onClick={() => {
-            window.location.href = '/app/auth/signin';
-          }}
-          colorScheme="blue"
-          variant="outline"
-          w="80%"
-        >
-          Fazer Login
-        </Button>
+        {!loading ? <h1>{user?.firstName}</h1> : <AppUserAuthButtons />}
       </Flex>
       <AppNavBar />
     </>

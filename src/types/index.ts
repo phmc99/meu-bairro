@@ -112,3 +112,11 @@ export interface IUser {
   phone: string;
   password: string;
 }
+
+export interface IUserResponse extends IUser {
+  _id: string;
+  superUser: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
