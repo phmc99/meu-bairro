@@ -41,7 +41,7 @@ export const authSlice = createSlice({
   name: 'signin',
   initialState,
   reducers: {
-    resetAuth(state) {
+    resetUserAuth(state) {
       state.token = null;
       localStorage.removeItem('user-token');
     }
@@ -63,6 +63,6 @@ export const authSlice = createSlice({
   }
 });
 
-export const { resetAuth } = authSlice.actions;
+export const { resetUserAuth } = authSlice.actions;
 
 export default authSlice.reducer;

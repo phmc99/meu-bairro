@@ -15,6 +15,7 @@ import { getLocalStorageLocation } from '../../../store/app/location';
 import { useEffect } from 'react';
 import { getUserData } from '../../../store/app/user';
 import AppUserAuthButtons from '../../../components/app/AppUserAuthButtons';
+import AppUserData from '../../../components/app/AppUserData';
 
 const User = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -72,7 +73,7 @@ const User = () => {
           Atualizar endereço
         </Button>
         <Divider my={5} />
-        {user ? <h1>{user?.firstName}</h1> : <AppUserAuthButtons />}
+        {user ? <AppUserData user={user} /> : <AppUserAuthButtons />}
       </Flex>
       <AppNavBar />
     </>
