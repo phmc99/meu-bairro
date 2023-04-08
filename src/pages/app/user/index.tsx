@@ -74,6 +74,19 @@ const User = () => {
         </Button>
         <Divider my={5} />
         {user ? <AppUserData user={user} /> : <AppUserAuthButtons />}
+        <Divider my={5} />
+        <Flex direction="column">
+          <Button
+            w={180}
+            variant="link"
+            color="gray.500"
+            onClick={() => {
+              window.location.href = '/misc/terms';
+            }}
+          >
+            Termos e condições
+          </Button>
+        </Flex>
       </Flex>
       <AppNavBar />
     </>
