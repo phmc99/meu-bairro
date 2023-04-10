@@ -14,13 +14,14 @@ import {
   useToast
 } from '@chakra-ui/react';
 import StarRatings from 'react-star-ratings';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ICommerce } from '../../../types';
-import { useSelector } from 'react-redux';
-import { AppState } from '../../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../../store';
 import { createFeedback } from '../../../services/feedback';
 import { useRouter } from 'next/router';
 import { actionErrors, userDataErrors } from './helpers';
+import { getUserData } from '../../../store/app/user';
 
 interface AppFeedbackModalProps {
   commerce: ICommerce;
@@ -35,6 +36,7 @@ const AppFeedbackModal = ({ commerce, onClose }: AppFeedbackModalProps) => {
   const [rate, setRate] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: AppState) => state.user);
 
   const ratingChanged = (newRating: any) => {
@@ -105,6 +107,15 @@ const AppFeedbackModal = ({ commerce, onClose }: AppFeedbackModalProps) => {
     setLoading(false);
     onClose();
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('user-token') || '';
+
+    if (!user && token.trim() !== '') {
+      dispatch(getUserData(token));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

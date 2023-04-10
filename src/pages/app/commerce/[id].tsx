@@ -16,6 +16,7 @@ import AppNavBar from '../../../components/app/AppNavBar';
 import AppSwiper from '../../../components/app/AppSwiper';
 import NavigationHeader from '../../../components/app/NavigationHeader';
 import { getCommerce } from '../../../services/commerce';
+import { useEffect, useState } from 'react';
 import { ICommerce } from '../../../types';
 import AppFeedbackModal from '../../../components/app/AppFeedbackModal';
 
@@ -25,10 +26,19 @@ interface AppCommerceProps {
 }
 
 const AppCommerce = ({ commerce }: AppCommerceProps) => {
+  const [disableFeedback, setDisableFeedback] = useState<boolean>(false);
   let address;
   if (commerce.address) {
     address = `${commerce.address.street}, ${commerce.address.number}, ${commerce.neighborhood}, ${commerce.address.city}, ${commerce.address.state}`;
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('user-token') || '';
+
+    if (token.trim() === '') {
+      setDisableFeedback(true);
+    }
+  }, []);
 
   const {
     isOpen: feedbackIsOpen,
@@ -106,6 +116,7 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
           fontSize="sm"
           colorScheme="blue"
           onClick={feedbackOnOpen}
+          disabled={disableFeedback}
         >
           Avalie {commerce.name}
         </Button>
