@@ -1,4 +1,13 @@
-import { Box, Flex, Heading, Icon, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Icon,
+  Modal,
+  Text,
+  useDisclosure
+} from '@chakra-ui/react';
 import Head from 'next/head';
 import { FaStar } from 'react-icons/fa';
 import AppCommerceAddress from '../../../components/app/AppCommerceAddress';
@@ -8,6 +17,7 @@ import AppSwiper from '../../../components/app/AppSwiper';
 import NavigationHeader from '../../../components/app/NavigationHeader';
 import { getCommerce } from '../../../services/commerce';
 import { ICommerce } from '../../../types';
+import AppFeedbackModal from '../../../components/app/AppFeedbackModal';
 
 interface AppCommerceProps {
   id: string;
@@ -20,6 +30,12 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
     address = `${commerce.address.street}, ${commerce.address.number}, ${commerce.neighborhood}, ${commerce.address.city}, ${commerce.address.state}`;
   }
 
+  const {
+    isOpen: feedbackIsOpen,
+    onClose: feedbackOnClose,
+    onOpen: feedbackOnOpen
+  } = useDisclosure();
+
   return (
     <>
       <Head>
@@ -29,6 +45,9 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
           content="Meu Bairro - App de comércios locais"
         />
       </Head>
+      <Modal isOpen={feedbackIsOpen} onClose={feedbackOnClose}>
+        <AppFeedbackModal />
+      </Modal>
       <NavigationHeader title={commerce.name} />
       <AppSwiper
         type="commerce"
@@ -81,6 +100,15 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
           Contatos
         </Heading>
         <AppCommerceContact contact={commerce.contact} />
+        <Button
+          my={5}
+          variant="link"
+          fontSize="sm"
+          colorScheme="blue"
+          onClick={feedbackOnOpen}
+        >
+          Avalie {commerce.name}
+        </Button>
       </Flex>
       <AppNavBar />
     </>
