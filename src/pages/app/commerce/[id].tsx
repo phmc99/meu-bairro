@@ -46,7 +46,7 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
         />
       </Head>
       <Modal isOpen={feedbackIsOpen} onClose={feedbackOnClose}>
-        <AppFeedbackModal />
+        <AppFeedbackModal commerce={commerce} onClose={feedbackOnClose} />
       </Modal>
       <NavigationHeader title={commerce.name} />
       <AppSwiper

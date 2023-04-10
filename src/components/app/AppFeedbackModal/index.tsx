@@ -10,16 +10,102 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  Textarea
+  Textarea,
+  useToast
 } from '@chakra-ui/react';
 import StarRatings from 'react-star-ratings';
 import { useState } from 'react';
+import { ICommerce } from '../../../types';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../store';
+import { createFeedback } from '../../../services/feedback';
+import { useRouter } from 'next/router';
+import { actionErrors, userDataErrors } from './helpers';
 
-const AppFeedbackModal = () => {
+interface AppFeedbackModalProps {
+  commerce: ICommerce;
+  onClose: any;
+}
+
+const AppFeedbackModal = ({ commerce, onClose }: AppFeedbackModalProps) => {
+  const toast = useToast();
+  const router = useRouter();
+
+  const [comment, setComment] = useState<string>('');
   const [rate, setRate] = useState<number>(3);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { user } = useSelector((state: AppState) => state.user);
+
   const ratingChanged = (newRating: any) => {
     setRate(newRating);
   };
+
+  const handleChangeComment = (e: any) => {
+    const { value } = e.target;
+    setComment(value);
+  };
+
+  const handleSendFeedback = async () => {
+    setLoading(true);
+
+    if (comment.trim() === '') {
+      toast({
+        status: 'error',
+        title: 'Insira um comentário',
+        isClosable: true,
+        duration: 3000
+      });
+
+      return setLoading(false);
+    }
+
+    const token = localStorage.getItem('user-token') || '';
+    const { _id } = commerce;
+    const body = {
+      user: {
+        _id: user?._id,
+        firstName: user?.firstName,
+        lastName: user?.lastName
+      },
+      comment,
+      rate
+    };
+
+    const create = await createFeedback(_id, token, body);
+
+    if (create.message && userDataErrors.includes(create.message)) {
+      toast({
+        status: 'error',
+        title: 'Algo de errado com seus dados',
+        isClosable: true,
+        duration: 3000
+      });
+      router.push('/app/user');
+    }
+
+    if (create.message && actionErrors.includes(create.message)) {
+      toast({
+        status: 'warning',
+        title: create.message,
+        isClosable: true,
+        duration: 3000
+      });
+    }
+
+    if (create.createdAt) {
+      toast({
+        status: 'success',
+        title: 'Avaliação enviada',
+        isClosable: true,
+        duration: 3000
+      });
+    }
+
+    setLoading(false);
+    onClose();
+  };
+
   return (
     <>
       <ModalOverlay />
@@ -29,9 +115,19 @@ const AppFeedbackModal = () => {
         <ModalBody pb={6}>
           <FormControl my={2}>
             <FormLabel>Comentário</FormLabel>
-            <Textarea placeholder="Digite um comentário sobre o comércio!" />
+            <Textarea
+              value={comment}
+              onChange={handleChangeComment}
+              placeholder="Digite um comentário sobre o comércio!"
+              disabled={loading}
+            />
           </FormControl>
-          <Flex gap={2} textAlign="left" direction="column">
+          <Flex
+            pointerEvents={loading ? 'none' : 'all'}
+            gap={2}
+            textAlign="left"
+            direction="column"
+          >
             <Text fontWeight={500}>Nota</Text>
             <StarRatings
               rating={rate}
@@ -46,7 +142,12 @@ const AppFeedbackModal = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3}>
+          <Button
+            onClick={handleSendFeedback}
+            isLoading={loading}
+            colorScheme="blue"
+            mr={3}
+          >
             Enviar
           </Button>
         </ModalFooter>
