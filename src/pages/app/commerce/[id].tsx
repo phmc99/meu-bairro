@@ -19,6 +19,9 @@ import { getCommerce } from '../../../services/commerce';
 import { useEffect, useState } from 'react';
 import { ICommerce } from '../../../types';
 import AppFeedbackModal from '../../../components/app/AppFeedbackModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '../../../store';
+import { getUserData } from '../../../store/app/user';
 
 interface AppCommerceProps {
   id: string;
@@ -27,10 +30,14 @@ interface AppCommerceProps {
 
 const AppCommerce = ({ commerce }: AppCommerceProps) => {
   const [disableFeedback, setDisableFeedback] = useState<boolean>(false);
+
   let address;
   if (commerce.address) {
     address = `${commerce.address.street}, ${commerce.address.number}, ${commerce.neighborhood}, ${commerce.address.city}, ${commerce.address.state}`;
   }
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { user } = useSelector((state: AppState) => state.user);
 
   useEffect(() => {
     const token = localStorage.getItem('user-token') || '';
@@ -39,6 +46,26 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
       setDisableFeedback(true);
     }
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem('user-token') || '';
+
+    if (!user && token.trim() !== '') {
+      dispatch(getUserData(token));
+    }
+
+    if (token.trim() === '') {
+      setDisableFeedback(true);
+    }
+
+    const commerceHasUserFeedback = commerce.feedbacks.find(
+      item => item.user._id === user?._id
+    );
+
+    if (commerceHasUserFeedback) {
+      setDisableFeedback(true);
+    }
+  }, [commerce.feedbacks, dispatch, user]);
 
   const {
     isOpen: feedbackIsOpen,
