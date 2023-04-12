@@ -18,10 +18,11 @@ import NavigationHeader from '../../../components/app/NavigationHeader';
 import { getCommerce } from '../../../services/commerce';
 import { useEffect, useState } from 'react';
 import { ICommerce } from '../../../types';
-import AppFeedbackModal from '../../../components/app/AppFeedbackModal';
+import AppFeedbackCreate from '../../../components/app/AppFeedbackCreate';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from '../../../store';
 import { getUserData } from '../../../store/app/user';
+import AppFeedbackList from '../../../components/app/AppFeedbackList';
 
 interface AppCommerceProps {
   id: string;
@@ -68,9 +69,15 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
   }, [commerce.feedbacks, dispatch, user]);
 
   const {
-    isOpen: feedbackIsOpen,
-    onClose: feedbackOnClose,
-    onOpen: feedbackOnOpen
+    isOpen: feedbackCreateIsOpen,
+    onClose: feedbackCreateOnClose,
+    onOpen: feedbackCreateOnOpen
+  } = useDisclosure();
+
+  const {
+    isOpen: feedbackListIsOpen,
+    onClose: feedbackListOnClose,
+    onOpen: feedbackListOnOpen
   } = useDisclosure();
 
   return (
@@ -82,8 +89,11 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
           content="Meu Bairro - App de comércios locais"
         />
       </Head>
-      <Modal isOpen={feedbackIsOpen} onClose={feedbackOnClose}>
-        <AppFeedbackModal commerce={commerce} onClose={feedbackOnClose} />
+      <Modal isOpen={feedbackCreateIsOpen} onClose={feedbackCreateOnClose}>
+        <AppFeedbackCreate commerce={commerce} onClose={feedbackCreateOnOpen} />
+      </Modal>
+      <Modal isOpen={feedbackListIsOpen} onClose={feedbackListOnClose}>
+        <AppFeedbackList feedbacks={commerce.feedbacks} />
       </Modal>
       <NavigationHeader title={commerce.name} />
       <AppSwiper
@@ -110,7 +120,12 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
           >
             {commerce.name}
           </Heading>
-          <Flex alignItems="center" gap={2}>
+          <Flex
+            alignItems="center"
+            gap={2}
+            onClick={feedbackListOnOpen}
+            cursor="pointer"
+          >
             <Icon color="yellow.400" as={FaStar} />
             <Text color="yellow.400" fontWeight={700}>
               {commerce.totalRate.toFixed(1)}
@@ -142,7 +157,7 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
           variant="link"
           fontSize="sm"
           colorScheme="blue"
-          onClick={feedbackOnOpen}
+          onClick={feedbackCreateOnOpen}
           disabled={disableFeedback}
         >
           Avalie {commerce.name}

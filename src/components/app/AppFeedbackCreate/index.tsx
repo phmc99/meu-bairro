@@ -23,12 +23,12 @@ import { useRouter } from 'next/router';
 import { actionErrors, userDataErrors } from './helpers';
 import { getUserData } from '../../../store/app/user';
 
-interface AppFeedbackModalProps {
+interface AppFeedbackCreateProps {
   commerce: ICommerce;
   onClose: any;
 }
 
-const AppFeedbackModal = ({ commerce, onClose }: AppFeedbackModalProps) => {
+const AppFeedbackCreate = ({ commerce, onClose }: AppFeedbackCreateProps) => {
   const toast = useToast();
   const router = useRouter();
 
@@ -167,4 +167,4 @@ const AppFeedbackModal = ({ commerce, onClose }: AppFeedbackModalProps) => {
   );
 };
 
-export default AppFeedbackModal;
+export default AppFeedbackCreate;
