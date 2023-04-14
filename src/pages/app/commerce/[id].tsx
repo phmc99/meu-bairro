@@ -90,7 +90,10 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
         />
       </Head>
       <Modal isOpen={feedbackCreateIsOpen} onClose={feedbackCreateOnClose}>
-        <AppFeedbackCreate commerce={commerce} onClose={feedbackCreateOnOpen} />
+        <AppFeedbackCreate
+          commerce={commerce}
+          onClose={feedbackCreateOnClose}
+        />
       </Modal>
       <Modal isOpen={feedbackListIsOpen} onClose={feedbackListOnClose}>
         <AppFeedbackList feedbacks={commerce.feedbacks} />
