@@ -96,7 +96,10 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
         />
       </Modal>
       <Modal isOpen={feedbackListIsOpen} onClose={feedbackListOnClose}>
-        <AppFeedbackList feedbacks={commerce.feedbacks} />
+        <AppFeedbackList
+          onClose={feedbackListOnClose}
+          feedbacks={commerce.feedbacks}
+        />
       </Modal>
       <NavigationHeader title={commerce.name} />
       <AppSwiper

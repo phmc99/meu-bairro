@@ -28,3 +28,18 @@ export const createFeedback = (
       return response.data;
     });
 };
+
+export const deleteFeedback = (feedbackId: string, token: string) => {
+  return api
+    .delete(`/commerce/feedback/${feedbackId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => {
+      return res.data;
+    })
+    .catch(({ response }) => {
+      return response.data;
+    });
+};

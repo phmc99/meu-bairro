@@ -14,9 +14,10 @@ import { decodeToken } from '../../../utils/jwt';
 
 interface AppFeedbackListProps {
   feedbacks: IFeedback[];
+  onClose: any;
 }
 
-const AppFeedbackList = ({ feedbacks }: AppFeedbackListProps) => {
+const AppFeedbackList = ({ feedbacks, onClose }: AppFeedbackListProps) => {
   const [feedbackList, setFeedbackList] = useState<IFeedback[]>([]);
 
   const feedbackOrder = (userId?: string) => {
@@ -65,7 +66,11 @@ const AppFeedbackList = ({ feedbacks }: AppFeedbackListProps) => {
           <Box h="50vh" overflowY="scroll" sx={scrolllBarCategoryList}>
             {feedbackList.length > 0
               ? feedbackList.map(item => (
-                  <AppFeedbackItem feedback={item} key={item._id} />
+                  <AppFeedbackItem
+                    feedback={item}
+                    key={item._id}
+                    onClose={onClose}
+                  />
                 ))
               : null}
           </Box>
