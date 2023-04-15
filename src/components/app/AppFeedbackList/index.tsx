@@ -1,5 +1,6 @@
 import {
   Box,
+  Heading,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -64,15 +65,24 @@ const AppFeedbackList = ({ feedbacks, onClose }: AppFeedbackListProps) => {
         <ModalCloseButton />
         <ModalBody>
           <Box h="50vh" overflowY="scroll" sx={scrolllBarCategoryList}>
-            {feedbackList.length > 0
-              ? feedbackList.map(item => (
-                  <AppFeedbackItem
-                    feedback={item}
-                    key={item._id}
-                    onClose={onClose}
-                  />
-                ))
-              : null}
+            {feedbackList.length > 0 ? (
+              feedbackList.map(item => (
+                <AppFeedbackItem
+                  feedback={item}
+                  key={item._id}
+                  onClose={onClose}
+                />
+              ))
+            ) : (
+              <Heading
+                color="gray.500"
+                fontWeight={600}
+                fontSize="lg"
+                textAlign="center"
+              >
+                Seja o primeiro a avaliar!
+              </Heading>
+            )}
           </Box>
         </ModalBody>
       </ModalContent>
