@@ -37,9 +37,9 @@ const AppFeedbackItem = ({ feedback, onClose }: AppFeedbackItemProps) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('user-token') || '';
+    const userToken = localStorage.getItem('user-token') || '';
 
-    if (token.trim() !== '') {
+    if (userToken.trim() !== '') {
       setToken(token);
       const { decoded } = decodeToken(token);
       const { id } = decoded as { id: string };

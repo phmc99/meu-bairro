@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from '../../store';
 import { useQuery } from 'react-query';
 import { getBanners } from '../../services/banner';
+import { getUserData } from '../../store/app/user';
 
 const MeuBairro = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -36,6 +37,8 @@ const MeuBairro = () => {
 
   useEffect(() => {
     let cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
+    const user = localStorage.getItem('user-token') || '';
+
     dispatch(getLocalStorageLocation());
 
     if (!cords.lat && !cords.lng) {
@@ -49,6 +52,10 @@ const MeuBairro = () => {
           dispatch(getLocation(cords));
         }
       });
+    }
+
+    if (user.trim() !== '') {
+      dispatch(getUserData(user));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
