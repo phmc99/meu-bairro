@@ -35,6 +35,7 @@ const AppFeedbackCreate = ({ commerce, onClose }: AppFeedbackCreateProps) => {
   const [comment, setComment] = useState<string>('');
   const [rate, setRate] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(false);
+  const [charCount, setCharCount] = useState<number>(0);
 
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: AppState) => state.user);
@@ -45,7 +46,14 @@ const AppFeedbackCreate = ({ commerce, onClose }: AppFeedbackCreateProps) => {
 
   const handleChangeComment = (e: any) => {
     const { value } = e.target;
-    setComment(value);
+    if (value.length && value.length > charCount && charCount <= 200) {
+      setCharCount(charCount + 1);
+      setComment(value);
+    } else if (charCount === 0) {
+      setCharCount(0);
+    } else {
+      setCharCount(charCount - 1);
+    }
   };
 
   const handleSendFeedback = async () => {
@@ -125,12 +133,16 @@ const AppFeedbackCreate = ({ commerce, onClose }: AppFeedbackCreateProps) => {
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl my={2}>
-            <FormLabel>Comentário</FormLabel>
+            <Flex alignItems="center" justifyContent="space-between">
+              <FormLabel>Comentário</FormLabel>
+              <Text fontSize="sm">{charCount}/200</Text>
+            </Flex>
             <Textarea
               value={comment}
               onChange={handleChangeComment}
               placeholder="Digite um comentário sobre o comércio!"
               disabled={loading}
+              maxLength={200}
             />
           </FormControl>
           <Flex
