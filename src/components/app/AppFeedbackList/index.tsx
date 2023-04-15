@@ -48,6 +48,8 @@ const AppFeedbackList = ({ feedbacks }: AppFeedbackListProps) => {
       const { decoded } = decodeToken(token);
       const { id } = decoded as { id: string };
       feedbackOrder(id);
+    } else {
+      setFeedbackList(feedbacks);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
