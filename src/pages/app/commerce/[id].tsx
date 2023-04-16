@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from '../../../store';
 import { getUserData } from '../../../store/app/user';
 import AppFeedbackList from '../../../components/app/AppFeedbackList';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 
 interface AppCommerceProps {
   id: string;

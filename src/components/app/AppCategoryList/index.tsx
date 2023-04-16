@@ -40,7 +40,7 @@ const AppCategoryList = () => {
   return (
     <>
       <Grid
-        h="65vh"
+        mb={20}
         w="100vw"
         overflowY="scroll"
         templateColumns="repeat(2, 2fr)"
