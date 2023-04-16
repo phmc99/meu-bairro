@@ -9,6 +9,7 @@ const AppUserAuthButtons = () => {
         }}
         colorScheme="blue"
         w="80%"
+        minH="30px"
       >
         Registre-se
       </Button>
@@ -19,6 +20,7 @@ const AppUserAuthButtons = () => {
         colorScheme="blue"
         variant="outline"
         w="80%"
+        minH="30px"
       >
         Fazer Login
       </Button>

@@ -1,5 +1,5 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons';
-import { Button, HStack, Icon } from '@chakra-ui/react';
+import { HStack, Heading, Icon } from '@chakra-ui/react';
 import { MdLocationOn } from 'react-icons/md';
 
 interface AppCommerceAddressProps {
@@ -8,15 +8,21 @@ interface AppCommerceAddressProps {
 
 const AppCommerceAddress = ({ address }: AppCommerceAddressProps) => {
   const handleOpenMaps = () => {
-    window.location.href = `https://www.google.com/maps?q=${address}`;
+    window.open(`https://www.google.com/maps?q=${address}`, 'blank');
   };
 
   return (
-    <HStack my={2} textAlign="center" w="80%" justifyContent="center">
+    <HStack
+      w="80%"
+      m="0 auto"
+      my={2}
+      textAlign="center"
+      justifyContent="center"
+    >
       <Icon boxSize={6} color="red.600" as={MdLocationOn} />
-      <Button
+      <Heading
         fontSize="md"
-        color="blue.600"
+        color={address ? 'blue.600' : 'gray.400'}
         sx={{
           display: '-webkit-box',
           overflow: 'hidden',
@@ -24,12 +30,11 @@ const AppCommerceAddress = ({ address }: AppCommerceAddressProps) => {
           WebkitLineClamp: '2',
           WebkitBoxOrient: 'vertical'
         }}
-        variant="link"
-        disabled={address ? false : true}
+        pointerEvents={address ? 'all' : 'none'}
         onClick={handleOpenMaps}
       >
         {address ? address : 'Sem endereço'}
-      </Button>
+      </Heading>
       <ExternalLinkIcon
         color="blue.600"
         mx="2px"
