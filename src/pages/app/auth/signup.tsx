@@ -99,6 +99,7 @@ const SignUpPage = () => {
                               disabled={props.isSubmitting}
                               {...field}
                               type="text"
+                              placeholder="Digite seu nome"
                             />
                             <FormErrorMessage>
                               {form.errors.firstName}
@@ -116,6 +117,7 @@ const SignUpPage = () => {
                               disabled={props.isSubmitting}
                               {...field}
                               type="text"
+                              placeholder="Digite seu sobrenome"
                             />
                             <FormErrorMessage>
                               {form.errors.lastName}
@@ -135,6 +137,7 @@ const SignUpPage = () => {
                           {...field}
                           name="email"
                           type="email"
+                          placeholder="Digite seu e-mail"
                         />
                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                       </FormControl>
@@ -149,6 +152,7 @@ const SignUpPage = () => {
                           disabled={props.isSubmitting}
                           {...field}
                           name="phone"
+                          placeholder="Digite seu telefone"
                         />
                         <FormErrorMessage>{form.errors.phone}</FormErrorMessage>
                       </FormControl>
@@ -165,6 +169,7 @@ const SignUpPage = () => {
                             {...field}
                             autoComplete="new-password"
                             type={showPassword ? 'text' : 'password'}
+                            placeholder="Digite sua senha"
                           />
                           <FormErrorMessage>
                             {form.errors.password}
@@ -202,7 +207,7 @@ const SignUpPage = () => {
                     <Text align={'center'}>
                       Já tem uma conta?{' '}
                       <Link color={'blue.500'} href="/app/auth/signin">
-                        Login
+                        Entrar
                       </Link>
                     </Text>
                   </Stack>

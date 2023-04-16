@@ -4,7 +4,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Link,
   Button,
@@ -115,11 +114,15 @@ const SignInPage = () => {
                   <Stack spacing={10}>
                     <Stack
                       direction={{ base: 'column', sm: 'row' }}
-                      align={'start'}
-                      justify={'space-between'}
+                      justify={'center'}
                     >
-                      <Checkbox>Lembrar de mim</Checkbox>
-                      <Link color={'blue.500'}>Esqueceu a senha?</Link>
+                      <Button
+                        cursor="pointer"
+                        color={'blue.500'}
+                        variant="link"
+                      >
+                        Esqueceu a senha?
+                      </Button>
                     </Stack>
                     <Button
                       type="submit"
