@@ -107,7 +107,12 @@ const AppCommerce = ({ commerce }: AppCommerceProps) => {
         images={commerce.images}
         logo={commerce.logo}
       />
-      <Flex h="35vh" w="100%" direction="column" alignItems="center">
+      <Flex
+        h="calc(50vh + 60px)"
+        w="100%"
+        direction="column"
+        alignItems="center"
+      >
         <Flex
           w="100%"
           px={5}
