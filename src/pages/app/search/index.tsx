@@ -21,7 +21,7 @@ const AppSearch = () => {
 
   const handleSearch = async () => {
     setIsLoading(true);
-    const endpoint = `/commerce/search?value=${value}&page=${page}&perPage=10`;
+    const endpoint = `/commerce/search?value=${value.trim()}&page=${page}&perPage=10`;
     const { data } = await api.get(endpoint);
     setHasMore(data.next_page != null ? true : false);
     setCommerces([...commerces, ...data.data]);
