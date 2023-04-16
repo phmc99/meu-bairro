@@ -40,8 +40,8 @@ const AppFeedbackItem = ({ feedback, onClose }: AppFeedbackItemProps) => {
     const userToken = localStorage.getItem('user-token') || '';
 
     if (userToken.trim() !== '') {
-      setToken(token);
-      const { decoded } = decodeToken(token);
+      setToken(userToken);
+      const { decoded } = decodeToken(userToken);
       const { id } = decoded as { id: string };
       if (id === feedback.user._id) {
         setFeedbackOwner(true);
