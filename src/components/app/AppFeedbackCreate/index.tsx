@@ -46,14 +46,8 @@ const AppFeedbackCreate = ({ commerce, onClose }: AppFeedbackCreateProps) => {
 
   const handleChangeComment = (e: any) => {
     const { value } = e.target;
-    if (value.length && value.length > charCount && charCount <= 200) {
-      setCharCount(charCount + 1);
-      setComment(value);
-    } else if (charCount === 0) {
-      setCharCount(0);
-    } else {
-      setCharCount(charCount - 1);
-    }
+    setComment(value);
+    setCharCount(value.length);
   };
 
   const handleSendFeedback = async () => {
