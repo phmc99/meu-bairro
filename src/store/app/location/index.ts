@@ -45,9 +45,10 @@ export const locationSlicer = createSlice({
   reducers: {
     getLocalStorageLocation(state) {
       state.address =
-        JSON.parse(localStorage.getItem('address') || 'null') || undefined;
+        JSON.parse(localStorage.getItem('@mb:address') || 'null') || undefined;
       state.neighborhood =
-        JSON.parse(localStorage.getItem('neighborhood') || 'null') || undefined;
+        JSON.parse(localStorage.getItem('@mb:neighborhood') || 'null') ||
+        undefined;
     }
   },
   extraReducers: builder => {
@@ -61,8 +62,8 @@ export const locationSlicer = createSlice({
         const neighborhood = address.split(' - ')[1].split(',')[0];
         state.address = address;
         state.neighborhood = neighborhood;
-        localStorage.setItem('address', JSON.stringify(address));
-        localStorage.setItem('neighborhood', JSON.stringify(neighborhood));
+        localStorage.setItem('@mb:address', JSON.stringify(address));
+        localStorage.setItem('@mb:neighborhood', JSON.stringify(neighborhood));
       }
     });
     builder.addCase(getLocation.rejected, (state, action) => {

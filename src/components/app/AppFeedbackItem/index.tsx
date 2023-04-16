@@ -40,7 +40,7 @@ const AppFeedbackItem = ({ feedback, onClose }: AppFeedbackItemProps) => {
   };
 
   useEffect(() => {
-    const userToken = localStorage.getItem('user-token') || '';
+    const userToken = localStorage.getItem('@mb:user-token') || '';
 
     if (userToken.trim() !== '') {
       setToken(userToken);

@@ -66,7 +66,7 @@ const AppFeedbackCreate = ({ commerce, onClose }: AppFeedbackCreateProps) => {
       return setLoading(false);
     }
 
-    const token = localStorage.getItem('user-token') || '';
+    const token = localStorage.getItem('@mb:user-token') || '';
     const { _id } = commerce;
     const body = {
       user: {
@@ -115,7 +115,7 @@ const AppFeedbackCreate = ({ commerce, onClose }: AppFeedbackCreateProps) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('user-token') || '';
+    const token = localStorage.getItem('@mb:user-token') || '';
 
     if (!user && token.trim() !== '') {
       dispatch(getUserData(token));

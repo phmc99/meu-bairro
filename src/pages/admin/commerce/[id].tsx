@@ -19,7 +19,7 @@ const CommercePage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem('admin-token') || '';
+    const token = localStorage.getItem('@mb:admin-token') || '';
     api
       .post('/user/token', {
         token
@@ -28,7 +28,7 @@ const CommercePage = () => {
         if (data.isValid) {
           return;
         } else {
-          localStorage.removeItem('admin-token');
+          localStorage.removeItem('@mb:admin-token');
           Router.push('/admin/login');
           return;
         }

@@ -44,7 +44,7 @@ const AppFeedbackList = ({ feedbacks, onClose }: AppFeedbackListProps) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('user-token') || '';
+    const token = localStorage.getItem('@mb:user-token') || '';
 
     if (token.trim() !== '') {
       const { decoded } = decodeToken(token);

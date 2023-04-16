@@ -24,7 +24,7 @@ const CommercePageFormBase = ({
   type
 }: CommercePageFormBaseProps) => {
   const router = useRouter();
-  const token = localStorage.getItem('admin-token');
+  const token = localStorage.getItem('@mb:admin-token');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
 

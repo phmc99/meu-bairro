@@ -49,7 +49,7 @@ const AppCommerce = ({ id }: AppCommerceProps) => {
   );
 
   useEffect(() => {
-    const token = localStorage.getItem('user-token') || '';
+    const token = localStorage.getItem('@mb:user-token') || '';
 
     if (token.trim() === '') {
       setDisableFeedback(true);
@@ -68,7 +68,7 @@ const AppCommerce = ({ id }: AppCommerceProps) => {
   }, [data]);
 
   useEffect(() => {
-    const token = localStorage.getItem('user-token') || '';
+    const token = localStorage.getItem('@mb:user-token') || '';
 
     if (!user && token.trim() !== '') {
       dispatch(getUserData(token));

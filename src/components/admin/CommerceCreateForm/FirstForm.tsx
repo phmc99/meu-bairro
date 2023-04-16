@@ -32,7 +32,7 @@ export const FirstForm = () => {
   const descriptionMaxRows = 3;
 
   const getCategories = () => {
-    const token = localStorage.getItem('admin-token');
+    const token = localStorage.getItem('@mb:admin-token');
     return api
       .get('/category', {
         headers: {
@@ -44,7 +44,7 @@ export const FirstForm = () => {
       })
       .catch(res => {
         if (res.response.status === 401) {
-          localStorage.removeItem('admin-token');
+          localStorage.removeItem('@mb:admin-token');
           Router.push('/admin/login');
           return;
         }

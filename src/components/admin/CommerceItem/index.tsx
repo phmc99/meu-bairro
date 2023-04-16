@@ -28,7 +28,7 @@ const CommerceItem = ({ id, logo, name }: CommerceItemProps) => {
   const toast = useToast();
 
   const deleteCommerce = () => {
-    const token = localStorage.getItem('admin-token');
+    const token = localStorage.getItem('@mb:admin-token');
 
     if (!token) {
       return Router.push('/admin/login');
@@ -58,7 +58,7 @@ const CommerceItem = ({ id, logo, name }: CommerceItemProps) => {
       })
       .catch(res => {
         if (res.response.status === 401) {
-          localStorage.removeItem('admin-token');
+          localStorage.removeItem('@mb:admin-token');
           Router.push('/admin/login');
           return;
         }

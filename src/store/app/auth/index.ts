@@ -44,7 +44,7 @@ export const authSlice = createSlice({
   reducers: {
     resetUserAuth(state) {
       state.token = null;
-      localStorage.removeItem('user-token');
+      localStorage.removeItem('@mb:user-token');
     }
   },
   extraReducers: builder => {
@@ -54,7 +54,7 @@ export const authSlice = createSlice({
     builder.addCase(signin.fulfilled, (state, action) => {
       state.loading = false;
       state.token = action.payload.token;
-      localStorage.setItem('user-token', action.payload.token);
+      localStorage.setItem('@mb:user-token', action.payload.token);
     });
     builder.addCase(signin.rejected, (state, action) => {
       state.loading = false;

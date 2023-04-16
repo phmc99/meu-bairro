@@ -24,7 +24,7 @@ const MeuBairro = () => {
   });
 
   const handleActionButton = async (page: string) => {
-    const cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
+    const cords = JSON.parse(localStorage.getItem('@mb:user-cords') || '{}');
 
     if (!cords.lat && !cords.lng) {
       Router.push(`/app/search/result/${page}`);
@@ -36,7 +36,7 @@ const MeuBairro = () => {
   };
 
   useEffect(() => {
-    let cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
+    let cords = JSON.parse(localStorage.getItem('@mb:user-cords') || '{}');
     const user = localStorage.getItem('user-token') || '';
 
     dispatch(getLocalStorageLocation());
@@ -47,7 +47,7 @@ const MeuBairro = () => {
           lat: postion.coords.latitude,
           lng: postion.coords.longitude
         };
-        localStorage.setItem('user-cords', JSON.stringify(cords));
+        localStorage.setItem('@mb:user-cords', JSON.stringify(cords));
         if (address == null) {
           dispatch(getLocation(cords));
         }

@@ -23,7 +23,7 @@ const AppChangeAddressForm = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const handleGetLocation = () => {
-    let cords = JSON.parse(localStorage.getItem('user-cords') || '{}');
+    let cords = JSON.parse(localStorage.getItem('@mb:user-cords') || '{}');
 
     if (!cords.lat && !cords.lng) {
       navigator.geolocation.getCurrentPosition(postion => {
@@ -31,7 +31,7 @@ const AppChangeAddressForm = ({
           lat: postion.coords.latitude,
           lng: postion.coords.longitude
         };
-        localStorage.setItem('user-cords', JSON.stringify(cords));
+        localStorage.setItem('@mb:user-cords', JSON.stringify(cords));
         dispatch(getLocation(cords));
       });
     }

@@ -36,7 +36,7 @@ export const adminSlice = createSlice({
   reducers: {
     resetAuth(state) {
       state.token = null;
-      localStorage.removeItem('admin-token');
+      localStorage.removeItem('@mb:admin-token');
     }
   },
   extraReducers: builder => {
@@ -46,7 +46,7 @@ export const adminSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.loading = false;
       state.token = action.payload;
-      localStorage.setItem('admin-token', action.payload);
+      localStorage.setItem('@mb:admin-token', action.payload);
     });
     builder.addCase(login.rejected, (state, action) => {
       state.loading = false;

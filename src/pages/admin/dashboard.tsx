@@ -23,7 +23,7 @@ const Dashboard = () => {
   const [token, setToken] = useState<string>('');
 
   useEffect(() => {
-    const token = localStorage.getItem('admin-token') || '';
+    const token = localStorage.getItem('@mb:admin-token') || '';
     api
       .post('/user/token', {
         token
@@ -38,7 +38,7 @@ const Dashboard = () => {
             position: 'bottom-left'
           });
         } else {
-          localStorage.removeItem('admin-token');
+          localStorage.removeItem('@mb:admin-token');
           Router.push('/admin/login');
           return;
         }

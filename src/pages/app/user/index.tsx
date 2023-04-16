@@ -24,7 +24,7 @@ const User = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    const token = localStorage.getItem('user-token') || '';
+    const token = localStorage.getItem('@mb:user-token') || '';
 
     if (token.trim() !== '') {
       dispatch(getUserData(token));
