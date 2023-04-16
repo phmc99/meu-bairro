@@ -22,6 +22,7 @@ import { createFeedback } from '../../../services/feedback';
 import { useRouter } from 'next/router';
 import { actionErrors, userDataErrors } from './helpers';
 import { getUserData } from '../../../store/app/user';
+import { useQueryClient } from 'react-query';
 
 interface AppFeedbackCreateProps {
   commerce: ICommerce;
@@ -31,6 +32,7 @@ interface AppFeedbackCreateProps {
 const AppFeedbackCreate = ({ commerce, onClose }: AppFeedbackCreateProps) => {
   const toast = useToast();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [comment, setComment] = useState<string>('');
   const [rate, setRate] = useState<number>(3);
@@ -108,6 +110,8 @@ const AppFeedbackCreate = ({ commerce, onClose }: AppFeedbackCreateProps) => {
 
     setLoading(false);
     onClose();
+    queryClient.invalidateQueries(['commerce']);
+    return;
   };
 
   useEffect(() => {

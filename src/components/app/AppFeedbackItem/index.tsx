@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { decodeToken } from '../../../utils/jwt';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { deleteFeedback } from '../../../services/feedback';
+import { useQueryClient } from 'react-query';
 
 interface AppFeedbackItemProps {
   feedback: IFeedback;
@@ -16,11 +17,13 @@ const AppFeedbackItem = ({ feedback, onClose }: AppFeedbackItemProps) => {
   const [token, setToken] = useState<string>('');
 
   const toast = useToast();
+  const queryClient = useQueryClient();
 
   const handleDeleteFeedback = async () => {
     if (token.trim() !== '') {
       await deleteFeedback(feedback._id, token);
       onClose();
+      queryClient.invalidateQueries(['commerce']);
       return toast({
         title: 'Avaliaçao deletada',
         duration: 3000,
