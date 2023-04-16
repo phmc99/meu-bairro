@@ -21,6 +21,7 @@ const initialState: authState = {
 export const signin = createAsyncThunk(
   'auth/signin',
   ({ email, password }: LoginProps) => {
+    email = email.toLowerCase();
     return api
       .post('/auth/signin', {
         email,

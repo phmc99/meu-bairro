@@ -37,6 +37,7 @@ const SignUpPage = () => {
   };
 
   const handleCreateUser = async (body: IUser) => {
+    body.email = body.email.toLowerCase();
     await api
       .post('/user', body)
       .then(() => router.push('/app/auth/signin'))
