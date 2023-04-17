@@ -5,7 +5,6 @@ import {
   Heading,
   Icon,
   Modal,
-  Spinner,
   Text,
   useDisclosure
 } from '@chakra-ui/react';
@@ -25,6 +24,7 @@ import { AppDispatch, AppState } from '../../../store';
 import { getUserData } from '../../../store/app/user';
 import AppFeedbackList from '../../../components/app/AppFeedbackList';
 import { useQuery } from 'react-query';
+import AppLoading from '../../../components/app/AppLoading';
 
 interface AppCommerceProps {
   id: string;
@@ -121,17 +121,7 @@ const AppCommerce = ({ id }: AppCommerceProps) => {
   } = useDisclosure();
 
   if (isLoading) {
-    return (
-      <Flex h="100vh" w="100vw" justifyContent="center" alignItems="center">
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      </Flex>
-    );
+    return <AppLoading />;
   }
 
   if (error) {

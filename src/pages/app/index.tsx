@@ -1,4 +1,4 @@
-import { Flex, Spinner, VStack } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
 import AppActionButton from '../../components/app/AppActionButton';
 import AppHeader from '../../components/app/AppHeader';
 import AppNavBar from '../../components/app/AppNavBar';
@@ -13,6 +13,7 @@ import { AppDispatch, AppState } from '../../store';
 import { useQuery } from 'react-query';
 import { getBanners } from '../../services/banner';
 import { getUserData } from '../../store/app/user';
+import AppLoading from '../../components/app/AppLoading';
 
 const MeuBairro = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -62,17 +63,7 @@ const MeuBairro = () => {
   }, []);
 
   if (isLoading) {
-    return (
-      <Flex w="100%" h="50vh" justifyContent="center" alignItems="center">
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      </Flex>
-    );
+    return <AppLoading />;
   }
 
   return (

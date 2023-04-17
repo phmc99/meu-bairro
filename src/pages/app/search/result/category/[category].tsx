@@ -1,4 +1,4 @@
-import { Flex, Heading, Spinner } from '@chakra-ui/react';
+import { Heading } from '@chakra-ui/react';
 import Head from 'next/head';
 import AppCommerceList from '../../../../../components/app/AppCommerceList';
 import AppNavBar from '../../../../../components/app/AppNavBar';
@@ -30,43 +30,10 @@ const Category = ({ category }: CategoryPageProps) => {
     setLoading(false);
   };
 
-  // Se category não estiver na lista de categorias, não fazer req
-
-  // useEffect(() => {
-  //   if (category === '‎') {
-  //     Router.push('/app');
-  //     return;
-  //   }
-  // }, [category]);
-
-  // if (error) {
-  //   return (
-  //     <Flex w="100%" h="50vh" justifyContent="center" alignItems="center">
-  //       <Heading color="gray.300" size="lg">
-  //         Algo de errado aconteceu!
-  //       </Heading>
-  //     </Flex>
-  //   );
-  // }
-
   useEffect(() => {
     fetchMoreData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  if (loading) {
-    return (
-      <Flex w="100%" h="50vh" justifyContent="center" alignItems="center">
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      </Flex>
-    );
-  }
 
   return (
     <>
@@ -96,8 +63,10 @@ const Category = ({ category }: CategoryPageProps) => {
             />
           ))
         ) : (
-          <Heading p={5} color="gray.300" size="lg">
-            Nenhum comércio na categoria {category}
+          <Heading p={5} color="gray.300" fontWeight={600} size="lg">
+            {loading
+              ? 'Carregando...'
+              : `Nenhum comércio na categoria ${category}`}
           </Heading>
         )}
       </AppCommerceList>

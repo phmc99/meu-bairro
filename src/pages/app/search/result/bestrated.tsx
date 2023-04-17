@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import AppNavBar from '../../../../components/app/AppNavBar';
 import NavigationHeader from '../../../../components/app/NavigationHeader';
-import { Flex, Heading, Spinner } from '@chakra-ui/react';
+import { Heading } from '@chakra-ui/react';
 import { ICommerce } from '../../../../types';
 import { useState, useEffect } from 'react';
 import AppCommerceItem from '../../../../components/app/AppCommerceItem';
@@ -29,19 +29,6 @@ const BestRated = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading) {
-    return (
-      <Flex w="100%" h="50vh" justifyContent="center" alignItems="center">
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      </Flex>
-    );
-  }
   return (
     <>
       <Head>
@@ -70,8 +57,8 @@ const BestRated = () => {
             />
           ))
         ) : (
-          <Heading p={5} color="gray.300" size="lg">
-            Nenhum comércio novo.
+          <Heading p={5} color="gray.300" fontWeight={600} size="lg">
+            {loading ? 'Carregando...' : 'Nenhum comércio por aqui.'}
           </Heading>
         )}
       </AppCommerceList>

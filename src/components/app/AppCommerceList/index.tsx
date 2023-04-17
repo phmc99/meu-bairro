@@ -23,7 +23,7 @@ const AppCommerceList = ({
       dataLength={dataLength}
       next={fetchMoreData}
       hasMore={hasMore}
-      loader={<Progress size="xs" isIndeterminate />}
+      loader={<Progress size="xs" isIndeterminate w="95%" m="0 auto" />}
       endMessage={
         <Button
           variant="link"

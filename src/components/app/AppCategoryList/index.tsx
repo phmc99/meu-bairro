@@ -1,9 +1,10 @@
-import { Flex, Grid, Heading, Spinner } from '@chakra-ui/react';
+import { Flex, Grid, Heading } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
 import { getCategory } from '../../../services/category';
 import { ICategoryQuery } from '../../../types';
 import AppCategoryItem from '../AppCategoryItem';
 import { scrolllBarCategoryList } from './style';
+import AppLoading from '../AppLoading';
 
 const AppCategoryList = () => {
   const { data, isLoading, error }: ICategoryQuery = useQuery(
@@ -24,17 +25,7 @@ const AppCategoryList = () => {
   }
 
   if (isLoading) {
-    return (
-      <Flex w="100%" h="50vh" justifyContent="center" alignItems="center">
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      </Flex>
-    );
+    return <AppLoading />;
   }
 
   return (

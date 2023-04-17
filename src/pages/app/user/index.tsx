@@ -1,10 +1,4 @@
-import {
-  Button,
-  Divider,
-  Flex,
-  Spinner,
-  useDisclosure
-} from '@chakra-ui/react';
+import { Button, Divider, Flex, useDisclosure } from '@chakra-ui/react';
 import AppNavBar from '../../../components/app/AppNavBar';
 import NavigationHeader from '../../../components/app/NavigationHeader';
 import AppCommerceAddress from '../../../components/app/AppCommerceAddress';
@@ -16,6 +10,7 @@ import { useEffect } from 'react';
 import { getUserData } from '../../../store/app/user';
 import AppUserAuthButtons from '../../../components/app/AppUserAuthButtons';
 import AppUserData from '../../../components/app/AppUserData';
+import AppLoading from '../../../components/app/AppLoading';
 
 const User = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,17 +30,7 @@ const User = () => {
   }, []);
 
   if (loading) {
-    return (
-      <Flex w="100%" h="50vh" justifyContent="center" alignItems="center">
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      </Flex>
-    );
+    return <AppLoading />;
   }
 
   return (
