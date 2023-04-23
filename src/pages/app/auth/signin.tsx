@@ -44,6 +44,10 @@ const SignInPage = () => {
     }
   };
 
+  const handleRecovery = () => {
+    router.push('/app/user/recovery');
+  };
+
   return (
     <Flex
       minH={'100vh'}
@@ -120,6 +124,7 @@ const SignInPage = () => {
                         cursor="pointer"
                         color={'blue.500'}
                         variant="link"
+                        onClick={handleRecovery}
                       >
                         Esqueceu a senha?
                       </Button>
