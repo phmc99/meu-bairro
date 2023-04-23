@@ -38,7 +38,7 @@ const MeuBairro = () => {
 
   useEffect(() => {
     let cords = JSON.parse(localStorage.getItem('@mb:user-cords') || '{}');
-    const user = localStorage.getItem('user-token') || '';
+    const user = localStorage.getItem('@mb:user-token') || '';
 
     dispatch(getLocalStorageLocation());
 

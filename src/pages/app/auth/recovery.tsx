@@ -16,37 +16,38 @@ import {
 import AppNavBar from '../../../components/app/AppNavBar';
 import { Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
-import { AppDispatch } from '../../../store';
-import { useDispatch } from 'react-redux';
-import { signin } from '../../../store/app/auth';
+import api from '../../../services/api';
+import Head from 'next/head';
 
 const Recovery = () => {
   const toast = useToast();
   const router = useRouter();
-  const dispatch = useDispatch<AppDispatch>();
 
   const initalValues = {
-    email: '',
-    password: ''
+    email: ''
   };
 
-  const handleLogin = async (email: string, password: string) => {
-    const result = await dispatch(signin({ email, password }));
-    if (result.payload.token) {
-      router.push('/app/user');
-      return;
-    } else {
-      return toast({
-        title: result.payload.message,
-        duration: 4000,
-        status: 'error',
-        isClosable: true
-      });
-    }
+  const handleSendRecovery = async (email: string) => {
+    await api.post('/auth/recovery', { email });
+    router.push('/app/user/newpassword');
+    return toast({
+      title: 'O código foi enviado!',
+      description:
+        'Verifique seu e-mail e utilize o código que enviamos para alterar sua senha.',
+      duration: 4000,
+      isClosable: true
+    });
   };
 
   return (
     <>
+      <Head>
+        <title>Meu Bairro - Recuperar senha</title>
+        <meta
+          name="description"
+          content="Meu Bairro - App de comércios locais"
+        />
+      </Head>
       <Flex
         minH={'100vh'}
         align={'center'}
@@ -73,7 +74,7 @@ const Recovery = () => {
             <Formik
               initialValues={initalValues}
               onSubmit={async (values, actions) => {
-                await handleLogin(values.email, values.password);
+                await handleSendRecovery(values.email);
                 actions.setSubmitting(false);
                 actions.resetForm();
                 actions.setValues(initalValues);

@@ -45,7 +45,7 @@ const SignInPage = () => {
   };
 
   const handleRecovery = () => {
-    router.push('/app/user/recovery');
+    router.push('/app/auth/recovery');
   };
 
   return (
