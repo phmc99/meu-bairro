@@ -7,20 +7,25 @@ import {
   FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Link,
   Stack,
   Text,
   useColorModeValue,
   useToast
 } from '@chakra-ui/react';
-import AppNavBar from '../../../components/app/AppNavBar';
 import { Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import api from '../../../services/api';
 import { decodeToken } from '../../../utils/jwt';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
 
 const Recovery = () => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const toast = useToast();
   const router = useRouter();
 
@@ -98,7 +103,7 @@ const Recovery = () => {
                   <Stack>
                     <Field name="token">
                       {({ field, form }: any) => (
-                        <FormControl id="token">
+                        <FormControl id="token" isRequired>
                           <FormLabel>Código</FormLabel>
                           <Input
                             {...field}
@@ -114,17 +119,33 @@ const Recovery = () => {
                     </Field>
                     <Field name="newPassword">
                       {({ field, form }: any) => (
-                        <FormControl id="newPassword">
+                        <FormControl id="newPassword" isRequired>
                           <FormLabel>Nova senha</FormLabel>
-                          <Input
-                            {...field}
-                            type="text"
-                            placeholder="Digite sua nova senha"
-                            disabled={props.isSubmitting}
-                          />
-                          <FormErrorMessage>
-                            {form.errors.newPassword}
-                          </FormErrorMessage>
+                          <InputGroup>
+                            <Input
+                              disabled={props.isSubmitting}
+                              {...field}
+                              autoComplete="new-password"
+                              type={showPassword ? 'text' : 'password'}
+                              placeholder="Digite sua nova senha"
+                            />
+                            <FormErrorMessage>
+                              {form.errors.newPassword}
+                            </FormErrorMessage>
+                            <InputRightElement h={'full'}>
+                              <Button
+                                isLoading={props.isSubmitting}
+                                variant={'ghost'}
+                                onClick={() =>
+                                  setShowPassword(
+                                    (showPassword: any) => !showPassword
+                                  )
+                                }
+                              >
+                                {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                              </Button>
+                            </InputRightElement>
+                          </InputGroup>
                         </FormControl>
                       )}
                     </Field>
@@ -152,7 +173,6 @@ const Recovery = () => {
           </Box>
         </Stack>
       </Flex>
-      <AppNavBar />
     </>
   );
 };

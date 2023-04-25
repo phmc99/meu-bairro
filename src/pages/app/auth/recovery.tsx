@@ -13,7 +13,6 @@ import {
   useColorModeValue,
   useToast
 } from '@chakra-ui/react';
-import AppNavBar from '../../../components/app/AppNavBar';
 import { Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import api from '../../../services/api';
@@ -85,7 +84,7 @@ const Recovery = () => {
                   <Stack>
                     <Field name="email">
                       {({ field, form }: any) => (
-                        <FormControl id="email">
+                        <FormControl id="email" isRequired>
                           <FormLabel>E-mail</FormLabel>
                           <Input
                             {...field}
@@ -123,7 +122,6 @@ const Recovery = () => {
           </Box>
         </Stack>
       </Flex>
-      <AppNavBar />
     </>
   );
 };
