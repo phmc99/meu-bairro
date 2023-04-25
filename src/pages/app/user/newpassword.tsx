@@ -10,34 +10,46 @@ import {
   Link,
   Stack,
   Text,
-  useColorModeValue
+  useColorModeValue,
+  useToast
 } from '@chakra-ui/react';
 import AppNavBar from '../../../components/app/AppNavBar';
 import { Field, Form, Formik } from 'formik';
-// import { useRouter } from 'next/router';
-// import api from '../../../services/api';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
+import api from '../../../services/api';
+import { decodeToken } from '../../../utils/jwt';
 
 const Recovery = () => {
-  // const toast = useToast();
-  // const router = useRouter();
+  const toast = useToast();
+  const router = useRouter();
 
   const initalValues = {
     token: '',
-    password: ''
+    newPassword: ''
   };
 
-  // const handleSendRecovery = async (email: string) => {
-  //   await api.post('/auth/recovery', { email });
-  //   router.push('/app/user/newpassword');
-  //   return toast({
-  //     title: 'O código foi enviado!',
-  //     description:
-  //       'Verifique seu e-mail e utilize o código que enviamos para alterar sua senha.',
-  //     duration: 4000,
-  //     isClosable: true
-  //   });
-  // };
+  const handleChangePassword = async (token: string, newPassword: string) => {
+    const { decoded } = decodeToken(token);
+    const { email } = decoded as { email: string };
+
+    await api.post(
+      '/user/password',
+      { newPassword, email },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    router.push('/app/auth/signin');
+    return toast({
+      title: 'Senha alterada!',
+      status: 'success',
+      duration: 3000,
+      isClosable: true
+    });
+  };
 
   return (
     <>
@@ -75,6 +87,7 @@ const Recovery = () => {
             <Formik
               initialValues={initalValues}
               onSubmit={async (values, actions) => {
+                await handleChangePassword(values.token, values.newPassword);
                 actions.setSubmitting(false);
                 actions.resetForm();
                 actions.setValues(initalValues);
@@ -99,9 +112,9 @@ const Recovery = () => {
                         </FormControl>
                       )}
                     </Field>
-                    <Field name="password">
+                    <Field name="newPassword">
                       {({ field, form }: any) => (
-                        <FormControl id="password">
+                        <FormControl id="newPassword">
                           <FormLabel>Nova senha</FormLabel>
                           <Input
                             {...field}
@@ -110,7 +123,7 @@ const Recovery = () => {
                             disabled={props.isSubmitting}
                           />
                           <FormErrorMessage>
-                            {form.errors.password}
+                            {form.errors.newPassword}
                           </FormErrorMessage>
                         </FormControl>
                       )}
