@@ -22,6 +22,7 @@ import { Field, Form, Formik } from 'formik';
 import api from '../../../services/api';
 import { IUser } from '../../../types';
 import { useRouter } from 'next/router';
+import { isValidPhone } from '../../../utils/validations';
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -40,7 +41,15 @@ const SignUpPage = () => {
     body.email = body.email.toLowerCase();
     await api
       .post('/user', body)
-      .then(() => router.push('/app/auth/signin'))
+      .then(() => {
+        router.push('/app/auth/signin');
+        return toast({
+          title: 'Conta criada com sucesso!',
+          duration: 4000,
+          status: 'success',
+          isClosable: true
+        });
+      })
       .catch(({ response }) => {
         if (response.data.message) {
           return toast({
@@ -82,7 +91,6 @@ const SignUpPage = () => {
             onSubmit={async (values, actions) => {
               await handleCreateUser(values);
               actions.setSubmitting(false);
-              actions.resetForm();
               actions.setValues(initalValues);
             }}
           >
@@ -144,9 +152,13 @@ const SignUpPage = () => {
                     )}
                   </Field>
 
-                  <Field name="phone">
+                  <Field name="phone" validate={isValidPhone}>
                     {({ field, form }: any) => (
-                      <FormControl id="phone" isRequired>
+                      <FormControl
+                        isInvalid={form.errors.phone}
+                        id="phone"
+                        isRequired
+                      >
                         <FormLabel>Telefone</FormLabel>
                         <Input
                           disabled={props.isSubmitting}
