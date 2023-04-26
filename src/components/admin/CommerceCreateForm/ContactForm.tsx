@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from '../../../store';
 import { handleChangeFormData } from '../../../store/commerce-create';
 import { IContact } from '../../../types';
+import InputMask from 'react-input-mask';
 
 export const ContactForm = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -47,7 +48,10 @@ export const ContactForm = () => {
           Telefone de contato
         </FormLabel>
         <Input
-          placeholder="Telefone de contato"
+          placeholder="Telefone de contato (ex: DD22301256)"
+          as={InputMask}
+          mask="99999999999"
+          maskChar={null}
           type="text"
           name="phone"
           id="phone"
@@ -61,7 +65,10 @@ export const ContactForm = () => {
           WhatsApp
         </FormLabel>
         <Input
-          placeholder="WhatsApp do comércio"
+          as={InputMask}
+          mask="99999999999"
+          maskChar={null}
+          placeholder="WhatsApp do comércio (ex: DD980951256)"
           type="text"
           name="whatsapp"
           id="whatsapp"
@@ -75,7 +82,7 @@ export const ContactForm = () => {
           Facebook
         </FormLabel>
         <Input
-          placeholder="Facebook do comércio"
+          placeholder="Final do link do facebook (ex: bairromariadagraca)"
           type="text"
           name="facebook"
           id="facebook"
@@ -89,7 +96,7 @@ export const ContactForm = () => {
           Instagram
         </FormLabel>
         <Input
-          placeholder="Instagram do comércio"
+          placeholder="Instagram do comércio (ex: bairromdg_oficial)"
           type="text"
           name="instagram"
           id="instagram"
