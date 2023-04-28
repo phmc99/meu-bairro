@@ -17,10 +17,29 @@ import Head from 'next/head';
 import CommerceCreateForm from '../../components/admin/CommerceCreateForm';
 import api from '../../services/api';
 import BannersModal from '../../components/admin/BannersModal';
+import { ICommerceResponse } from '../../types';
+import SearchResultList from '../../components/admin/SearchResultList';
 
 const Dashboard = () => {
   const toast = useToast();
   const [token, setToken] = useState<string>('');
+
+  const [value, setValue] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<ICommerceResponse>({} as ICommerceResponse);
+
+  const handleSearch = async (page = 1) => {
+    setLoading(true);
+
+    const endpoint = `/commerce/search?value=${value.trim()}&page=${page}&perPage=5`;
+    const { data } = await api.get(endpoint);
+
+    setData(data);
+
+    setLoading(false);
+
+    return data;
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('@mb:admin-token') || '';
@@ -80,16 +99,28 @@ const Dashboard = () => {
               Adicionar comércio
             </Button>
             <Flex gap={2}>
-              <Input placeholder="Buscar comércio" />
+              <Input
+                placeholder="Buscar comércio"
+                onChange={e => setValue(e.target.value)}
+              />
               <IconButton
                 colorScheme="blue"
                 aria-label="Search database"
                 icon={<SearchIcon />}
+                onClick={() => handleSearch}
               />
             </Flex>
           </Stack>
           <Heading>Comercios</Heading>
-          <CommerceList />
+          {data.data && data.data.length > 0 ? (
+            <SearchResultList
+              data={data}
+              handleSearch={handleSearch}
+              loading={loading}
+            />
+          ) : (
+            <CommerceList />
+          )}
           <Stack direction={['column', 'row']} my={5}>
             <Button boxShadow={'base'} onClick={bannerModalOnOpen}>
               Banners
