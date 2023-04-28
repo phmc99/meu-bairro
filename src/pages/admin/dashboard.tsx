@@ -12,13 +12,13 @@ import {
   useToast
 } from '@chakra-ui/react';
 import CommerceList from '../../components/admin/CommerceList';
-import { SearchIcon } from '@chakra-ui/icons';
 import Head from 'next/head';
 import CommerceCreateForm from '../../components/admin/CommerceCreateForm';
 import api from '../../services/api';
 import BannersModal from '../../components/admin/BannersModal';
 import { ICommerceResponse } from '../../types';
 import SearchResultList from '../../components/admin/SearchResultList';
+import { MdSearch, MdSearchOff } from 'react-icons/md';
 
 const Dashboard = () => {
   const toast = useToast();
@@ -28,8 +28,12 @@ const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<ICommerceResponse>({} as ICommerceResponse);
 
-  const handleSearch = async (page = 1) => {
+  const handleSearch = async (page: any) => {
     setLoading(true);
+
+    if (!page) {
+      page = 1;
+    }
 
     const endpoint = `/commerce/search?value=${value.trim()}&page=${page}&perPage=5`;
     const { data } = await api.get(endpoint);
@@ -39,6 +43,11 @@ const Dashboard = () => {
     setLoading(false);
 
     return data;
+  };
+
+  const handleClearSearch = () => {
+    setValue('');
+    setData({} as ICommerceResponse);
   };
 
   useEffect(() => {
@@ -99,15 +108,26 @@ const Dashboard = () => {
               Adicionar comércio
             </Button>
             <Flex gap={2}>
+              {data.data && data.data.length > 0 ? (
+                <IconButton
+                  aria-label="Clear search"
+                  icon={<MdSearchOff size={22} />}
+                  variant="link"
+                  ml={2}
+                  onClick={handleClearSearch}
+                />
+              ) : null}
+
               <Input
                 placeholder="Buscar comércio"
+                value={value}
                 onChange={e => setValue(e.target.value)}
               />
               <IconButton
                 colorScheme="blue"
                 aria-label="Search database"
-                icon={<SearchIcon />}
-                onClick={() => handleSearch}
+                icon={<MdSearch size={22} />}
+                onClick={handleSearch}
               />
             </Flex>
           </Stack>
