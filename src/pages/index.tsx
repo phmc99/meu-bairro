@@ -14,12 +14,15 @@ export default function Home() {
         />
       </Head>
       <Flex direction="column">
-        <Stack direction={{ base: 'column', md: 'row' }}>
+        <Stack
+          h={{ base: 'auto', md: '100vh' }}
+          direction={{ base: 'column', md: 'row' }}
+        >
           <Flex p={8} flex={1} align={'center'} justify={'center'}>
             <Stack spacing={6} w={'full'} maxW={'lg'}>
               <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
                 <Image src="./logo-meu-bairro.png" alt="logo" />
-                <Text color={'blue.400'} as={'span'}>
+                <Text color={'blue.600'} as={'span'}>
                   O app dos comércios do seu bairro.
                 </Text>
               </Heading>
@@ -31,17 +34,24 @@ export default function Home() {
               <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
                 <Button
                   rounded={'full'}
-                  bg={'blue.400'}
+                  bg={'blue.600'}
                   color={'white'}
                   _hover={{
                     bg: 'blue.500'
                   }}
                 >
-                  Cadastrar seu comércio
+                  Conheça o Meu Bairro
                 </Button>
-                <Button rounded={'full'}>
+                <Button
+                  bg={'gray.200'}
+                  color={'gray.600'}
+                  _hover={{
+                    bg: 'gray.300'
+                  }}
+                  rounded={'full'}
+                >
                   <Link target="_blank" href="/app">
-                    Conheça o app
+                    Cadastre o seu comércio
                   </Link>
                 </Button>
               </Stack>
@@ -52,7 +62,7 @@ export default function Home() {
               alt={'Login Image'}
               objectFit={'cover'}
               src={
-                'https://images.unsplash.com/photo-1527689368864-3a821dbccc34?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+                'https://images.unsplash.com/photo-1504281186-f427c16ed131?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
               }
             />
           </Flex>

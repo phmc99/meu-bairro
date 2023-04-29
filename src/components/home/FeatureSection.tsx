@@ -58,7 +58,12 @@ const Card = ({ heading, description, icon }: CardProps) => {
 
 export default function GridListWith() {
   return (
-    <Flex direction="column" justifyContent="center" p={4}>
+    <Flex
+      h={{ base: 'auto', md: '100vh' }}
+      direction="column"
+      justifyContent="center"
+      p={4}
+    >
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
         <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
           Sobre o Meu Bairro
