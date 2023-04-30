@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { Button, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import GridListWith from '../components/home/FeatureSection';
+import Footer from '../components/home/Footer';
 
 export default function Home() {
   return (
@@ -68,6 +69,7 @@ export default function Home() {
           </Flex>
         </Stack>
         <GridListWith />
+        <Footer />
       </Flex>
     </>
   );
