@@ -1,6 +1,13 @@
 import Head from 'next/head';
-import { Button, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react';
-import Link from 'next/link';
+import {
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Link,
+  Stack,
+  Text
+} from '@chakra-ui/react';
 import GridListWith from '../components/home/FeatureSection';
 import Footer from '../components/home/Footer';
 
@@ -34,14 +41,24 @@ export default function Home() {
               </Text>
               <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
                 <Button
+                  p={5}
                   rounded={'full'}
                   bg={'blue.600'}
                   color={'white'}
+                  fontSize={'lg'}
                   _hover={{
                     bg: 'blue.500'
                   }}
                 >
-                  Conheça o Meu Bairro
+                  <Link
+                    target="_blank"
+                    href="/app"
+                    _hover={{
+                      textDecoration: 'none'
+                    }}
+                  >
+                    Conheça o meu Bairro
+                  </Link>
                 </Button>
                 <Button
                   bg={'gray.200'}
@@ -50,8 +67,9 @@ export default function Home() {
                     bg: 'gray.300'
                   }}
                   rounded={'full'}
+                  disabled
                 >
-                  <Link target="_blank" href="/app">
+                  <Link target="_blank" href="#">
                     Cadastre o seu comércio
                   </Link>
                 </Button>

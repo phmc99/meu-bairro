@@ -1,9 +1,11 @@
 import {
   Box,
+  Button,
   Container,
   Flex,
   Heading,
   Icon,
+  Link,
   Stack,
   Text,
   useColorModeValue
@@ -64,7 +66,13 @@ export default function GridListWith() {
       justifyContent="center"
       p={4}
     >
-      <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
+      <Stack
+        mt={5}
+        spacing={4}
+        as={Container}
+        maxW={'3xl'}
+        textAlign={'center'}
+      >
         <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
           Sobre o Meu Bairro
         </Heading>
@@ -83,7 +91,7 @@ export default function GridListWith() {
           fontWeight={'semibold'}
           mb={4}
         >
-          Beneficios do App
+          Benefícios do App
         </Heading>
         <Flex flexWrap="wrap" gridGap={6} justify="center">
           <Card
@@ -121,6 +129,29 @@ export default function GridListWith() {
               'Muito útil para os comércios. Esse recurso facilita a atualização da página e mantém todos os clientes atualizados.'
             }
           />
+        </Flex>
+        <Flex my={10} justifyContent="center">
+          <Button
+            p={5}
+            rounded={'full'}
+            fontSize={'lg'}
+            bg={'blue.600'}
+            color={'white'}
+            _hover={{
+              bg: 'blue.500',
+              textDecoration: 'none'
+            }}
+          >
+            <Link
+              target="_blank"
+              href="/app"
+              _hover={{
+                textDecoration: 'none'
+              }}
+            >
+              Conheça o meu Bairro
+            </Link>
+          </Button>
         </Flex>
       </Container>
     </Flex>
