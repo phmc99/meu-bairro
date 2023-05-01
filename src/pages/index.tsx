@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import GridListWith from '../components/home/FeatureSection';
 import Footer from '../components/home/Footer';
+import InstallSection from '../components/home/InstallSection';
 
 export default function Home() {
   return (
@@ -87,6 +88,7 @@ export default function Home() {
           </Flex>
         </Stack>
         <GridListWith />
+        <InstallSection />
         <Footer />
       </Flex>
     </>
