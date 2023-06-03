@@ -14,7 +14,6 @@ import { useQuery } from 'react-query';
 import { getBanners } from '../../services/banner';
 import { getUserData } from '../../store/app/user';
 import AppLoading from '../../components/app/AppLoading';
-import AppNotification from '../../components/app/AppNotification';
 
 const MeuBairro = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -68,7 +67,7 @@ const MeuBairro = () => {
   }
 
   return (
-    <AppNotification>
+    <>
       <Head>
         <title>Meu Bairro - Início</title>
         <meta
@@ -91,7 +90,7 @@ const MeuBairro = () => {
         </AppActionButton>
       </VStack>
       <AppNavBar />
-    </AppNotification>
+    </>
   );
 };
 
