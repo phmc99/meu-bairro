@@ -68,9 +68,11 @@ export default function Home() {
                     bg: 'gray.300'
                   }}
                   rounded={'full'}
-                  disabled
                 >
-                  <Link target="_blank" href="#">
+                  <Link
+                    target="_blank"
+                    href="https://wa.me/5521998651205?text=Quero cadastrar meu comércio no Meu Bairro."
+                  >
                     Cadastre o seu comércio
                   </Link>
                 </Button>
